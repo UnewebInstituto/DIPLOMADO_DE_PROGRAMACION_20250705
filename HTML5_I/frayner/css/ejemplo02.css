@@ -59,3 +59,17 @@ table, th, td{
     width: 150px;
     height: 150px;
 }
+  .boton-elegante {
+    background-color: #f41111; /* Verde bonito */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .boton-elegante:hover {
+    background-color: #ac5f5f; /* Cambia al pasar el mouse */
+  }
