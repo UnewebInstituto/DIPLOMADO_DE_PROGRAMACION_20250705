@@ -1,0 +1,60 @@
+    /*Indicamos el estilo de documento*/
+    /*Usar "*" indica aplicar a Todas las Etiquetas*/
+        *{ 
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        header{
+            background-color: lightslategray;
+            padding: 15px;
+        }
+        nav{
+            background-color: azure;
+            padding: 10px;
+        }
+        ul li{
+            list-style: none;
+            display: inline;
+        }
+        a{
+            text-decoration: none;
+            margin-right: 10px;
+            color: black;
+        }
+        p, blockquote{
+            text-align: justify;
+        }
+        footer{
+            background-color: lightgray;
+            padding: 10px;
+        }
+        #contenido{
+            width: 80%;
+            margin-left: 10%;
+        }
+        section{
+            width: 50%;
+        }
+        aside{
+            width: 47%;
+            margin-left: 10px;
+            background-color: whitesmoke;
+        }
+        section, aside{
+            display: block;
+            float: left;
+        }
+        footer{
+            clear: both;
+            border-bottom-style: solid;
+            border-top-width: 1px;
+            border-top-color: black;
+        }
+        article{
+            margin-bottom: 10px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: gray;
+        }
