@@ -25,7 +25,7 @@ git remote add origin https://github.com/UnewebInstituto/DIPLOMADO_DE_PROGRAMACI
 git branch -M main
 git push -u origin main
 
-
+git push origin main --force
 
 https://es.wikipedia.org/wiki/Patr%C3%B3n_de_dise%C3%B1o
 

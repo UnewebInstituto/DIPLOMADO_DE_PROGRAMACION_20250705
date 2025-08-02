@@ -4,7 +4,7 @@ const formidable = require('formidable'); // Para analizar datos de formularios,
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+const PORT = 3002;
 const DATA_FILE = path.join(__dirname, 'formData.txt'); // Archivo para almacenar los datos del formulario
 
 const server = http.createServer((req, res) => {
