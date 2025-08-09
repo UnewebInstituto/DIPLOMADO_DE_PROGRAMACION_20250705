@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../img/icono_uneweb.png" type="image/x-icon">
+  <title>Ejemplo04 Geolocalización</title>
+</head>
+
+<body>
+
+  <h1>API Geolocalización</h1>
+  <br>
+  <a href="https://developer.mozilla.org/es/docs/Web/API/Geolocation_API" target="_blank" target="_blank">Documentación Geolocalización</a>
+  <br>
+  <a href="./ejemplo03.html">Regresar al menú</a>
+  <br>
+  <button onclick="obtener()">Obtener coordenadas</button>
+  <br>
+  <div id="resultado"></div>
+  
+  <script>
+    function obtener(){
+      //Se verifica que elnavegado soporta 
+      //Geolocalización
+      if (navigator.geolocation){
+        document.getElementById('resultado').innerHTML = "Navegador web soporta geolocalizaión.";
+        console.log(navigator)
+        navigator.geolocation.getCurrentPosition(solicitarUbicación, negarUbicación)
+
+      }else{
+        document.getElementById('resultado').innerHTML = "Su Navegador web no soporta para geolocalizaión.";
+      }
+    }
+
+    //Las siguientes funciones se ha declarado empleando 
+    //notacón arrow funtion (funciones flecha)
+    //funcion solicitarUbicación (p) {} <- frma tradicional 
+    const solicitarUbicación = (p) => {
+      //Donde p es objeto de ubicación
+      console.log(p)
+      latitud = p.coords.latitude;
+      longitud = p.coords.longitude;
+      document.getElementById('resultado').innerHTML +=
+      '<hr>Coordenadas geográficas.<br>Latitud:'+latitud+'<br>Longitud:'+longitud;
+    }
+
+    const negarUbicación = (e) => {
+      //Donde es objeto de error
+      console.log(e);
+      switch (e.code) {
+        case 1:
+        document.getElementById('resultado').innerHTML +=
+      '<hr>Coordenadas geográficas.<br>Usuario negó acceso ubicación.';
+          break;
+      
+        case 2:
+        document.getElementById('resultado').innerHTML +=
+      '<hr>Error.<br>Posición no disponible.';
+        break
+
+        default:
+        document.getElementById('resultado').innerHTML +=
+      '<br>Error.<br>Se excedió en el tiempo de espera.';
+          break;
+      }
+}
+
+function mostrarMapa(){
+      let url = "https://www.openstreetmap.org/#map=17/"+latitud+"/"+longitud;
+      window.open(url);
+    }
+
+
+  //Declaración de variables
+  var longitud, latitud;
+
+
+  </script>
+
+</body>
+</html>
+

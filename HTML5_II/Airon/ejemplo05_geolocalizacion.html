@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplo 05 - Geolocalización</title>
+  
+  <link rel="shortcut icon" href="../img/icono_uneweb.png" type="image/x-icon">
+</head>
+<body>
+  <h1>API Geolocalización</h1>
+  <br>
+  <a href="https://developer.mozilla.org/es/docs/Web/API/Geolocation_API" target="_blank">Documentación Geolocalización</a>
+  <br>
+  <a href="./ejemplo03.html">Regresar</a>
+  <br>
+  <button onclick="obtener()">Obtener Coordenadas</button>
+  <br>
+  <div id="resultado"></div>
+  <br>
+  <script>
+    function obtener(){
+      //Se verifica si el navegador soporta geolocalización
+      if (navigator.geolocation){
+        document.getElementById("resultado").innerHTML = "Navegador Web soporta Geolocalización"
+        console.log(navigator)
+        navigator.geolocation.getCurrentPosition(solicitarUbicacion, negarUbicacion)
+      }
+      else{
+        document.getElementById("resultado").innerHTML = "Atención: Su Navegador Web no tiene soporte para Geolocalización"
+      }
+    }
+
+    //Las siguientes funciones se han declarado usando noacion arrow function (funciones flecha)
+    //function solicitarUbicacion(p){} <- forma tradicional
+    const solicitarUbicacion = (p) => {
+      //Donde p es objeto de ubicación
+      console.log(p)
+      latitud= p.coords.latitude;
+      longitud= p.coords.longitude;
+      document.getElementById("resultado").innerHTML += "<hr> Coordenadas Geográficas <br> Latitud:" +latitud+"<br>Longitud:" +longitud;
+
+    }
+
+    const negarUbicacion = (e) =>{
+      //Donde e es objeto de error
+      console.log(e)
+      switch (e.code) {
+        case 1:
+          document.getElementById("resultado").innerHTML += "<hr> Coordenadas Geográficas <br> Usuario negó acceso a ubicación";
+          break;
+        case 2:
+          document.getElementById("resultado").innerHTML += "<hr> Coordenadas Geográficas <br> Posición no disponible";
+          break;
+        default: document.getElementById("resultado").innerHTML += "<hr> Coordenadas Geográficas <br> Se excedió en el tiempo de espera";
+          break;
+      }
+    }
+
+    function mostrarMapa(){
+      let url = "https://www.openstreetmap.org/#map=15/"+latitud+"/"+longitud;
+      window.open(url);
+    }
+
+
+    //Declaracion de Variables
+    var longitud, latitud;
+  </script>
+</body>
+</html>

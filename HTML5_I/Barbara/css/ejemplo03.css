@@ -1,0 +1,63 @@
+        /* Todas las etiquetas contenidas en el documento*/
+        *{
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        header{
+            background-color: burlywood;
+            padding: 15px;
+        }
+        nav{
+            background-color: rgb(173, 171, 171);
+            padding: 10px;
+        }
+        ul li{
+            list-style: none;
+            display: inline;
+        }
+        a{
+            text-decoration: none;
+            margin-right: 10px;
+            color: black;
+        }
+        p, blockquote{
+            text-align: justify;
+        }
+        footer{
+            background-color: burlywood;
+            padding: 10px;
+            clear: both;
+            border-top-style: solid;
+            border-top-width: 1px;
+            border-top-color: gray;
+        }
+        #contenido{
+            width: 80%;
+            margin-left: 10%;
+        }
+        section{
+            width: 50%;
+        }
+        aside{
+            width: 47%;
+            margin-left: 10px;
+        }
+        section, aside{
+
+            display: block;
+            float: left;
+        }
+        article{
+            margin-bottom: 10px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+        }
+        p{
+            padding: 10px;
+        }
+        video{
+            width: 395px;
+        }

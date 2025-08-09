@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/ejemplo03.css">
+</head>
+<body>
+        <!-- 
+        Autor: Bárbara Villasmil
+        Fecha: 2025-07-19
+        Ejemplo04.html, Diplomado de Programación
+    -->
+    <header>
+        <h1>Ejemplo03 Web Semántica</h1>
+    </header>
+    <nav>
+        <ul>
+            <a href=""><li>Inicio</li></a>
+            <a href=""><li>Productos</li></a>
+            <a href=""><li>Servicios</li></a>
+            <a href=""><li>Contactos</li></a>
+        </ul>
+    </nav>
+    <div id="contenido">
+        <section>
+            <!-- 1er. Artículo-->
+            <article>
+                <header>
+                    <h2>Etiqueta video</h2>
+                </header>
+                <!-- 1era. Forma de declaración etiqueta video -->
+                <!--
+                <video src="../video/1236-144355017_small.mp4" controls></video>
+                -->
+                <video controls>
+                    <source src="../video/1236-144355017_small.mp4" type="video/mp4">
+                    <source src="../video/1236-144355017_small.webm" type="video/webm">
+                </video>
+                <footer>
+                    Pie del 1er. Artículo
+                </footer>
+            </article>
+            <!-- 2do. Artículo-->
+            <article>
+                <header>
+                    <h2>Etiqueta audio</h2>
+                </header>
+                <!-- 1era. Forma de declaración etiqueta audio -->
+                <!--
+                <audio src="../audio/this-minimal-technology_pure-12327.mp3" controls></audio>
+                -->
+                <audio controls>
+                    <source src="../audio/this-minimal-technology_pure-12327.mp3" type="audio/mp3">
+                    <source src="../audio/this-minimal-technology_pure-12327.ogg" type="audio/ogg">
+                </audio>
+                <footer>
+                    Pie del 2do. Artículo
+                </footer>
+            </article>
+        </section>
+        <aside>
+            <blockquote>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem odio velit, vel non eligendi ipsum beatae odit consequatur voluptas! Corrupti animi amet consequatur quaerat ea, alias, numquam perferendis, suscipit saepe ad quibusdam unde quidem odit non ipsa exercitationem deserunt enim! Qui recusandae numquam rem, necessitatibus enim eligendi minus deleniti aperiam, sequi quo debitis ut pariatur porro quasi voluptate voluptatum! Quidem eius, minus ullam perferendis atque dolor sed fugit consectetur, distinctio voluptatem accusamus! Iusto, labore, illum id magnam minima ullam dolor veritatis sit magni omnis commodi cum consectetur laboriosam praesentium adipisci autem iure similique tenetur unde a obcaecati esse tempora. Iusto.</blockquote>
+            <blockquote>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem odio velit, vel non eligendi ipsum beatae odit consequatur voluptas! Corrupti animi amet consequatur quaerat ea, alias, numquam perferendis, suscipit saepe ad quibusdam unde quidem odit non ipsa exercitationem deserunt enim! Qui recusandae numquam rem, necessitatibus enim eligendi minus deleniti aperiam, sequi quo debitis ut pariatur porro quasi voluptate voluptatum! Quidem eius, minus ullam perferendis atque dolor sed fugit consectetur, distinctio voluptatem accusamus! Iusto, labore, illum id magnam minima ullam dolor veritatis sit magni omnis commodi cum consectetur laboriosam praesentium adipisci autem iure similique tenetur unde a obcaecati esse tempora. Iusto.</blockquote>
+        </aside>
+    </div>
+    <footer>
+        Diplomado de Programación - HTML5 Nivel I - Uneweb - 2025 &copy;
+    </footer>
+</body>
+</html>

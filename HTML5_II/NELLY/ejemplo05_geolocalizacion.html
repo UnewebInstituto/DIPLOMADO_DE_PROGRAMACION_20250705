@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/icono_uneweb.png" type="image/x-icon">
+    <title>Ejemplo05 Geolocalización</title>
+</head>
+<body>
+    <h1>API Geolocalización</h1>
+    <br>
+    <a href="https://developer.mozilla.org/es/docs/Web/API/Geolocation_API" target="_blank">Documentación Geolocalización</a>
+    <br>
+    <a href="./ejemplo03.html">Regresar al menú</a>
+    <br>
+    <button onclick="obtener()">Obtener coordenadas</button>
+    <br>
+    <div id="resultado"></div>
+    
+    <script>
+        function obtener(){
+            // Se verifica que el navegador soporta
+            // Geolocalización
+            if (navigator.geolocation){
+                document.getElementById('resultado').innerHTML = "Navegador Web soporta Geolocalización.";
+                console.log(navigator);
+                navigator.geolocation.getCurrentPosition(solicitarUbicacion, negarUbicacion)
+            }else{
+                document.getElementById('resultado').innerHTML = "Atención: Su Navegador Web no tiene soporte para Geolocalización.";
+            }
+        }
+
+        // Las siguientes funciones se han declarado empleando
+        // notación arrow function (funciones flecha)
+        // function solicitarUbicacion(p){} <- forma tradicional
+        const solicitarUbicacion = (p) =>{
+            // Donde p es objeto de ubicación
+            console.log(p)
+            latitud = p.coords.latitude;
+            longitud = p.coords.longitude;
+            document.getElementById('resultado').innerHTML += '<hr>Coordenadas geográficas.<br>Latitud:'+latitud+'<br>Longitud:'+longitud;
+        }
+
+        const negarUbicacion = (e) =>{
+            // Donde e es objeto de error
+            console.log(e);
+            switch (e.code) {
+                case 1:
+                    document.getElementById('resultado').innerHTML += '<hr>Error.<br>Usuario negó acceso ubicación.';
+                    break;
+                case 2:
+                    document.getElementById('resultado').innerHTML += '<hr>Error.<br>Posición no disponible.';
+                    break;
+                case 3:
+                    document.getElementById('resultado').innerHTML += '<hr>Error.<br>Se excedió en el tiempo de espera.';
+                    break;
+                default:
+                    document.getElementById('resultado').innerHTML += '<hr>Error.<br>Se desconoce el motivo.';
+                    break;
+            }
+        }
+        function mostrarMapa(){
+            let url= "https://www.openstreetmap.org/#map=17/"+latitud+"/"+longitud;
+      window.open(url);
+        }
+
+
+        // Declaración de variables
+        var longitud, latitud;
+
+    </script>
+
+    
+</body>
+</html>
