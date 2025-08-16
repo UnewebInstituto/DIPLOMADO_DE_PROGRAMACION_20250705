@@ -15,68 +15,15 @@
   <br>
   <a href="./ejemplo03.html">Regresar al menú</a>
   <br>
-  <button onclick="obtener()">Obtener coordenadas</button>
+  <button onclick="obtener()" id="btnObtener">Obtener coordenadas</button>
+  <button onclick="verMapa()" id="btnVerMapa" disabled>Ver mapa</button>
   <br>
   <div id="resultado"></div>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.05443020798!2d-66.84867512630805!3d10.496375564299635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a590a1a7eb463%3A0xf02b5ccc84590d61!2sUneweb!5e0!3m2!1ses-419!2sve!4v1755352117801!5m2!1ses-419!2sve" width="300" height="225" style="border:2px; border-style: solid; border-color:black;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe width="300" height="225" src="https://www.openstreetmap.org/export/embed.html?bbox=-66.87336087226869%2C10.487590340453439%2C-66.86145186424257%2C10.49332927177671&amp;layer=mapnik" style="border: 2px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?#map=17/10.490460/-66.867406">Ver el mapa más grande</a></small>
   
-  <script>
-    function obtener(){
-      //Se verifica que elnavegado soporta 
-      //Geolocalización
-      if (navigator.geolocation){
-        document.getElementById('resultado').innerHTML = "Navegador web soporta geolocalizaión.";
-        console.log(navigator)
-        navigator.geolocation.getCurrentPosition(solicitarUbicación, negarUbicación)
+  <script src="./js/ejemplo05_geolocalización.js"> </script>
 
-      }else{
-        document.getElementById('resultado').innerHTML = "Su Navegador web no soporta para geolocalizaión.";
-      }
-    }
-
-    //Las siguientes funciones se ha declarado empleando 
-    //notacón arrow funtion (funciones flecha)
-    //funcion solicitarUbicación (p) {} <- frma tradicional 
-    const solicitarUbicación = (p) => {
-      //Donde p es objeto de ubicación
-      console.log(p)
-      latitud = p.coords.latitude;
-      longitud = p.coords.longitude;
-      document.getElementById('resultado').innerHTML +=
-      '<hr>Coordenadas geográficas.<br>Latitud:'+latitud+'<br>Longitud:'+longitud;
-    }
-
-    const negarUbicación = (e) => {
-      //Donde es objeto de error
-      console.log(e);
-      switch (e.code) {
-        case 1:
-        document.getElementById('resultado').innerHTML +=
-      '<hr>Coordenadas geográficas.<br>Usuario negó acceso ubicación.';
-          break;
-      
-        case 2:
-        document.getElementById('resultado').innerHTML +=
-      '<hr>Error.<br>Posición no disponible.';
-        break
-
-        default:
-        document.getElementById('resultado').innerHTML +=
-      '<br>Error.<br>Se excedió en el tiempo de espera.';
-          break;
-      }
-}
-
-function mostrarMapa(){
-      let url = "https://www.openstreetmap.org/#map=17/"+latitud+"/"+longitud;
-      window.open(url);
-    }
-
-
-  //Declaración de variables
-  var longitud, latitud;
-
-
-  </script>
 
 </body>
 </html>

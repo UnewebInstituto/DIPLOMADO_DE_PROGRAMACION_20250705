@@ -6,7 +6,7 @@ luis17castillo@gmail.com;
 delvisrod@gmail.com;
 frayner.y.13@gmail.com;
 rojasdaniel424@gmail.com;
-moviglitchs2004@gmail.com;
+moisesby2004@gmail.com;
 
 echo "# DIPLOMADO_DE_PROGRAMACION_20250705" >> README.md
 git init
