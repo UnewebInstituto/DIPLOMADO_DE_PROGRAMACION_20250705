@@ -1,0 +1,93 @@
+https://developer.mozilla.org/en-US/docs/Web/API
+
+https://developer.mozilla.org/es/docs/Web/Progressive_web_apps
+
+
+As a programmer, here's a summary of common notations for declaring variables.
+
+There isn't a single universal standard; instead, different programming languages and development teams use various conventions to improve code readability and consistency. These conventions are often referred to as **naming conventions** or **notations**.
+
+## Tipos de Notación
+
+### **1. Camel Case (camelCase)** 🐪
+This is a popular style where the first letter of the first word is lowercase, and the first letter of every subsequent word is capitalized. It's widely used in languages like **Java**, **JavaScript**, and **Swift**.
+* **Ejemplo**: `miNombreDeVariable`, `numeroDeEstudiantes`, `obtenerDatosDeUsuario`
+
+---
+
+### **2. Pascal Case (PascalCase)**
+Similar to camel case, but the first letter of *every* word is capitalized. This is commonly used for class names, constructors, and sometimes for function names in languages like **C#**, **Python** (for classes), and **Java**.
+* **Ejemplo**: `MiClaseDeUsuario`, `NumeroTotalDeProductos`, `NombreDeJugador`
+
+---
+
+### **3. Snake Case (snake_case)** 🐍
+In this notation, all letters are lowercase, and words are separated by underscores (`_`). It's the standard for variable and function names in languages like **Python** and **Ruby**.
+* **Ejemplo**: `mi_nombre_de_variable`, `numero_de_estudiantes`, `obtener_datos_de_usuario`
+
+---
+
+### **4. Kebab Case (kebab-case)**
+This notation uses hyphens (`-`) to separate words. It's often used in **CSS** for class and ID names and in file names, but it is **not** a valid notation for variables in most common programming languages (as hyphens are typically interpreted as the subtraction operator).
+* **Ejemplo**: `mi-clase-de-estilo`, `nombre-de-archivo`
+
+---
+
+### **5. Notación Húngara (Hungarian Notation)**
+This is a more classic style where a prefix is added to the variable name to indicate its data type. It was once very popular, particularly in **C++** and **Windows API programming**, but its use has declined with the rise of modern IDEs that can easily show a variable's type.
+* **Ejemplo**: `strNombre` (where `str` indicates a string), `intNumeroDeProductos` (where `int` indicates an integer), `bEstaActivo` (where `b` indicates a boolean).
+
+## Consideraciones Adicionales
+
+* **Consistencia**: La regla más importante es ser **consistente** dentro de un mismo proyecto o equipo.
+* **Significado**: Los nombres de las variables deben ser **descriptivos** y claros para entender su propósito. Por ejemplo, `nombreDeUsuario` es mejor que `nDu`.
+* **Convenciones del Lenguaje**: Cada lenguaje de programación tiene sus propias **convenciones** preferidas. Seguir estas convenciones hace que tu código sea más familiar para otros programadores del mismo lenguaje.
+
+var botones;
+undefined
+botones
+undefined
+botones = document.getElementsByTagName('buttons')
+HTMLCollection []length: 0[[Prototype]]: HTMLCollectionitem: ƒ item()length: 1name: "item"arguments: (...)caller: (...)[[Prototype]]: ƒ ()apply: ƒ apply()arguments: (...)bind: ƒ bind()call: ƒ call()caller: (...)constructor: ƒ Function()length: 0name: ""toString: ƒ toString()Symbol(Symbol.hasInstance): ƒ [Symbol.hasInstance]()get arguments: ƒ arguments()set arguments: ƒ arguments()get caller: ƒ caller()set caller: ƒ caller()[[FunctionLocation]]: [[Prototype]]: Object[[Scopes]]: Scopes[0][[Scopes]]: Scopes[0]No propertieslength: (...)namedItem: ƒ namedItem()constructor: ƒ HTMLCollection()Symbol(Symbol.iterator): ƒ values()Symbol(Symbol.toStringTag): "HTMLCollection"get length: ƒ length()[[Prototype]]: Object
+botones = document.getElementsByTagName('button')
+HTMLCollection(2) [button, button]0: buttonaccessKey: ""ariaActiveDescendantElement: nullariaAtomic: nullariaAutoComplete: nullariaBrailleLabel: nullariaBrailleRoleDescription: nullariaBusy: nullariaChecked: nullariaColCount: nullariaColIndex: nullariaColIndexText: nullariaColSpan: nullariaControlsElements: nullariaCurrent: nullariaDescribedByElements: nullariaDescription: nullariaDetailsElements: nullariaDisabled: nullariaErrorMessageElements: nullariaExpanded: nullariaFlowToElements: nullariaHasPopup: nullariaHidden: nullariaInvalid: nullariaKeyShortcuts: nullariaLabel: nullariaLabelledByElements: nullariaLevel: nullariaLive: nullariaModal: nullariaMultiLine: nullariaMultiSelectable: nullariaOrientation: nullariaPlaceholder: nullariaPosInSet: nullariaPressed: nullariaReadOnly: nullariaRelevant: nullariaRequired: nullariaRoleDescription: nullariaRowCount: nullariaRowIndex: nullariaRowIndexText: nullariaRowSpan: nullariaSelected: nullariaSetSize: nullariaSort: nullariaValueMax: nullariaValueMin: nullariaValueNow: nullariaValueText: nullassignedSlot: nullattributeStyleMap: StylePropertyMap {size: 0}attributes: NamedNodeMap {0: onclick, onclick: onclick, length: 1}autocapitalize: ""autofocus: falsebaseURI: "file:///C:/.PROFESORES/HENRY_DUQUE/DIPLOMADO_DE_PROGRAMACION_20250705/HTML5_II/HENRY/ejemplo05_geolocalizacion.html"childElementCount: 0childNodes: NodeList [text]children: HTMLCollection []classList: DOMTokenList [value: '']className: ""clientHeight: 17clientLeft: 2clientTop: 2clientWidth: 141command: ""commandForElement: nullcontentEditable: "inherit"currentCSSZoom: 1dataset: DOMStringMap {}dir: ""disabled: falsedraggable: falseeditContext: nullelementTiming: ""enterKeyHint: ""firstChild: textfirstElementChild: nullform: nullformAction: "file:///C:/.PROFESORES/HENRY_DUQUE/DIPLOMADO_DE_PROGRAMACION_20250705/HTML5_II/HENRY/ejemplo05_geolocalizacion.html"formEnctype: ""formMethod: ""formNoValidate: falseformTarget: ""hidden: falseid: ""inert: falseinnerHTML: "Obtener coordenadas"innerText: "Obtener coordenadas"inputMode: ""isConnected: trueisContentEditable: falselabels: NodeList []lang: ""lastChild: textlastElementChild: nulllocalName: "button"name: ""namespaceURI: "http://www.w3.org/1999/xhtml"nextElementSibling: buttonnextSibling: textnodeName: "BUTTON"nodeType: 1nodeValue: nullnonce: ""offsetHeight: 21offsetLeft: 8offsetParent: bodyoffsetTop: 134offsetWidth: 144onabort: nullonanimationend: nullonanimationiteration: nullonanimationstart: nullonauxclick: nullonbeforecopy: nullonbeforecut: nullonbeforeinput: nullonbeforematch: nullonbeforepaste: nullonbeforetoggle: nullonbeforexrselect: nullonblur: nulloncancel: nulloncanplay: nulloncanplaythrough: nullonchange: nullonclick: ƒ onclick(event)onclose: nulloncommand: nulloncontentvisibilityautostatechange: nulloncontextlost: nulloncontextmenu: nulloncontextrestored: nulloncopy: nulloncuechange: nulloncut: nullondblclick: nullondrag: nullondragend: nullondragenter: nullondragleave: nullondragover: nullondragstart: nullondrop: nullondurationchange: nullonemptied: nullonended: nullonerror: nullonfocus: nullonformdata: nullonfullscreenchange: nullonfullscreenerror: nullongotpointercapture: nulloninput: nulloninvalid: nullonkeydown: nullonkeypress: nullonkeyup: nullonload: nullonloadeddata: nullonloadedmetadata: nullonloadstart: nullonlostpointercapture: nullonmousedown: nullonmouseenter: nullonmouseleave: nullonmousemove: nullonmouseout: nullonmouseover: nullonmouseup: nullonmousewheel: nullonpaste: nullonpause: nullonplay: nullonplaying: nullonpointercancel: nullonpointerdown: nullonpointerenter: nullonpointerleave: nullonpointermove: nullonpointerout: nullonpointerover: nullonpointerrawupdate: nullonpointerup: nullonprogress: nullonratechange: nullonreset: nullonresize: nullonscroll: nullonscrollend: nullonscrollsnapchange: nullonscrollsnapchanging: nullonsearch: nullonsecuritypolicyviolation: nullonseeked: nullonseeking: nullonselect: nullonselectionchange: nullonselectstart: nullonslotchange: nullonstalled: nullonsubmit: nullonsuspend: nullontimeupdate: nullontoggle: nullontransitioncancel: nullontransitionend: nullontransitionrun: nullontransitionstart: nullonvolumechange: nullonwaiting: nullonwebkitanimationend: nullonwebkitanimationiteration: nullonwebkitanimationstart: nullonwebkitfullscreenchange: nullonwebkitfullscreenerror: nullonwebkittransitionend: nullonwheel: nullouterHTML: "<button onclick=\"obtener()\">Obtener coordenadas</button>"outerText: "Obtener coordenadas"ownerDocument: documentparentElement: bodyparentNode: bodypart: DOMTokenList [value: '']popover: nullpopoverTargetAction: "toggle"popoverTargetElement: nullprefix: nullpreviousElementSibling: brpreviousSibling: textrole: nullscrollHeight: 17scrollLeft: 0scrollTop: 0scrollWidth: 141shadowRoot: nullslot: ""spellcheck: truestyle: CSSStyleDeclaration {accentColor: '', additiveSymbols: '', alignContent: '', alignItems: '', alignSelf: '', …}tabIndex: 0tagName: "BUTTON"textContent: "Obtener coordenadas"title: ""translate: truetype: "submit"validationMessage: ""validity: ValidityState {valueMissing: false, typeMismatch: false, patternMismatch: false, tooLong: false, tooShort: false, …}value: ""virtualKeyboardPolicy: ""willValidate: truewritingSuggestions: "true"[[Prototype]]: HTMLButtonElement(...)1: buttonaccessKey: ""ariaActiveDescendantElement: nullariaAtomic: nullariaAutoComplete: nullariaBrailleLabel: nullariaBrailleRoleDescription: nullariaBusy: nullariaChecked: nullariaColCount: nullariaColIndex: nullariaColIndexText: nullariaColSpan: nullariaControlsElements: nullariaCurrent: nullariaDescribedByElements: nullariaDescription: nullariaDetailsElements: nullariaDisabled: nullariaErrorMessageElements: nullariaExpanded: nullariaFlowToElements: nullariaHasPopup: nullariaHidden: nullariaInvalid: nullariaKeyShortcuts: nullariaLabel: nullariaLabelledByElements: nullariaLevel: nullariaLive: nullariaModal: nullariaMultiLine: nullariaMultiSelectable: nullariaOrientation: nullariaPlaceholder: nullariaPosInSet: nullariaPressed: nullariaReadOnly: nullariaRelevant: nullariaRequired: nullariaRoleDescription: nullariaRowCount: nullariaRowIndex: nullariaRowIndexText: nullariaRowSpan: nullariaSelected: nullariaSetSize: nullariaSort: nullariaValueMax: nullariaValueMin: nullariaValueNow: nullariaValueText: nullassignedSlot: nullattributeStyleMap: StylePropertyMap {size: 0}attributes: NamedNodeMap {0: onclick, 1: disabled, onclick: onclick, disabled: disabled, length: 2}autocapitalize: ""autofocus: falsebaseURI: "file:///C:/.PROFESORES/HENRY_DUQUE/DIPLOMADO_DE_PROGRAMACION_20250705/HTML5_II/HENRY/ejemplo05_geolocalizacion.html"childElementCount: 0childNodes: NodeList [text]children: HTMLCollection []classList: DOMTokenList [value: '']className: ""clientHeight: 17clientLeft: 2clientTop: 2clientWidth: 69command: ""commandForElement: nullcontentEditable: "inherit"currentCSSZoom: 1dataset: DOMStringMap {}dir: ""disabled: truedraggable: falseeditContext: nullelementTiming: ""enterKeyHint: ""firstChild: textfirstElementChild: nullform: nullformAction: "file:///C:/.PROFESORES/HENRY_DUQUE/DIPLOMADO_DE_PROGRAMACION_20250705/HTML5_II/HENRY/ejemplo05_geolocalizacion.html"formEnctype: ""formMethod: ""formNoValidate: falseformTarget: ""hidden: falseid: ""inert: falseinnerHTML: "Ver mapa"innerText: "Ver mapa"inputMode: ""isConnected: trueisContentEditable: falselabels: NodeList []lang: ""lastChild: textlastElementChild: nulllocalName: "button"name: ""namespaceURI: "http://www.w3.org/1999/xhtml"nextElementSibling: brnextSibling: textnodeName: "BUTTON"nodeType: 1nodeValue: nullnonce: ""offsetHeight: 21offsetLeft: 156offsetParent: bodyoffsetTop: 134offsetWidth: 72onabort: nullonanimationend: nullonanimationiteration: nullonanimationstart: nullonauxclick: nullonbeforecopy: nullonbeforecut: nullonbeforeinput: nullonbeforematch: nullonbeforepaste: nullonbeforetoggle: nullonbeforexrselect: nullonblur: nulloncancel: nulloncanplay: nulloncanplaythrough: nullonchange: nullonclick: ƒ onclick(event)onclose: nulloncommand: nulloncontentvisibilityautostatechange: nulloncontextlost: nulloncontextmenu: nulloncontextrestored: nulloncopy: nulloncuechange: nulloncut: nullondblclick: nullondrag: nullondragend: nullondragenter: nullondragleave: nullondragover: nullondragstart: nullondrop: nullondurationchange: nullonemptied: nullonended: nullonerror: nullonfocus: nullonformdata: nullonfullscreenchange: nullonfullscreenerror: nullongotpointercapture: nulloninput: nulloninvalid: nullonkeydown: nullonkeypress: nullonkeyup: nullonload: nullonloadeddata: nullonloadedmetadata: nullonloadstart: nullonlostpointercapture: nullonmousedown: nullonmouseenter: nullonmouseleave: nullonmousemove: nullonmouseout: nullonmouseover: nullonmouseup: nullonmousewheel: nullonpaste: nullonpause: nullonplay: nullonplaying: nullonpointercancel: nullonpointerdown: nullonpointerenter: nullonpointerleave: nullonpointermove: nullonpointerout: nullonpointerover: nullonpointerrawupdate: nullonpointerup: nullonprogress: nullonratechange: nullonreset: nullonresize: nullonscroll: nullonscrollend: nullonscrollsnapchange: nullonscrollsnapchanging: nullonsearch: nullonsecuritypolicyviolation: nullonseeked: nullonseeking: nullonselect: nullonselectionchange: nullonselectstart: nullonslotchange: nullonstalled: nullonsubmit: nullonsuspend: nullontimeupdate: nullontoggle: nullontransitioncancel: nullontransitionend: nullontransitionrun: nullontransitionstart: nullonvolumechange: nullonwaiting: nullonwebkitanimationend: nullonwebkitanimationiteration: nullonwebkitanimationstart: nullonwebkitfullscreenchange: nullonwebkitfullscreenerror: nullonwebkittransitionend: nullonwheel: nullouterHTML: "<button onclick=\"verMapa()\" disabled=\"\">Ver mapa</button>"outerText: "Ver mapa"ownerDocument: documentparentElement: bodyparentNode: bodypart: DOMTokenList [value: '']popover: nullpopoverTargetAction: "toggle"popoverTargetElement: nullprefix: nullpreviousElementSibling: buttonpreviousSibling: textrole: nullscrollHeight: 17scrollLeft: 0scrollTop: 0scrollWidth: 69shadowRoot: nullslot: ""spellcheck: truestyle: CSSStyleDeclaration {accentColor: '', additiveSymbols: '', alignContent: '', alignItems: '', alignSelf: '', …}tabIndex: 0tagName: "BUTTON"textContent: "Ver mapa"title: ""translate: truetype: "submit"validationMessage: ""validity: ValidityState {valueMissing: false, typeMismatch: false, patternMismatch: false, tooLong: false, tooShort: false, …}value: ""virtualKeyboardPolicy: ""willValidate: falsewritingSuggestions: "true"[[Prototype]]: HTMLButtonElement(...)length: 2[[Prototype]]: HTMLCollection
+let i = 0
+undefined
+while (i < 5) {
+    console.log(i);
+    i = i + 1;
+}
+VM527:2 0
+VM527:2 1
+VM527:2 2
+VM527:2 3
+VM527:2 4
+5
+botones = document.getElementsByTagName('button')
+HTMLCollection(2) [button, button]
+botones
+HTMLCollection(2) [button, button]
+botones[0]
+<button onclick=​"obtener()​">​Obtener coordenadas​</button>​
+botones[1]
+<button onclick=​"verMapa()​" disabled>​Ver mapa​</button>​
+botones[1].disabled
+true
+botones[1].disabled = false
+false
+
+
+var btnVerMapa = document.getElementById("btnVerMapa")
+undefined
+btnVerMapa
+<button onclick=​"verMapa()​" id=​"btnVerMapa" disabled>​Ver mapa​</button>​
+btnVerMapa = false
+false
+var btnVerMapa = document.getElementById("btnVerMapa")
+undefined
+btnVerMapa.disabled
+true
+btnVerMapa.disabled = false
+false
+
+

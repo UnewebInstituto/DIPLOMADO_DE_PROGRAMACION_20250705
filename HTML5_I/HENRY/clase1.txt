@@ -1,0 +1,30 @@
+nellyazzatto@gmail.com;
+bvillasmils27@gmail.com;
+ytzalijimenez@gmail.com;
+airon03ortega@gmail.com;
+luis17castillo@gmail.com;
+delvisrod@gmail.com;
+frayner.y.13@gmail.com;
+rojasdaniel424@gmail.com;
+moisesby2004@gmail.com;
+
+…or create a new repository on the command line
+echo "# DIPLOMADO_DE_PROGRAMACION_20250705" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote remove origin
+git remote add origin https://github.com/UnewebInstituto/DIPLOMADO_DE_PROGRAMACION_20250705.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/UnewebInstituto/DIPLOMADO_DE_PROGRAMACION_20250705.git
+git branch -M main
+git push -u origin main
+
+git push origin main --force
+
+https://es.wikipedia.org/wiki/Patr%C3%B3n_de_dise%C3%B1o
+
+
+https://developer.mozilla.org/en-US/docs/Web/HTML

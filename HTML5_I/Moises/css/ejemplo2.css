@@ -1,0 +1,73 @@
+/*
+Todo el texto contenido en la pagina corresponde al formato de fuente indicado en la propiedad font-family
+*/
+
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+  
+/*
+Parrafos y celdas de tablas, su contenido va justificado
+*/
+
+p, td{
+    text-align: justify;
+}
+
+/*
+Propiedades para la tabla
+*/
+
+table, th, td{
+border-style:solid; 
+border-color: blue;
+border-width: 1px;
+}
+
+/* 
+Etiquetas para las filas par e impar
+*/
+
+#titulo{
+    color: white;
+}
+
+#titulo, #fila_impar{
+
+    /* Nombre de color (si lo posee, son 140 identificadores) /*
+    /* background-color: gray; */
+
+    /* Código hexadécimal */
+    /* background-color: #808080; */
+
+    /* Notacion rgb(): Rojo, Verde y Azul */
+    /* background-color: rgb(128, 128, 128); */
+
+    /*Notación hs1() */
+
+    background-color: rgba(13, 105, 155, 0.572)
+}
+
+#fila_par{
+    background-color: rgb(67, 219, 168);
+}
+
+.definiciones{
+    width: 300px;
+    height: 200px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    box-shadow: 3px 3px 3px gray;
+    display: block;
+    margin: 0 auto;
+}
+
+.bbdd{
+    border-radius: 5%;
+    border-color: rgb(0, 55, 255);
+    border-style: solid;
+    border-width: 2px;
+    width: 150px;
+    height: 150px;
+}

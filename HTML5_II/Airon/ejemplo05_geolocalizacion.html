@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplo 05 - Geolocalización</title>
+  
+  <link rel="shortcut icon" href="../img/icono_uneweb.png" type="image/x-icon">
+</head>
+<body>
+  <h1>API Geolocalización</h1>
+  <br>
+  <a href="https://developer.mozilla.org/es/docs/Web/API/Geolocation_API" target="_blank">Documentación Geolocalización</a>
+  <br>
+  <a href="./ejemplo03.html">Regresar</a>
+  <br>
+  <button onclick="obtener()" id="btnObtener">Obtener Coordenadas</button>
+  <button onclick="verMapa()" id="btnVerMapa" disabled>Ver Mapa</button>
+  <div id="resultado"></div>
+  <br>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.05443020798!2d-66.84867512630805!3d10.496375564299635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a590a1a7eb463%3A0xf02b5ccc84590d61!2sUneweb!5e0!3m2!1ses-419!2sve!4v1755352117801!5m2!1ses-419!2sve" width="300" height="225" style="border:2px; border-style: solid; border-color:black;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <iframe width="300" height="225" src="https://www.openstreetmap.org/export/embed.html?bbox=-66.87336087226869%2C10.487590340453439%2C-66.86145186424257%2C10.49332927177671&amp;layer=mapnik" style="border: 2px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?#map=17/10.490460/-66.867406">Ver el mapa más grande</a></small>
+  
+  <script src="./js/ejemplo05_geolocalizacion.js"></script>
+</body>
+</html>

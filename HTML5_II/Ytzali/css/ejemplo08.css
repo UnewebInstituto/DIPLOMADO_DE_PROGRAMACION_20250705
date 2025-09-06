@@ -1,0 +1,39 @@
+#principal{
+  width: 70%;
+  margin-left: 15%;
+  height: 400px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: blue;
+  box-shadow: 0px 5px 5px black;
+}
+
+#principal img{
+  width: 100%;
+  height: 100%; 
+}
+
+#secundario{
+  width: 80%;
+  margin-left: 10%;
+  height: 150px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(102, 102, 156);
+  box-shadow: 0px 5px 5px rgb(94, 89, 89);
+  margin-top: 50px;
+
+}
+
+#secundario img{
+  width: 22%;
+  height: 100%; 
+  margin-left: 20px;
+  opacity: 0.5;
+}
+
+#secundario img:hover{
+  cursor: pointer;
+  opacity: 1;
+}
+

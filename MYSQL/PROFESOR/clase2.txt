@@ -1,0 +1,759 @@
+
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)
+
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++----------------------+
+| Database             |
++----------------------+
+| bd_airon_20250830    |
+| bd_barbara_20250830  |
+| bd_carrito_henry     |
+| bd_carrito_jose      |
+| bd_carrito_navileth  |
+| bd_carrito_nelson    |
+| bd_daniel_20250830   |
+| bd_frayner_20250830  |
+| bd_ismael_20250830   |
+| bd_movi_30482481     |
+| bd_nelly_20250830    |
+| bd_profesor_20250830 |
+| bd_ricardo_20250830  |
+| bd_ricardo_20253008  |
+| bd_ytzali_20250830   |
+| information_schema   |
+| mysql                |
+| performance_schema   |
+| phpmyadmin           |
+| ricardo_20253008     |
+| test                 |
++----------------------+
+21 rows in set (0.011 sec)
+
+MariaDB [(none)]> use bd_profesoro_20250830
+ERROR 1049 (42000): Unknown database 'bd_profesoro_20250830'
+MariaDB [(none)]> use bd_profesor_20250830
+Database changed
+MariaDB [bd_profesor_20250830]> show tables;
++--------------------------------+
+| Tables_in_bd_profesor_20250830 |
++--------------------------------+
+| contactos                      |
++--------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> show create table contactos;
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                            |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| contactos | CREATE TABLE `contactos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL,
+  `telf_hab` varchar(11) DEFAULT NULL,
+  `telf_cel` varchar(11) DEFAULT NULL,
+  `telf_ofi` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.003 sec)
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telf_hab           | varchar(11) | YES  |     | NULL    |                |
+| telf_cel           | varchar(11) | YES  |     | NULL    |                |
+| telf_ofi           | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> select * from contactos;
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+| id | nombre   | apellido    | direccion               | correo_electronico | telf_hab    | telf_cel | telf_ofi |
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+|  1 | LIBIA    | COLS        | GUARENAS                | lc@gmail.com       | 02125554433 | NULL     | NULL     |
+|  2 | HERDRINA | MONASTERIOS | LOS VALLES DEL TUY      | hm@hotmail.com     | 02125554433 | NULL     | NULL     |
+|  3 | Ytzali   | Rodriguez   | Charallave o Los Teques | yr@gmail.com       | 02125554433 | NULL     | NULL     |
+|  4 | Ytali    | Rodriguez   | Charallave o Los Teques | ytr@gmail.com      | 02125554433 | NULL     | NULL     |
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+4 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> insert into contacto(id,nombre,apellido,direccion,correo_electronico,telf_hab,telf_cel,telf_ofi) values
+    -> (1,'LAURA','GONZALEZ','DOS CAMINOS','lg@gmail.com','02121234567','04149876543','02122345678');
+ERROR 1146 (42S02): Table 'bd_profesor_20250830.contacto' doesn't exist
+MariaDB [bd_profesor_20250830]> insert into contacto(id,nombre,apellido,direccion,correo_electronico,telf_hab,telf_cel,telf_ofi) values
+    -> (1,'LAURA','GONZALEZ','DOS CAMINOS','lg@gmail.com','02121234567','04149876543','02122345678');
+ERROR 1146 (42S02): Table 'bd_profesor_20250830.contacto' doesn't exist
+MariaDB [bd_profesor_20250830]> insert into contactos(id,nombre,apellido,direccion,correo_electronico,telf_hab,telf_cel,telf_ofi) values
+    -> (1,'LAURA','GONZALEZ','DOS CAMINOS','lg@gmail.com','02121234567','04149876543','02122345678');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [bd_profesor_20250830]> insert into contactos(nombre,apellido,direccion,correo_electronico,telf_hab,telf_cel,telf_ofi) values
+    -> ('LAURA','GONZALEZ','DOS CAMINOS','lg@gmail.com','02121234567','04149876543','02122345678');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> select * from contactos;
++----+----------+-------------+-------------------------+--------------------+-------------+-------------+-------------+
+| id | nombre   | apellido    | direccion               | correo_electronico | telf_hab    | telf_cel    | telf_ofi    |
++----+----------+-------------+-------------------------+--------------------+-------------+-------------+-------------+
+|  1 | LIBIA    | COLS        | GUARENAS                | lc@gmail.com       | 02125554433 | NULL        | NULL        |
+|  2 | HERDRINA | MONASTERIOS | LOS VALLES DEL TUY      | hm@hotmail.com     | 02125554433 | NULL        | NULL        |
+|  3 | Ytzali   | Rodriguez   | Charallave o Los Teques | yr@gmail.com       | 02125554433 | NULL        | NULL        |
+|  4 | Ytali    | Rodriguez   | Charallave o Los Teques | ytr@gmail.com      | 02125554433 | NULL        | NULL        |
+|  5 | LAURA    | GONZALEZ    | DOS CAMINOS             | lg@gmail.com       | 02121234567 | 04149876543 | 02122345678 |
++----+----------+-------------+-------------------------+--------------------+-------------+-------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> show create table contactos;
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                            |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| contactos | CREATE TABLE `contactos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL,
+  `telf_hab` varchar(11) DEFAULT NULL,
+  `telf_cel` varchar(11) DEFAULT NULL,
+  `telf_ofi` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> ^C
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 20
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]> alter table contactos add unique(correo_electronico);
+Query OK, 5 rows affected (0.035 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> show create table contactos;
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| contactos | CREATE TABLE `contactos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL,
+  `telf_hab` varchar(11) DEFAULT NULL,
+  `telf_cel` varchar(11) DEFAULT NULL,
+  `telf_ofi` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `correo_electronico` (`correo_electronico`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> insert into contactos(nombre,apellido,direccion,correo_electronico,telf_hab,telf_cel,telf_ofi) values
+    -> ('LILIANA','GAMEZ','CARICUAO','lg@gmail.com','02191234567','04148876543','02127345678');
+ERROR 1062 (23000): Duplicate entry 'lg@gmail.com' for key 'correo_electronico'
+MariaDB [bd_profesor_20250830]> alter table contactos add index(correo_electronico);
+Query OK, 5 rows affected, 1 warning (0.019 sec)
+Records: 5  Duplicates: 0  Warnings: 1
+
+MariaDB [bd_profesor_20250830]> show create table contactos;
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| contactos | CREATE TABLE `contactos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL,
+  `telf_hab` varchar(11) DEFAULT NULL,
+  `telf_cel` varchar(11) DEFAULT NULL,
+  `telf_ofi` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `correo_electronico` (`correo_electronico`) USING HASH,
+  KEY `correo_electronico_2` (`correo_electronico`(768))
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> -- CLAVES FORANEAS
+MariaDB [bd_profesor_20250830]> -- DECLARACIÓN DE LA TABLA PROVEEDORES
+MariaDB [bd_profesor_20250830]> create table proveedores(
+    ->     id integer AUTO_INCREMENT,
+    ->     nombre varchar(30),
+    ->     direccion text,
+    ->     telefono varchar(30),
+    ->     correo_electronico text,
+    ->     primary key(id),
+    ->     unique(correo_electronico)
+    -> );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [bd_profesor_20250830]> -- DECLARACIÓN DE LA TABLA PRODUCTOS
+MariaDB [bd_profesor_20250830]> create table productos(
+    ->     id integer AUTO_INCREMENT,
+    ->     proveedor_id integer,
+    ->     nombre varchar(30),
+    ->     precio decimal(13,2),
+    ->     cantidad integer,
+    ->     primary key(id),
+    ->     index(proveedor_id),
+    ->     foreign key(proveedor_id) references proveedores(id)
+    -> );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [bd_profesor_20250830]> -- CARGA DE DATOS EN LAS TABLAS
+MariaDB [bd_profesor_20250830]> INSERT INTO proveedores(nombre, direccion, correo_electronico, telefono)
+    -> values
+    -> ('GE','AV. LECUNA','info@ge.com','02124431234'),
+    -> ('MABE','AV. RÓMULO GALLEGOS','info@mabe.com','02122631234'),
+    -> ('WHIRPOOL','AV. FRANCISCO DE MIRANDA','info@whirpool.com','02122062140'),
+    -> ('SIRAGON','AV. LIBERTADOR','info@sirangon.com','02127531234');
+Query OK, 4 rows affected, 1 warning (0.003 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+MariaDB [bd_profesor_20250830]> INSERT INTO productos(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (1,'NEVERA',500.25,6),
+    -> (1,'COCINA A GAS',300.75,12),
+    -> (1,'LAVADORA',350.50,3),
+    -> (1,'SECADORA',750.00,3),
+    -> (2,'AIRE ACONDICIONADO',450.75,4),
+    -> (2,'COCINA ELECTRICA',425.00,2),
+    -> (3,'LAVADORA',700.00,6),
+    -> (3,'CONGELADOR',250.75,5),
+    -> (4,'NEVERA',650.25,9),
+    -> (4,'COCINA A GAS',280.75,6),
+    -> (4,'LAVADORA',450.50,5),
+    -> (4,'SECADORA',550.00,5);
+Query OK, 12 rows affected (0.004 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> SELECT * FROM PROVEEDORES;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> SELECT * FROM PROVEEDORES;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> USE BD_PRODUCTOS_20250830;
+ERROR 1049 (42000): Unknown database 'bd_productos_20250830'
+MariaDB [bd_profesor_20250830]> USE BD_ISMAEL_20250830;
+Database changed
+MariaDB [BD_ISMAEL_20250830]> SELECT * FROM PROVEEDORES;
++----+----------+----------+-------------+--------------------+
+| id | nombre   | direcion | telefono    | correo_electronico |
++----+----------+----------+-------------+--------------------+
+|  1 | ge       | maracibo | 0423766455  | uh@gmail.com       |
+|  2 | mabe     | apure    | 0422355649  | mabe@gmail.co      |
+|  3 | whirpool | cojedes  | 04123667689 | whir@gmail.com     |
+|  4 | siragon  | uuee     | 04125673348 | riragon@gmail.com  |
++----+----------+----------+-------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [BD_ISMAEL_20250830]> USE BD_PROFESOR_20250830;
+Database changed
+MariaDB [BD_PROFESOR_20250830]> select * from productos;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  1 |            1 | NEVERA             | 500.25 |        6 |
+|  2 |            1 | COCINA A GAS       | 300.75 |       12 |
+|  3 |            1 | LAVADORA           | 350.50 |        3 |
+|  4 |            1 | SECADORA           | 750.00 |        3 |
+|  5 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+12 rows in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> INSERT INTO productos(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (9,'NEVERA',500.25,6);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`bd_profesor_20250830`.`productos`, CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`))
+MariaDB [BD_PROFESOR_20250830]> delete from proveedores where id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`bd_profesor_20250830`.`productos`, CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`))
+MariaDB [BD_PROFESOR_20250830]> update proveedores set id = 11 where id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`bd_profesor_20250830`.`productos`, CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`))
+MariaDB [BD_PROFESOR_20250830]> -- CLAVES FORANEAS
+MariaDB [BD_PROFESOR_20250830]> -- DECLARACIÓN DE LA TABLA PROVEEDORES1
+MariaDB [BD_PROFESOR_20250830]> create table proveedores1(
+    ->     id integer AUTO_INCREMENT,
+    ->     nombre varchar(30),
+    ->     direccion text,
+    ->     telefono varchar(30),
+    ->     correo_electronico text,
+    ->     primary key(id),
+    ->     unique(correo_electronico)
+    -> );
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> -- DECLARACIÓN DE LA TABLA PRODUCTOS1
+MariaDB [BD_PROFESOR_20250830]> create table productos1(
+    ->     id integer AUTO_INCREMENT,
+    ->     proveedor_id integer,
+    ->     nombre varchar(30),
+    ->     precio decimal(13,2),
+    ->     cantidad integer,
+    ->     primary key(id),
+    ->     index(proveedor_id),
+    ->     foreign key(proveedor_id) references proveedores1(id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> SHOW CREATE TABLE PROVEEDORES1;
++--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table        | Create Table                                                                                                                                                                                                                                                                                                                                                                              |
++--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| PROVEEDORES1 | CREATE TABLE `proveedores1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(30) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `telefono` varchar(30) DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `correo_electronico` (`correo_electronico`) USING HASH
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SHOW CREATE TABLE PRODUCTOS1;
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table      | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| PRODUCTOS1 | CREATE TABLE `productos1` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proveedor_id` int(11) DEFAULT NULL,
+  `nombre` varchar(30) DEFAULT NULL,
+  `precio` decimal(13,2) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `proveedor_id` (`proveedor_id`),
+  CONSTRAINT `productos1_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores1` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> -- CARGA DE DATOS EN LAS TABLAS
+MariaDB [BD_PROFESOR_20250830]> INSERT INTO proveedores1(nombre, direccion, correo_electronico, telefono)
+    -> values
+    -> ('GE','AV. LECUNA','info@ge.com','02124431234'),
+    -> ('MABE','AV. RÓMULO GALLEGOS','info@mabe.com','02122631234'),
+    -> ('WHIRPOOL','AV. FRANCISCO DE MIRANDA','info@whirpool.com','02122062140'),
+    -> ('SIRAGON','AV. LIBERTADOR','info@sirangon.com','02127531234');
+Query OK, 4 rows affected, 1 warning (0.003 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> INSERT INTO productos1(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (1,'NEVERA',500.25,6),
+    -> (1,'COCINA A GAS',300.75,12),
+    -> (1,'LAVADORA',350.50,3),
+    -> (1,'SECADORA',750.00,3),
+    -> (2,'AIRE ACONDICIONADO',450.75,4),
+    -> (2,'COCINA ELECTRICA',425.00,2),
+    -> (3,'LAVADORA',700.00,6),
+    -> (3,'CONGELADOR',250.75,5),
+    -> (4,'NEVERA',650.25,9),
+    -> (4,'COCINA A GAS',280.75,6),
+    -> (4,'LAVADORA',450.50,5),
+    -> (4,'SECADORA',550.00,5);
+Query OK, 12 rows affected (0.003 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> USE BD_ISMAEL_20250830
+Database changed
+MariaDB [BD_ISMAEL_20250830]> SELECT * FROM PROVEEDORES1;
+Empty set (0.000 sec)
+
+MariaDB [BD_ISMAEL_20250830]>
+MariaDB [BD_ISMAEL_20250830]> DESCRIBE PROVEEDORES1;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(30) | YES  |     | NULL    |                |
+| direcion           | text        | YES  |     | NULL    |                |
+| telefono           | varchar(30) | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  | UNI | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [BD_ISMAEL_20250830]> INSERT INTO proveedores1(nombre, direccion, correo_electronico, telefono)
+    -> values
+    -> ('GE','AV. LECUNA','info@ge.com','02124431234'),
+    -> ('MABE','AV. RÓMULO GALLEGOS','info@mabe.com','02122631234'),
+    -> ('WHIRPOOL','AV. FRANCISCO DE MIRANDA','info@whirpool.com','02122062140'),
+    -> ('SIRAGON','AV. LIBERTADOR','info@sirangon.com','02127531234');
+ERROR 1054 (42S22): Unknown column 'direccion' in 'field list'
+MariaDB [BD_ISMAEL_20250830]> DROP TABLE PROVEEDORES1;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [BD_ISMAEL_20250830]> create table proveedores1(
+    ->     id integer AUTO_INCREMENT,
+    ->     nombre varchar(30),
+    ->     direccion text,
+    ->     telefono varchar(30),
+    ->     correo_electronico text,
+    ->     primary key(id),
+    ->     unique(correo_electronico)
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [BD_ISMAEL_20250830]> SELECT * FROM PRODUCTOS1;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  1 |            1 | NEVERA             | 500.25 |        6 |
+|  2 |            1 | COCINA A GAS       | 300.75 |       12 |
+|  3 |            1 | LAVADORA           | 350.50 |        3 |
+|  4 |            1 | SECADORA           | 750.00 |        3 |
+|  5 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+12 rows in set (0.001 sec)
+
+MariaDB [BD_ISMAEL_20250830]> DROP TABLE PRODUCTOS1;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [BD_ISMAEL_20250830]> -- DECLARACIÓN DE LA TABLA PRODUCTOS1
+MariaDB [BD_ISMAEL_20250830]> create table productos1(
+    ->     id integer AUTO_INCREMENT,
+    ->     proveedor_id integer,
+    ->     nombre varchar(30),
+    ->     precio decimal(13,2),
+    ->     cantidad integer,
+    ->     primary key(id),
+    ->     index(proveedor_id),
+    ->     foreign key(proveedor_id) references proveedores1(id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [BD_ISMAEL_20250830]> INSERT INTO productos1(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (1,'NEVERA',500.25,6),
+    -> (1,'COCINA A GAS',300.75,12),
+    -> (1,'LAVADORA',350.50,3),
+    -> (1,'SECADORA',750.00,3),
+    -> (2,'AIRE ACONDICIONADO',450.75,4),
+    -> (2,'COCINA ELECTRICA',425.00,2),
+    -> (3,'LAVADORA',700.00,6),
+    -> (3,'CONGELADOR',250.75,5),
+    -> (4,'NEVERA',650.25,9),
+    -> (4,'COCINA A GAS',280.75,6),
+    -> (4,'LAVADORA',450.50,5),
+    -> (4,'SECADORA',550.00,5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`bd_ismael_20250830`.`productos1`, CONSTRAINT `productos1_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores1` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+MariaDB [BD_ISMAEL_20250830]> -- CARGA DE DATOS EN LAS TABLAS
+MariaDB [BD_ISMAEL_20250830]> INSERT INTO proveedores1(nombre, direccion, correo_electronico, telefono)
+    -> values
+    -> ('GE','AV. LECUNA','info@ge.com','02124431234'),
+    -> ('MABE','AV. RÓMULO GALLEGOS','info@mabe.com','02122631234'),
+    -> ('WHIRPOOL','AV. FRANCISCO DE MIRANDA','info@whirpool.com','02122062140'),
+    -> ('SIRAGON','AV. LIBERTADOR','info@sirangon.com','02127531234');
+Query OK, 4 rows affected, 1 warning (0.002 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+MariaDB [BD_ISMAEL_20250830]>
+MariaDB [BD_ISMAEL_20250830]> INSERT INTO productos1(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (1,'NEVERA',500.25,6),
+    -> (1,'COCINA A GAS',300.75,12),
+    -> (1,'LAVADORA',350.50,3),
+    -> (1,'SECADORA',750.00,3),
+    -> (2,'AIRE ACONDICIONADO',450.75,4),
+    -> (2,'COCINA ELECTRICA',425.00,2),
+    -> (3,'LAVADORA',700.00,6),
+    -> (3,'CONGELADOR',250.75,5),
+    -> (4,'NEVERA',650.25,9),
+    -> (4,'COCINA A GAS',280.75,6),
+    -> (4,'LAVADORA',450.50,5),
+    -> (4,'SECADORA',550.00,5);
+Query OK, 12 rows affected (0.003 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_ISMAEL_20250830]> SELECT * FROM PROVEEDORES1;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [BD_ISMAEL_20250830]> SELECT * FROM PRODUCTOS1;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+| 13 |            1 | NEVERA             | 500.25 |        6 |
+| 14 |            1 | COCINA A GAS       | 300.75 |       12 |
+| 15 |            1 | LAVADORA           | 350.50 |        3 |
+| 16 |            1 | SECADORA           | 750.00 |        3 |
+| 17 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+| 18 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+| 19 |            3 | LAVADORA           | 700.00 |        6 |
+| 20 |            3 | CONGELADOR         | 250.75 |        5 |
+| 21 |            4 | NEVERA             | 650.25 |        9 |
+| 22 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 23 |            4 | LAVADORA           | 450.50 |        5 |
+| 24 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+12 rows in set (0.000 sec)
+
+MariaDB [BD_ISMAEL_20250830]> USE BD_PROFESOR_20250830;
+Database changed
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM PROVEEDORES1;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM PRODUCTOS1;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  1 |            1 | NEVERA             | 500.25 |        6 |
+|  2 |            1 | COCINA A GAS       | 300.75 |       12 |
+|  3 |            1 | LAVADORA           | 350.50 |        3 |
+|  4 |            1 | SECADORA           | 750.00 |        3 |
+|  5 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+12 rows in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> delete from proveedores1 where id = 1;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM PROVEEDORES1;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM PRODUCTOS1;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  5 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+8 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> update proveedores1 set id = 22 where id = 2;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM PRODUCTOS1;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  5 |           22 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |           22 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+8 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT proveedores.nombre,
+    ->        productos.nombre,
+    ->        productos.precio,
+    ->        productos.cantidad
+    ->        from proveedores, productos
+    ->        where proveedores.id = productos.proveedor_id;
++----------+--------------------+--------+----------+
+| nombre   | nombre             | precio | cantidad |
++----------+--------------------+--------+----------+
+| GE       | NEVERA             | 500.25 |        6 |
+| GE       | COCINA A GAS       | 300.75 |       12 |
+| GE       | LAVADORA           | 350.50 |        3 |
+| GE       | SECADORA           | 750.00 |        3 |
+| MABE     | AIRE ACONDICIONADO | 450.75 |        4 |
+| MABE     | COCINA ELECTRICA   | 425.00 |        2 |
+| WHIRPOOL | LAVADORA           | 700.00 |        6 |
+| WHIRPOOL | CONGELADOR         | 250.75 |        5 |
+| SIRAGON  | NEVERA             | 650.25 |        9 |
+| SIRAGON  | COCINA A GAS       | 280.75 |        6 |
+| SIRAGON  | LAVADORA           | 450.50 |        5 |
+| SIRAGON  | SECADORA           | 550.00 |        5 |
++----------+--------------------+--------+----------+
+12 rows in set (0.002 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT A.nombre as proveedor,
+    ->        B.nombre as producto,
+    ->        B.precio,
+    ->        B.cantidad
+    ->        from proveedores as A, productos as B
+    ->        where A.id = B.proveedor_id;
++-----------+--------------------+--------+----------+
+| proveedor | producto           | precio | cantidad |
++-----------+--------------------+--------+----------+
+| GE        | NEVERA             | 500.25 |        6 |
+| GE        | COCINA A GAS       | 300.75 |       12 |
+| GE        | LAVADORA           | 350.50 |        3 |
+| GE        | SECADORA           | 750.00 |        3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |        4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |        2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |        6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |        5 |
+| SIRAGON   | NEVERA             | 650.25 |        9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |        6 |
+| SIRAGON   | LAVADORA           | 450.50 |        5 |
+| SIRAGON   | SECADORA           | 550.00 |        5 |
++-----------+--------------------+--------+----------+
+12 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]>
+MariaDB [BD_PROFESOR_20250830]> create view vista_proveedores_productos as
+    -> SELECT A.nombre as proveedor,
+    ->        B.nombre as producto,
+    ->        B.precio,
+    ->        B.cantidad
+    ->        from proveedores as A, productos as B
+    ->        where A.id = B.proveedor_id;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SHOW TABLES;
++--------------------------------+
+| Tables_in_bd_profesor_20250830 |
++--------------------------------+
+| contactos                      |
+| productos                      |
+| productos1                     |
+| proveedores                    |
+| proveedores1                   |
+| vista_proveedores_productos    |
++--------------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM VISTA_PROVEEDORES_PRDUCTOS;
+ERROR 1146 (42S02): Table 'bd_profesor_20250830.vista_proveedores_prductos' doesn't exist
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM VISTA_PROVEEDORES_PRODUCTOS;
++-----------+--------------------+--------+----------+
+| proveedor | producto           | precio | cantidad |
++-----------+--------------------+--------+----------+
+| GE        | NEVERA             | 500.25 |        6 |
+| GE        | COCINA A GAS       | 300.75 |       12 |
+| GE        | LAVADORA           | 350.50 |        3 |
+| GE        | SECADORA           | 750.00 |        3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |        4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |        2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |        6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |        5 |
+| SIRAGON   | NEVERA             | 650.25 |        9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |        6 |
+| SIRAGON   | LAVADORA           | 450.50 |        5 |
+| SIRAGON   | SECADORA           | 550.00 |        5 |
++-----------+--------------------+--------+----------+
+12 rows in set (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]>

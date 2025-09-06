@@ -1,0 +1,19 @@
+La principal diferencia entre una clave única y un índice en una base de datos es su propósito. La clave única garantiza que cada registro en una tabla sea distinto, mientras que un índice acelera la búsqueda y el acceso a los datos.
+
+Clave Única (UNIQUE KEY)
+Una clave única es una restricción que se impone a una columna o grupo de columnas. Su objetivo es asegurar que todos los valores en esa columna sean únicos en toda la tabla. . Esto significa que no puede haber dos filas con el mismo valor en la columna que tiene la clave única. Por ejemplo, en una tabla de usuarios, el correo electrónico podría tener una clave única para asegurar que no haya dos usuarios con la misma dirección. Además de su función principal de restricción, una clave única crea automáticamente un índice para poder hacer esta validación de forma rápida.
+
+Propósito: Garantizar la unicidad de los datos.
+
+Función: Restricción de integridad.
+
+Creación: Se define al crear o modificar la tabla.
+
+Índice (INDEX)
+Un índice es una estructura de datos que se crea en una o más columnas de una tabla para mejorar el rendimiento de las consultas, especialmente las de búsqueda (SELECT). . Puedes pensar en un índice como el índice alfabético de un libro. En lugar de leer el libro entero para encontrar un tema, puedes ir al índice, encontrar el número de página y saltar directamente a la información que necesitas. Un índice en una base de datos hace lo mismo, permite al sistema encontrar los datos rápidamente sin tener que escanear toda la tabla (lo que se conoce como "full table scan").
+
+Propósito: Acelerar las consultas de lectura.
+
+Función: Mejora del rendimiento.
+
+Creación: Se crea de forma independiente en una columna o grupo de columnas

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplo 06 - Drag and Drop</title>
+  <link rel="shortcut icon" href="../img/icono_uneweb.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/ejemplo06_draganddrop.css">
+</head>
+<body>
+  <h1>Drag and Drop</h1>
+  <br>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API" target="_blank">Documentación Drag and Drop</a>
+  <br>
+  <a href="https://www.w3schools.com/HTML/html5_draganddrop.asp">Documentación w3Schools</a>
+  <br>
+  <a href="./ejemplo03.html">Regresar</a>
+  <br>
+  <br>
+  <div id="caja1" ondrop="manejadorSoltar(event)" ondragover="arrastrarSobre(event)"0>
+    <img id="dibujo" src="./img/FC_Barcelona.svg" draggable="true" ondragstart="manejadorInicioArrastre(event)" >
+  </div>
+  <div id="caja2" draggable="true" ondragstart="manejadorInicioArrastre(event)" ondrop="manejadorSoltar(event)" ondragover="arrastrarSobre(event)">
+
+  </div>
+
+  <script src="./js/ejemplo06_draganddrop.js"></script>
+</body>
+</html>

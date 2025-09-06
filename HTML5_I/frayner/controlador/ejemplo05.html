@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <style>
+        #c_btn_apagado{
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplo05 - Formulario</h1>
+    <!--
+    <form action="" method="get">-->
+    <!-- method="post" enctype="multipart/form-data" para poder anexar archivos -->
+        <form action="" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>CÉDULA:</td>
+                <td>
+                    <!-- 
+                        La variable "documento", puede recibir el
+                        valor "V" o "E", en función de la selección
+                        que efectúe el usuario.
+                    -->
+                    <select name="documento" id="c_documento">
+                        <option value="V">V</option>
+                        <option value="E">E</option>
+                    </select>
+                    <!-- 
+                        El dato que se ingrese a través de la caja de texto
+                        se guarda en la variable "numero"
+                    -->
+                    <input type="number" name="numero" id="c_numero" min="100000" max="99999999" placeholder="12345678" required>
+                </td>
+            </tr>
+            <tr>
+                <td>NOMBRE:</td>
+                <td>
+                    <input type="text" name="nombre" id="c_nombre" placeholder="Escriba su nombre" required>
+                </td>
+            </tr>
+            <tr>
+                <td>APELLIDO:</td>
+                <td>
+                    <input type="text" name="apellido" id="c_apellido" placeholder="Escriba su apellido"  required>
+                </td>
+            </tr>
+            <tr>
+                <td>CORREO:</td>
+                <td>
+                    <input type="email" name="correo" id="c_correo" placeholder="correo@dominio.com" required>
+                </td>
+            </tr>
+            <tr>
+                <td>URL:</td>
+                <td>
+                    <input type="url" name="url" id="c_url" placeholder="https://www.uneweb.edu.ve" required>
+                </td>
+            </tr>
+            <tr>
+                <td>TÉRMINO DE BÚSQUEDA:</td>
+                <td>
+                    <input type="search" name="buscar" id="c_buscar" placeholder="¿Qué buscar?" required>
+                </td>
+            </tr>
+            <tr>
+                <td>PASSWORD:</td>
+                <td>
+                    <input type="password" name="clave" id="c_clave" placeholder="********" required>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>FECHA DE NACIMIENTO:</td>
+                <td>
+                    <input type="date" name="fechaNacimiento" id="c_fechaNacimiento">
+                </td>
+            </tr>
+            <tr>
+                <td>FECHA Y HORA:</td>
+                <td>
+                    <input type="datetime-local" name="fechaHora" id="c_fechaHora">
+                </td>
+            </tr>
+            <tr>
+                <td>HORA:</td>
+                <td>
+                    <input type="time" name="hora" id="c_hora">
+                </td>
+            </tr>
+            <tr>
+                <td>SEMANA:</td>
+                <td>
+                    <input type="week" name="semana" id="c_semana">
+                </td>
+            </tr>
+            <tr>
+                <td>MES:</td>
+                <td>
+                    <input type="month" name="mes" id="c_mes">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>SEXO:</td>
+                <td>
+                    <input type="radio" name="sexo" id="c_sexo" value="F">FEMENINO
+                    <input type="radio" name="sexo" id="c_sexo" value="M">MASCULINO
+                </td>
+            </tr>
+            <tr>
+                <!-- 
+                    Para el caso de selección múltiple, se debe indicar el atributo
+                    "multiple" y el nombre de variable debe ir acompañado de "[]",
+                    por ejemplo: actividad[]
+                -->
+                <td>ACTIVIDAD:</td>
+                <td>
+                    <input type="checkbox" name="actividad[]" id="c_actividad" value="Estudia" multiple>Estudia
+                    <input type="checkbox" name="actividad[]" id="c_actividad" value="Trabaja" multiple>Trabaja
+                    <input type="checkbox" name="actividad[]" id="c_actividad" value="Otra">Otra
+                </td>
+            </tr>
+            <tr>
+                <td>COLOR:</td>
+                <td>
+                    <input type="color" name="color" id="c_color" value="#ffffff">
+                </td>
+            </tr>
+            <tr>
+                <!-- 
+                    Para hacer uso de input del tipo "file", es requerido que el
+                    method="POST" y se añade a la etiqueta <form> el atributo 
+                    enctype="multipart/form-data"
+                -->
+                <td>ARCHIVO:</td>
+                <td>
+                    <input type="file" name="archivo" id="c_archivo">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>oculto:</td>
+                <td>
+                    <input type="hidden" name="oculto" id="c_oculto" value="el contenido no se muestra">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>descripcion:</td>
+                <td>
+                    <textarea name="descripcion" id="c_descripcion" cols="60" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>botones</td>
+                <td>
+                    <button type="submit">enviar</button>
+                    <button type="reset">limpiar</button>
+                    <input type="submit" value="enviar">
+                    <input type="reset" value="limpiar">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>imagen:</td>
+                <td>
+                    <input type="image" src="../img/apagado.png" alt="boton de apagado" name="btn_apagado" id="c_btn_apagado">
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <!--http://127.0.0.1:5500/DIPLOMADO_DE_PROGRAMACION_20250705/HTML5_I/frayner/ejemplo05.html?documento=V&numero=31926928&nombre=frayner&apellido=yemi%C3%B1ani&correo=frayner.y.13%40gmail.com&url=https%3A%2F%2Fwww.microsoft.com%2Fes-es%2Fedge%2Fwelcome%3Fform%3DMT00LJ%26form%3DMT004A%26OCID%3DMT004A%26cs%3D3330855388&buscar=CASA&clave=121232132&fechaNacimiento=2025-07-26&fechaHora=2025-07-26T11%3A30&hora=11%3A31&semana=2025-W30&mes=2025-07&sexo=M&actividad%5B%5D=Otra&color=%23f70808&archivo=apagado.png&oculto=el+contenido+no+se+muestra&descripcion=casaaaaaaaaaa-->
+</body>
+</html>

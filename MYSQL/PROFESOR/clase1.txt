@@ -1,0 +1,1115 @@
+nellyazzatto@gmail.com;
+bvillasmils27@gmail.com;
+ytzalijimenez@gmail.com;
+airon03ortega@gmail.com;
+frayner.y.13@gmail.com;
+rojasdaniel424@gmail.com;
+moisesby2004@gmail.com;
+heinrikken@gmail.com;
+ih8225537@gmail.com;
+
+…or create a new repository on the command line
+echo "# DIPLOMADO_DE_PROGRAMACION_20250705" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/UnewebInstituto/DIPLOMADO_DE_PROGRAMACION_20250705.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/UnewebInstituto/DIPLOMADO_DE_PROGRAMACION_20250705.git
+git branch -M main
+git push -u origin main
+
+
+
+
+
+INSTALACIÓN PARA ARQUITECTURA DE 64 bits
+(más de 4Gb de RAM)
+1)
+https://www.apachefriends.org/es/index.html
+
+2)
+https://www.appserv.org/en/
+
+3)
+https://www.wampserver.com/en/
+
+
+Los tipos de datos en MySQL se organizan en categorías principales como numéricos, cadena (o texto), fecha y hora, espaciales, y JSON. Las tablas pueden almacenar una variedad de tipos de datos dentro de estas categorías, incluyendo valores enteros (como INT), decimales (DECIMAL), cadenas de longitud variable (VARCHAR), fechas (DATE), y más recientemente, el tipo JSON para almacenar documentos JSON. 
+1. Tipos Numéricos
+Estos se utilizan para almacenar valores numéricos y se dividen en: 
+Enteros: Números sin punto decimal. Ejemplos: TINYINT, SMALLINT, MEDIUMINT, INT, BIGINT.
+Decimales: Números exactos de punto fijo. Ejemplos: DECIMAL, NUMERIC.
+Flotantes: Números de precisión simple y doble. Ejemplos: FLOAT, DOUBLE.
+Bit: Para valores de bit.
+2. Tipos de Cadena (Texto)
+Se usan para almacenar datos textuales de diferentes longitudes: 
+De longitud fija: Como CHAR.
+De longitud variable: Como VARCHAR.
+Binarios: Para almacenar bytes.
+Blobs y Textos: Para almacenar datos grandes de texto. Ejemplos: BLOB, TEXT.
+ENUM y SET: Para almacenar un conjunto predefinido de valores o múltiples valores de una lista.
+3. Tipos de Fecha y Hora
+Almacenan información relacionada con el tiempo: 
+DATE: Almacena una fecha.
+TIME: Almacena un valor de tiempo.
+DATETIME: Combina la fecha y la hora.
+TIMESTAMP: Similar a DATETIME, pero con un rango de fechas más limitado.
+YEAR: Almacena un año.
+4. Tipos de Datos Espaciales
+MySQL soporta tipos de datos para información geográfica y geométrica: 
+Geometría:
+Tipos como GEOMETRY, POINT, LINESTRING, POLYGON, que pueden representar objetos geométricos.
+Geometría múltiple:
+Tipos como MULTIPOINT, MULTIPOLYGON, que pueden almacenar múltiples objetos del mismo tipo.
+5. Tipos de Datos JSON
+Permite almacenar documentos en formato JSON, lo que facilita el manejo de estructuras de datos complejas y flexibles dentro de la base de datos. 
+
+
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-42TM87A c:\xampp
+# quit
+"quit" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
+Profesor@DESKTOP-42TM87A c:\xampp
+#
+Profesor@DESKTOP-42TM87A c:\xampp
+#
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 17
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database bd_profesor_20250830;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database' at line 1
+MariaDB [(none)]> show databases;
++----------------------+
+| Database             |
++----------------------+
+| bd_airon_20250830    |
+| bd_barbara_20250830  |
+| bd_daniel_20250830   |
+| bd_frayner_20250830  |
+| bd_ismael_20250830   |
+| bd_movi_30482481     |
+| bd_nelly_20250830    |
+| bd_profesor_20250830 |
+| bd_ytzali_20250830   |
+| information_schema   |
+| mysql                |
+| performance_schema   |
+| phpmyadmin           |
+| ricardo_20253008     |
+| test                 |
++----------------------+
+15 rows in set (0.001 sec)
+
+MariaDB [(none)]> show databases like '%_20250830%';
++------------------------+
+| Database (%_20250830%) |
++------------------------+
+| bd_airon_20250830      |
+| bd_barbara_20250830    |
+| bd_daniel_20250830     |
+| bd_frayner_20250830    |
+| bd_ismael_20250830     |
+| bd_nelly_20250830      |
+| bd_profesor_20250830   |
+| bd_ytzali_20250830     |
++------------------------+
+8 rows in set (0.001 sec)
+
+MariaDB [(none)]> use bd_profesor_20250825;
+ERROR 1049 (42000): Unknown database 'bd_profesor_20250825'
+MariaDB [(none)]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]> show tables;
+Empty set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> -- CREACIÓN DE LA TABLA CONTACTOS
+MariaDB [bd_profesor_20250830]> create table contactos(
+    ->     nombre varchar(80),
+    ->     apellido varchar(80),
+    ->     telefono varchar(11),
+    ->     direccion text,
+    ->     correo_electronico text
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| nombre             | varchar(80) | YES  |     | NULL    |       |
+| apellido           | varchar(80) | YES  |     | NULL    |       |
+| telefono           | varchar(11) | YES  |     | NULL    |       |
+| direccion          | text        | YES  |     | NULL    |       |
+| correo_electronico | text        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> show create table contactos;
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                               |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| contactos | CREATE TABLE `contactos` (
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `telefono` varchar(11) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  `correo_electronico` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++-----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> insert into contactos(nombre, apellido, telefono, direccion, correo_electronico)
+    -> value
+    -> ('ANA','VASQUEZ','02121234567','SANTA FE','av@gmail.com');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> -- CONSULTAR DATOS DE UNA TABLA
+MariaDB [bd_profesor_20250830]> -- VER TODAS LAS COLUMNAS *
+MariaDB [bd_profesor_20250830]> select * from contactos;
++--------+----------+-------------+-----------+--------------------+
+| nombre | apellido | telefono    | direccion | correo_electronico |
++--------+----------+-------------+-----------+--------------------+
+| ANA    | VASQUEZ  | 02121234567 | SANTA FE  | av@gmail.com       |
+| ANA    | VASQUEZ  | 02121234567 | SANTA FE  | av@gmail.com       |
++--------+----------+-------------+-----------+--------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> -- VER ALGUNAS COLUMNAS DE LA TABLA (se indica la lista de campos)
+MariaDB [bd_profesor_20250830]> select nombre, apellido, telefono from contactos;
++--------+----------+-------------+
+| nombre | apellido | telefono    |
++--------+----------+-------------+
+| ANA    | VASQUEZ  | 02121234567 |
+| ANA    | VASQUEZ  | 02121234567 |
++--------+----------+-------------+
+2 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> -- GUARDAR VARIOS REGISTROS EN LA TABLA
+MariaDB [bd_profesor_20250830]> insert into contactos(nombre, apellido, telefono, direccion, correo_electronico)
+    -> values
+    -> ('YOLANDA','TORTOZA','02123741234','CATIA LA MAR','yt@hotmail.com'),
+    -> ('LIBIA','COLS','02123534100','GUARENAS','lc@gmail.com'),
+    -> ('HERDRINA','MONASTERIOS','02126741234','LOS VALLES DEL TUY','hm@hotmail.com');
+Query OK, 3 rows affected (0.003 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> select * from contactos;
++----------+-------------+-------------+--------------------+--------------------+
+| nombre   | apellido    | telefono    | direccion          | correo_electronico |
++----------+-------------+-------------+--------------------+--------------------+
+| ANA      | VASQUEZ     | 02121234567 | SANTA FE           | av@gmail.com       |
+| ANA      | VASQUEZ     | 02121234567 | SANTA FE           | av@gmail.com       |
+| YOLANDA  | TORTOZA     | 02123741234 | CATIA LA MAR       | yt@hotmail.com     |
+| LIBIA    | COLS        | 02123534100 | GUARENAS           | lc@gmail.com       |
+| HERDRINA | MONASTERIOS | 02126741234 | LOS VALLES DEL TUY | hm@hotmail.com     |
++----------+-------------+-------------+--------------------+--------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> select nombre, apellido, telefono from contactos;
++----------+-------------+-------------+
+| nombre   | apellido    | telefono    |
++----------+-------------+-------------+
+| ANA      | VASQUEZ     | 02121234567 |
+| ANA      | VASQUEZ     | 02121234567 |
+| YOLANDA  | TORTOZA     | 02123741234 |
+| LIBIA    | COLS        | 02123534100 |
+| HERDRINA | MONASTERIOS | 02126741234 |
++----------+-------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> select nombre, apellido, telefono from contactos;
++----------+-------------+-------------+
+| nombre   | apellido    | telefono    |
++----------+-------------+-------------+
+| ANA      | VASQUEZ     | 02121234567 |
+| ANA      | VASQUEZ     | 02121234567 |
+| YOLANDA  | TORTOZA     | 02123741234 |
+| LIBIA    | COLS        | 02123534100 |
+| HERDRINA | MONASTERIOS | 02126741234 |
+| Yolanda  | Tortoza     | 02124526798 |
++----------+-------------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> show databases like '%movi%';
++-------------------+
+| Database (%movi%) |
++-------------------+
+| bd_movi_30482481  |
++-------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> use bd_movi_30482481;
+Database changed
+MariaDB [bd_movi_30482481]> show tables;
++----------------------------+
+| Tables_in_bd_movi_30482481 |
++----------------------------+
+| contactos                  |
++----------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_movi_30482481]> select * from contactos;
++---------+----------+-------------+--------------+---------------------+
+| nombre  | apellido | telefono    | direccion    | correo_electronico  |
++---------+----------+-------------+--------------+---------------------+
+| Movi    | Games    | +58 0424-15 | Antimano     | moviby2004gmail.com |
+| YOLANDA | TORTOZA  | 02123741234 | CATIA LA MAR | yt@hotmail.com      |
+| LIBIA   | COLS     | 02123534100 | GUARENAS     | lc@gmail.com        |
+| Movi    | Games    | +58 0424-15 | Antimano     | moviby2004gmail.com |
+| YOLANDA | TORTOZA  | 02123741234 | CATIA LA MAR | yt@hotmail.com      |
+| LIBIA   | COLS     | 02123534100 | GUARENAS     | lc@gmail.com        |
+| Movi    | Games    | +58 0424-15 | Antimano     | moviby2004gmail.com |
+| YOLANDA | TORTOZA  | 02123741234 | CATIA LA MAR | yt@hotmail.com      |
+| LIBIA   | COLS     | 02123534100 | GUARENAS     | lc@gmail.com        |
+| Movi    | Games    | +58 0424-15 | Antimano     | moviby2004gmail.com |
++---------+----------+-------------+--------------+---------------------+
+10 rows in set (0.000 sec)
+
+MariaDB [bd_movi_30482481]> use bd_profesor_2050830;
+ERROR 1049 (42000): Unknown database 'bd_profesor_2050830'
+MariaDB [bd_movi_30482481]> use bd_profesor_20s50830;
+ERROR 1049 (42000): Unknown database 'bd_profesor_20s50830'
+MariaDB [bd_movi_30482481]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]> USE BD_NELLY_20250830;
+Database changed
+MariaDB [BD_NELLY_20250830]> SELECT * FROM CONTACTOS;
++----------+-------------+-------------+--------------------+--------------------+
+| nombre   | apellido    | telefono    | direccion          | correo_electronico |
++----------+-------------+-------------+--------------------+--------------------+
+| ANA      | VASQUEZ     | 02123547896 | SANTA FE           | av@gmail.com       |
+| ANA      | VASQUEZ     | 02123547896 | SANTA FE           | av@gmail.com       |
+| YOLANDA  | TORTOZA     | 02123741234 | CATIA LA MAR       | yt@hotmail.com     |
+| LIBIA    | COLS        | 02123534100 | GUARENAS           | lc@gmail.com       |
+| HERDRINA | MONASTERIOS | 02126741234 | LOS VALLES DEL TUY | hm@hotmail.com     |
++----------+-------------+-------------+--------------------+--------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [BD_NELLY_20250830]> SHOW DATABASES LIKE '%20250830%';
++-----------------------+
+| Database (%20250830%) |
++-----------------------+
+| bd_airon_20250830     |
+| bd_barbara_20250830   |
+| bd_daniel_20250830    |
+| bd_frayner_20250830   |
+| bd_ismael_20250830    |
+| bd_nelly_20250830     |
+| bd_profesor_20250830  |
+| bd_ricardo_20250830   |
+| bd_ytzali_20250830    |
++-----------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [BD_NELLY_20250830]> USE bd_frayner_20250830;
+Database changed
+MariaDB [bd_frayner_20250830]> SELECT * FROM CONTACTOS;
++---------+----------+-------------+--------------+--------------------+
+| nombre  | apellido | telefono    | direccion    | correo_electronico |
++---------+----------+-------------+--------------+--------------------+
+| YOLANDA | TORTOZA  | 02127894561 | CATIA LA MAR | yt@gmail.com       |
++---------+----------+-------------+--------------+--------------------+
+1 row in set (0.000 sec)
+
+MariaDB [bd_frayner_20250830]> USE bd_ismael_20250830;
+Database changed
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| NOMBRE             | varchar(80) | YES  |     | NULL    |       |
+| apellido           | varchar(80) | YES  |     | NULL    |       |
+| telefono           | varchar(11) | YES  |     | NULL    |       |
+| direcion           | text        | YES  |     | NULL    |       |
+| correo_electronico | text        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.002 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> SELECT * FROM CONTACTOS;
+Empty set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]> USE BD_PROFESOR_20250830
+Database changed
+MariaDB [BD_PROFESOR_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| nombre             | varchar(80) | YES  |     | NULL    |       |
+| apellido           | varchar(80) | YES  |     | NULL    |       |
+| telefono           | varchar(11) | YES  |     | NULL    |       |
+| direccion          | text        | YES  |     | NULL    |       |
+| correo_electronico | text        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.002 sec)
+
+MariaDB [BD_PROFESOR_20250830]> SELECT * FROM CONTACTOS;
++----------+-------------+-------------+-------------------------+--------------------+
+| nombre   | apellido    | telefono    | direccion               | correo_electronico |
++----------+-------------+-------------+-------------------------+--------------------+
+| ANA      | VASQUEZ     | 02121234567 | SANTA FE                | av@gmail.com       |
+| ANA      | VASQUEZ     | 02121234567 | SANTA FE                | av@gmail.com       |
+| YOLANDA  | TORTOZA     | 02123741234 | CATIA LA MAR            | yt@hotmail.com     |
+| LIBIA    | COLS        | 02123534100 | GUARENAS                | lc@gmail.com       |
+| HERDRINA | MONASTERIOS | 02126741234 | LOS VALLES DEL TUY      | hm@hotmail.com     |
+| Yolanda  | Tortoza     | 02124526798 | Catia La Mar            | yt@gmail.com       |
+| Yolanda  | Tortoza     | 02124526798 | Catia La Mar            | yt@gmail.com       |
+| Ytzali   | Rodriguez   | 02122795183 | Charallave o Los Teques | yr@gmail.com       |
+| Ytali    | Rodriguez   | 02122795186 | Charallave o Los Teques | ytr@gmail.com      |
++----------+-------------+-------------+-------------------------+--------------------+
+9 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> DELETE FROM contactos WHERE nombre = 'ANA';
+Query OK, 2 rows affected (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> select * from contactos;
++----------+-------------+-------------+-------------------------+--------------------+
+| nombre   | apellido    | telefono    | direccion               | correo_electronico |
++----------+-------------+-------------+-------------------------+--------------------+
+| YOLANDA  | TORTOZA     | 02123741234 | CATIA LA MAR            | yt@hotmail.com     |
+| LIBIA    | COLS        | 02123534100 | GUARENAS                | lc@gmail.com       |
+| HERDRINA | MONASTERIOS | 02126741234 | LOS VALLES DEL TUY      | hm@hotmail.com     |
+| Yolanda  | Tortoza     | 02124526798 | Catia La Mar            | yt@gmail.com       |
+| Yolanda  | Tortoza     | 02124526798 | Catia La Mar            | yt@gmail.com       |
+| Ytzali   | Rodriguez   | 02122795183 | Charallave o Los Teques | yr@gmail.com       |
+| Ytali    | Rodriguez   | 02122795186 | Charallave o Los Teques | ytr@gmail.com      |
++----------+-------------+-------------+-------------------------+--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> DELETE FROM contactos WHERE nombre = 'YOLANDA';
+Query OK, 3 rows affected (0.001 sec)
+
+MariaDB [BD_PROFESOR_20250830]> select * from contactos;
++----------+-------------+-------------+-------------------------+--------------------+
+| nombre   | apellido    | telefono    | direccion               | correo_electronico |
++----------+-------------+-------------+-------------------------+--------------------+
+| LIBIA    | COLS        | 02123534100 | GUARENAS                | lc@gmail.com       |
+| HERDRINA | MONASTERIOS | 02126741234 | LOS VALLES DEL TUY      | hm@hotmail.com     |
+| Ytzali   | Rodriguez   | 02122795183 | Charallave o Los Teques | yr@gmail.com       |
+| Ytali    | Rodriguez   | 02122795186 | Charallave o Los Teques | ytr@gmail.com      |
++----------+-------------+-------------+-------------------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> ALTER TABLE contactos DROP COLUMN telefono;
+Query OK, 0 rows affected (0.005 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_PROFESOR_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| nombre             | varchar(80) | YES  |     | NULL    |       |
+| apellido           | varchar(80) | YES  |     | NULL    |       |
+| direccion          | text        | YES  |     | NULL    |       |
+| correo_electronico | text        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.002 sec)
+
+MariaDB [BD_PROFESOR_20250830]> ALTER TABLE contactos add column id integer auto_increment first;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+MariaDB [BD_PROFESOR_20250830]> ALTER TABLE contactos add column id integer auto_increment primary key first;
+Query OK, 0 rows affected (0.016 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_PROFESOR_20250830]> select * from contactos;
++----+----------+-------------+-------------------------+--------------------+
+| id | nombre   | apellido    | direccion               | correo_electronico |
++----+----------+-------------+-------------------------+--------------------+
+|  1 | LIBIA    | COLS        | GUARENAS                | lc@gmail.com       |
+|  2 | HERDRINA | MONASTERIOS | LOS VALLES DEL TUY      | hm@hotmail.com     |
+|  3 | Ytzali   | Rodriguez   | Charallave o Los Teques | yr@gmail.com       |
+|  4 | Ytali    | Rodriguez   | Charallave o Los Teques | ytr@gmail.com      |
++----+----------+-------------+-------------------------+--------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [BD_PROFESOR_20250830]> use bd_movi_30482481;
+Database changed
+MariaDB [bd_movi_30482481]> select * from contactos;
+Empty set (0.000 sec)
+
+MariaDB [bd_movi_30482481]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [bd_movi_30482481]>
+MariaDB [bd_movi_30482481]>
+MariaDB [bd_movi_30482481]>
+MariaDB [bd_movi_30482481]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> use bd_ismael_20250830;
+Database changed
+MariaDB [bd_ismael_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| NOMBRE             | varchar(80) | YES  |     | NULL    |       |
+| apellido           | varchar(80) | YES  |     | NULL    |       |
+| direcion           | text        | YES  |     | NULL    |       |
+| correo_electronico | text        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.003 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]>
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----------+----------+----------+--------------------+
+| NOMBRE   | apellido | direcion | correo_electronico |
++----------+----------+----------+--------------------+
+| oscar    | perez    | chacao   | hdhe@gmail.com     |
+| katalina | a?es     | valle    | kata@gmail.com     |
+| pedro    | lozano   | catia    | pedrol@gmail.com   |
++----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> select * from contactos;
++----+----------+----------+----------+--------------------+
+| id | NOMBRE   | apellido | direcion | correo_electronico |
++----+----------+----------+----------+--------------------+
+|  1 | oscar    | perez    | chacao   | hdhe@gmail.com     |
+|  2 | katalina | a?es     | valle    | kata@gmail.com     |
+|  3 | pedro    | lozano   | catia    | pedrol@gmail.com   |
++----+----------+----------+----------+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [bd_ismael_20250830]> use bd_profesor_2050830
+ERROR 1049 (42000): Unknown database 'bd_profesor_2050830'
+MariaDB [bd_ismael_20250830]> use bd_profesor_20250830
+Database changed
+MariaDB [bd_profesor_20250830]> alter table contactos add column telefono_ofi varchar(11);
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> alter table contactos add column telefono_hab after correo_electronico varchar(11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'correo_electronico varchar(11)' at line 1
+MariaDB [bd_profesor_20250830]> alter table contactos add column telefono_hab  varchar(11) after correo_electronico;
+Query OK, 0 rows affected (0.003 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> alter table contactos add column telefono_cel  varchar(11) after telefono_hab;
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> alter table contactos change column telefono_cel telf_cel varchar(11);
+Query OK, 0 rows affected (0.003 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> alter table contactos change column telefono_hab telf_hab varchar(11);
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> alter table contactos change column telefono_ofi telf_ofi varchar(11);
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> describe contactos;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telf_hab           | varchar(11) | YES  |     | NULL    |                |
+| telf_cel           | varchar(11) | YES  |     | NULL    |                |
+| telf_ofi           | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.002 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> USE BD_NELLY_20250830
+Database changed
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.003 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.003 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.003 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telefono_hab       | varchar(11) | YES  |     | NULL    |                |
+| telefono_cel       | varchar(11) | YES  |     | NULL    |                |
+| telefono_ofi       | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.003 sec)
+
+MariaDB [BD_NELLY_20250830]> alter table contactos change column telefono_cel telf_cel varchar(11);
+Query OK, 0 rows affected (0.003 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_NELLY_20250830]> alter table contactos change column telefono_hab telf_hab varchar(11);
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_NELLY_20250830]> alter table contactos change column telefono_ofi telf_ofi varchar(11);
+Query OK, 0 rows affected (0.003 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [BD_NELLY_20250830]> DESCRIBE CONTACTOS;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nombre             | varchar(80) | YES  |     | NULL    |                |
+| apellido           | varchar(80) | YES  |     | NULL    |                |
+| telefono           | varchar(11) | YES  |     | NULL    |                |
+| direccion          | text        | YES  |     | NULL    |                |
+| correo_electronico | text        | YES  |     | NULL    |                |
+| telf_hab           | varchar(11) | YES  |     | NULL    |                |
+| telf_cel           | varchar(11) | YES  |     | NULL    |                |
+| telf_ofi           | varchar(11) | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.002 sec)
+
+MariaDB [BD_NELLY_20250830]> use bd_henry_20250830;
+ERROR 1049 (42000): Unknown database 'bd_henry_20250830'
+MariaDB [bd_nelly_20250830]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]> UPDATE CONTACTOS SET telf_hab = '02125554433';
+Query OK, 4 rows affected (0.002 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> select * from contactos;
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+| id | nombre   | apellido    | direccion               | correo_electronico | telf_hab    | telf_cel | telf_ofi |
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+|  1 | LIBIA    | COLS        | GUARENAS                | lc@gmail.com       | 02125554433 | NULL     | NULL     |
+|  2 | HERDRINA | MONASTERIOS | LOS VALLES DEL TUY      | hm@hotmail.com     | 02125554433 | NULL     | NULL     |
+|  3 | Ytzali   | Rodriguez   | Charallave o Los Teques | yr@gmail.com       | 02125554433 | NULL     | NULL     |
+|  4 | Ytali    | Rodriguez   | Charallave o Los Teques | ytr@gmail.com      | 02125554433 | NULL     | NULL     |
++----+----------+-------------+-------------------------+--------------------+-------------+----------+----------+
+4 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]>
