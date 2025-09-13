@@ -1,0 +1,15 @@
+categories:
+   Bit Functions
+   Comparison Operators
+   Control Flow Functions
+   Date and Time Functions
+   Dynamic Column Functions
+   Encryption Functions
+   Information Functions
+   JSON Functions
+   Logical Operators
+   Miscellaneous Functions
+   Numeric Functions
+   Spider Functions
+   String Functions
+   Window Functions

@@ -182,3 +182,17 @@ select a.nombre as proveedor,
        b.cantidad
        from proveedores as productos as b
        where a.id = b.proveedor_id;
+
+
+
+       -- CREACIÓN
+create view vista_proveedores_productos as
+SELECT A.nombre as proveedor,
+       B.nombre as producto,
+       B.precio,
+       B.cantidad
+       from proveedores as A, productos as B 
+       where A.id = B.proveedor_id;
+
+
+

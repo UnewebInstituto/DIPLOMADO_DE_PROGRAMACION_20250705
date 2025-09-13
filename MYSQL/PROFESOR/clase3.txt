@@ -1,0 +1,126 @@
+Microsoft Windows [Versión 10.0.19045.6332]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705>dir
+ El volumen de la unidad D es Respaldo Profesres
+ El número de serie del volumen es: 747D-105F
+
+ Directorio de D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705
+
+06/09/2025  12:02 p. m.    <DIR>          .
+06/09/2025  12:02 p. m.    <DIR>          ..
+30/08/2025  07:37 p. m.    <DIR>          .vscode
+30/08/2025  07:37 p. m.    <DIR>          HTML5_I
+30/08/2025  07:37 p. m.    <DIR>          HTML5_II
+30/08/2025  07:37 p. m.    <DIR>          MYSQL
+               0 archivos              0 bytes
+               6 dirs  1.948.215.656.448 bytes libres
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705>cd mysql
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL>dir
+ El volumen de la unidad D es Respaldo Profesres
+ El número de serie del volumen es: 747D-105F
+
+ Directorio de D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL
+
+30/08/2025  07:37 p. m.    <DIR>          .
+30/08/2025  07:37 p. m.    <DIR>          ..
+13/09/2025  08:47 a. m.    <DIR>          Airon
+13/09/2025  08:46 a. m.    <DIR>          Barbara
+13/09/2025  08:47 a. m.    <DIR>          Daniel Rojas
+13/09/2025  08:44 a. m.    <DIR>          frayner
+13/09/2025  08:52 a. m.    <DIR>          ismael
+13/09/2025  08:47 a. m.    <DIR>          Moises Villegas
+06/09/2025  08:38 a. m.    <DIR>          Nelly
+13/09/2025  08:47 a. m.    <DIR>          PROFESOR
+13/09/2025  08:50 a. m.    <DIR>          Ricardo Motta
+13/09/2025  08:44 a. m.    <DIR>          Ytzali
+               0 archivos              0 bytes
+              12 dirs  1.948.215.656.448 bytes libres
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL>cd profesor
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL\PROFESOR>dir
+ El volumen de la unidad D es Respaldo Profesres
+ El número de serie del volumen es: 747D-105F
+
+ Directorio de D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL\PROFESOR
+
+13/09/2025  08:47 a. m.    <DIR>          .
+13/09/2025  08:47 a. m.    <DIR>          ..
+30/08/2025  07:37 p. m.    <DIR>          clase1
+30/08/2025  07:37 p. m.             2.775 clase1.sql
+30/08/2025  07:37 p. m.            60.620 clase1.txt
+06/09/2025  08:38 a. m.    <DIR>          clase2
+06/09/2025  11:57 a. m.             6.589 clase2.sql
+06/09/2025  12:00 p. m.            48.398 clase2.txt
+13/09/2025  08:45 a. m.    <DIR>          clase3
+13/09/2025  08:43 a. m.                 0 clase3.sql
+13/09/2025  08:43 a. m.                 0 clase3.txt
+13/09/2025  08:43 a. m.                 0 recupera.bat
+13/09/2025  08:52 a. m.               452 respalda.bat
+13/09/2025  08:47 a. m.    <DIR>          respaldos
+               8 archivos        118.834 bytes
+               6 dirs  1.948.215.656.448 bytes libres
+
+D:\.PROFESORES\HENRY_DUQUE\DIPLOMADO_DE_PROGRAMACION_20250705\MYSQL\PROFESOR>    
+
+
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use bd_profesor_20250830
+Database changed
+MariaDB [bd_profesor_20250830]> create database bd1_profesor_20250830;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> show tables;
++--------------------------------+
+| Tables_in_bd_profesor_20250830 |
++--------------------------------+
+| contactos                      |
+| productos                      |
+| productos1                     |
+| proveedores                    |
+| proveedores1                   |
+| vista_proveedores_productos    |
++--------------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> use bd1_profesor_20250830
+Database changed
+MariaDB [bd1_profesor_20250830]> show tables;
+Empty set (0.000 sec)
+
+MariaDB [bd1_profesor_20250830]>
+
+MariaDB [bd_profesor_20250830]> help functions;
+You asked for help about help category: "Functions"
+For more information, type 'help <item>', where <item> is one of the following
+categories:
+   Bit Functions
+   Comparison Operators
+   Control Flow Functions
+   Date and Time Functions
+   Dynamic Column Functions
+   Encryption Functions
+   Information Functions
+   JSON Functions
+   Logical Operators
+   Miscellaneous Functions
+   Numeric Functions
+   Spider Functions
+   String Functions
+   Window Functions
+
+MariaDB [bd_profesor_20250830]>

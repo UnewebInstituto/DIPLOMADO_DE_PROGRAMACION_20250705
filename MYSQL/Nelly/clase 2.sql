@@ -147,3 +147,28 @@ delete from proveedores1 where id =1;
 --productos
 update proveedores1 set id = 22 where id = 2;
 --actualizacio y modificacion en cascada
+select proveedores.nombre,
+       productos.nombre,
+       productos.precio,
+       productos.cantidad,
+       from proveedores, productos
+       where proveedor_id = productos.proveedor_id;
+---definicion  de alias para tablas y campos 
+
+-- DEFINICIÓN DE ALIAS PARA TABLAS Y CAMPOS
+SELECT A.nombre as proveedor,
+       B.nombre as producto,
+       B.precio,
+       B.cantidad
+       from proveedores as A, productos as B 
+       where A.id = B.proveedor_id;
+       
+
+       -- CREACIÓN
+create view vista_proveedores_productos as
+SELECT A.nombre as proveedor,
+       B.nombre as producto,
+       B.precio,
+       B.cantidad
+       from proveedores as A, productos as B 
+       where A.id = B.proveedor_id;

@@ -69,19 +69,5 @@ alter table contactos change column telefono_ofi telf_ofi varchar(11);
 
 UPDATE CONTACTOS SET telf_hab ='02125554433';
 
-select proveedores.nombre,
-       productos.nombre,
-       productos.precio,
-       productos.cantidad,
-       from proveedores, productos
-       where proveedor_id = productos.proveedor_id;
----definicion  de alias para tablas y campos 
 
--- DEFINICIÓN DE ALIAS PARA TABLAS Y CAMPOS
-SELECT A.nombre as proveedor,
-       B.nombre as producto,
-       B.precio,
-       B.cantidad
-       from proveedores as A, productos as B 
-       where A.id = B.proveedor_id;
 
