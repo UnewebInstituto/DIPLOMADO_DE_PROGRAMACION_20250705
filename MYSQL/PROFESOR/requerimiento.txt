@@ -1,0 +1,41 @@
+1) Catálogo Tienda
+Se requiere realizar el diseño de la base de datos que va a ser utilizada para una aplicación web que servirá como catálogo y posterior tienda virtual para una tienda.
+
+Premisas a tomar en cuenta:
+
+Deben registrarse los productos con datos de nombre, precio, categoría (un producto tiene una sola categoría), descripción. Calificación de usuarios a cada producto (por ejemplo, estrellas, del 1 al 5). Imágenes, un producto puede tener una o muchas imágenes.
+
+Pueden registrarse diferentes "Etiquetas" para asociar a los productos y que de esta manera se puedan hacer búsquedas dentro de la aplicación. Un producto puede tener una o muchas etiquetas.
+
+Se debe registrar las cantidades disponibles de cada producto para poder mostrarlas en la aplicación. Adicionalmente manejo de cantidades mínimas y máximas del producto para temas de gestión de existencia.
+
+Registro de usuarios
+
+Tomar en cuenta datos básicos usados para un usuario en una aplicación.
+
+Manejo de roles, cada usuario puede tener uno o más roles, lo que permitirá administrar el acceso a las diferentes funcionalidades de la aplicación.
+
+*************************
+
+Consultas Catálogo Tienda
+
+Mostrar nombre de la categoría, nombre de producto, descripción y precio para todos los productos registrados.
+
+Mostrar los mismos campos de la consulta anterior para los productos que están calificados con 5 estrellas.
+
+Mostrar nombre del producto más caro.
+
+Mostrar nombre del producto más barato.
+
+Mostrar nombre de los productos que no están disponibles.
+
+Mostrar nombre de producto y cantidades disponibles para los productos para niños.
+
+Mostrar cuántos productos están registrados por cada categoría.
+
+Mostrar nombre de usuario, login y rol para todos los usuarios registrados.
+
+Mostrar cuántos usuarios están registrados por cada rol.
+
+Mostrar nombre de categoría, nombre de producto, cantidad disponible, cantidad mínima y cantidad máxima ordenadas por cantidad disponible y categoría.
+

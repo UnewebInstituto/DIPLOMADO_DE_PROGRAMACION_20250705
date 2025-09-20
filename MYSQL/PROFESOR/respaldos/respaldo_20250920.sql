@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: bd_ricardo_20250830
+-- Host: localhost    Database: bd_profesor_20250830
 -- ------------------------------------------------------
 -- Server version	10.4.32-MariaDB
 
@@ -110,7 +110,7 @@ CREATE TABLE `contactos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `correo_electronico` (`correo_electronico`) USING HASH,
   KEY `correo_electronico_2` (`correo_electronico`(768))
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `contactos` (
 
 LOCK TABLES `contactos` WRITE;
 /*!40000 ALTER TABLE `contactos` DISABLE KEYS */;
-INSERT INTO `contactos` VALUES (1,'Yolanda','Tortoza','Catia La Mar','yt@hotmail.com','02125554433',NULL,NULL),(2,'LIBIA','COLS','GUARENAS','lc@gmail.com','02125554433',NULL,NULL),(3,'HERDRINA','MONASTERIOS','LOS VALLES DEL TUY','hm@hotmail.com','02125554433',NULL,NULL),(4,'Laura','Gonzales','Dos caminos','lg@gmail.com','0212134567','04149876543','02122123456');
+INSERT INTO `contactos` VALUES (1,'LIBIA','COLS','GUARENAS','lc@gmail.com','02125554433',NULL,NULL),(2,'HERDRINA','MONASTERIOS','LOS VALLES DEL TUY','hm@hotmail.com','02125554433',NULL,NULL),(3,'Ytzali','Rodriguez','Charallave o Los Teques','yr@gmail.com','02125554433',NULL,NULL),(4,'Ytali','Rodriguez','Charallave o Los Teques','ytr@gmail.com','02125554433',NULL,NULL),(5,'LAURA','GONZALEZ','DOS CAMINOS','lg@gmail.com','02121234567','04149876543','02122345678');
 /*!40000 ALTER TABLE `contactos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +139,7 @@ CREATE TABLE `productos` (
   PRIMARY KEY (`id`),
   KEY `proveedor_id` (`proveedor_id`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'GE','AV.Lecuna','02124431234','info@ge.com'),(2,'MABE','AV.Romulo Gallegos','02122631234','info@mabe.com'),(3,'WHIRPOOL','AV. Francisco de Miranda','02122062140','info@whirpool.com'),(4,'SIRAGON','AV.Libertador','02127531234','info@siragon.com'),(5,'','AV.VICTORIA','02129998877','info@blanco.com'),(6,NULL,'AV. ROOSVELT','02128887766','info@nulo.com');
+INSERT INTO `proveedores` VALUES (1,'GE','AV. LECUNA','02124431234','info@ge.com'),(2,'MABE','AV. R?MULO GALLEGOS','02122631234','info@mabe.com'),(3,'WHIRPOOL','AV. FRANCISCO DE MIRANDA','02122062140','info@whirpool.com'),(4,'SIRAGON','AV. LIBERTADOR','02127531234','info@sirangon.com'),(5,'','AV. VICTORIA','02129998877','info@blanco.com'),(6,NULL,'AV. ROOSVELT','02128887766','info@nulo.com');
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +260,7 @@ CREATE TABLE `proveedores1` (
 
 LOCK TABLES `proveedores1` WRITE;
 /*!40000 ALTER TABLE `proveedores1` DISABLE KEYS */;
-INSERT INTO `proveedores1` VALUES (3,'WHIRPOOL','AV. Francisco de Miranda','02122062140','info@whirpool.com'),(4,'SIRAGON','AV.Libertador','02127531234','info@siragon.com'),(22,'MABE','AV.Romulo Gallegos','02122631234','info@mabe.com');
+INSERT INTO `proveedores1` VALUES (3,'WHIRPOOL','AV. FRANCISCO DE MIRANDA','02122062140','info@whirpool.com'),(4,'SIRAGON','AV. LIBERTADOR','02127531234','info@sirangon.com'),(22,'MABE','AV. R?MULO GALLEGOS','02122631234','info@mabe.com');
 /*!40000 ALTER TABLE `proveedores1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,7 +302,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `view_full_join_proveedores2_productos2` AS SELECT
  1 AS `proveedor`,
-  1 AS `productos`,
+  1 AS `producto`,
   1 AS `precio`,
   1 AS `existencia` */;
 SET character_set_client = @saved_cs_client;
@@ -317,7 +317,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `view_inner_join_proveedores2_productos2` AS SELECT
  1 AS `proveedor`,
-  1 AS `productos`,
+  1 AS `producto`,
   1 AS `precio`,
   1 AS `existencia` */;
 SET character_set_client = @saved_cs_client;
@@ -332,7 +332,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `view_left_join_proveedores2_productos2` AS SELECT
  1 AS `proveedor`,
-  1 AS `productos`,
+  1 AS `producto`,
   1 AS `precio`,
   1 AS `existencia` */;
 SET character_set_client = @saved_cs_client;
@@ -347,7 +347,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `view_right_join_proveedores2_productos2` AS SELECT
  1 AS `proveedor`,
-  1 AS `productos`,
+  1 AS `producto`,
   1 AS `precio`,
   1 AS `existencia` */;
 SET character_set_client = @saved_cs_client;
@@ -410,7 +410,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_full_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `productos`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` left join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) union select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `productos`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`productos2` left join `proveedores2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
+/*!50001 VIEW `view_full_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `producto`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` left join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) union select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `producto`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`productos2` left join `proveedores2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -428,7 +428,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_inner_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `productos`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
+/*!50001 VIEW `view_inner_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `producto`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -446,7 +446,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_left_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `productos`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` left join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
+/*!50001 VIEW `view_left_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `producto`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`proveedores2` left join `productos2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -464,7 +464,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_right_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `productos`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`productos2` left join `proveedores2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
+/*!50001 VIEW `view_right_join_proveedores2_productos2` AS select `proveedores2`.`nombre` AS `proveedor`,`productos2`.`nombre` AS `producto`,`productos2`.`precio` AS `precio`,`productos2`.`cantidad` AS `existencia` from (`productos2` left join `proveedores2` on(`proveedores2`.`id` = `productos2`.`proveedor_id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -532,4 +532,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-20 11:46:20
+-- Dump completed on 2025-09-20 11:44:08

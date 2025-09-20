@@ -1,0 +1,77 @@
+¡Claro\! Como experto en MySQL, te ayudaré a generar un script para cargar datos basándonos en el diagrama entidad-relación que proporcionaste.
+
+Aquí tienes un script de ejemplo que puedes adaptar. He incluido algunos datos de muestra para cada tabla, siguiendo las relaciones que se ven en el diagrama.
+
+```sql
+-- Desactivar temporalmente las comprobaciones de clave externa para facilitar la carga de datos
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ** Carga de datos para la tabla 'roles' **
+INSERT INTO `catalogo_profesor_bd`.`roles` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Administrador', 'Rol con permisos completos sobre el sistema'),
+(2, 'Cliente', 'Rol para usuarios que realizan compras'),
+(3, 'Editor', 'Rol con permisos para gestionar productos y categorías');
+
+-- ** Carga de datos para la tabla 'usuarios' **
+-- Asegúrate de que los IDs de 'rol_id' existan en la tabla 'roles'
+INSERT INTO `catalogo_profesor_bd`.`usuarios` (`id`, `correo`, `nombre`, `apellido`, `clave`, `rol_id`) VALUES
+(1, 'admin@example.com', 'Juan', 'Pérez', 'claveadmin', 1), -- Administrador
+(2, 'cliente1@example.com', 'María', 'Gómez', 'clavecliente1', 2), -- Cliente
+(3, 'editor@example.com', 'Pedro', 'López', 'claveeditor', 3); -- Editor
+
+-- ** Carga de datos para la tabla 'categorias' **
+INSERT INTO `catalogo_profesor_bd`.`categorias` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Electrónica', 'Dispositivos electrónicos y gadgets'),
+(2, 'Libros', 'Libros de diferentes géneros'),
+(3, 'Ropa', 'Artículos de vestir para hombre y mujer');
+
+-- ** Carga de datos para la tabla 'productos' **
+-- Asegúrate de que los IDs de 'categoria_id' existan en la tabla 'categorias'
+INSERT INTO `catalogo_profesor_bd`.`productos` (`id`, `nombre`, `cantidad`, `precio`, `descripcion`, `categoria_id`) VALUES
+(1, 'Laptop XYZ', 10, 1200.00, 'Potente laptop para trabajo y estudio', 1),
+(2, 'Smartphone ABC', 50, 600.00, 'Último modelo de smartphone con cámara avanzada', 1),
+(3, 'El Señor de los Anillos', 25, 25.50, 'Trilogía épica de fantasía', 2),
+(4, 'Camiseta Algodón', 100, 15.00, 'Camiseta básica de algodón 100%', 3);
+
+-- ** Carga de datos para la tabla 'calificaciones' **
+-- Asegúrate de que los IDs de 'usuario_id' y 'producto_id' existan
+INSERT INTO `catalogo_profesor_bd`.`calificaciones` (`id`, `usuario_id`, `producto_id`, `calificacion`, `fecha_hora`) VALUES
+(1, 2, 1, 5, NOW()), -- Cliente 2 califica Laptop XYZ con 5 estrellas
+(2, 2, 3, 4, NOW()), -- Cliente 2 califica El Señor de los Anillos con 4 estrellas
+(3, 1, 2, 3, NOW()); -- Admin 1 califica Smartphone ABC con 3 estrellas (solo por ejemplo, un admin podría no calificar)
+
+-- ** Carga de datos para la tabla 'imagenes' **
+-- Asegúrate de que los IDs de 'producto_id' existan en la tabla 'productos'
+INSERT INTO `catalogo_profesor_bd`.`imagenes` (`id`, `producto_id`, `ruta`, `descripcion`) VALUES
+(1, 1, '/img/laptop_xyz_1.jpg', 'Vista frontal de la Laptop XYZ'),
+(2, 1, '/img/laptop_xyz_2.jpg', 'Vista lateral de la Laptop XYZ'),
+(3, 2, '/img/smartphone_abc_1.jpg', 'Pantalla del Smartphone ABC'),
+(4, 3, '/img/libro_esdla.jpg', 'Portada de El Señor de los Anillos');
+
+-- ** Carga de datos para la tabla 'etiquetas' **
+-- Asegúrate de que los IDs de 'producto_id' existan en la tabla 'productos'
+INSERT INTO `catalogo_profesor_bd`.`etiquetas` (`id`, `producto_id`, `nombre`, `descripcion`) VALUES
+(1, 1, 'Oferta', 'Producto en oferta especial'),
+(2, 1, 'Nuevo', 'Producto recién llegado'),
+(3, 2, 'Tecnología', 'Relacionado con tecnología móvil'),
+(4, 3, 'Fantasía', 'Género literario de fantasía épica');
+
+
+-- Reactivar las comprobaciones de clave externa
+SET FOREIGN_KEY_CHECKS = 1;
+```
+
+**Consideraciones y cómo usar este script:**
+
+1.  **Nombre de la base de datos:** He asumido que tu base de datos se llama `catalogo_profesor_bd` como se ve en el diagrama. Si es diferente, deberás cambiarlo en cada `INSERT INTO` (aunque la mayoría de las veces se usa `USE nombre_de_tu_bd;` al principio del script para evitar esto).
+2.  **Orden de inserción:** Es crucial insertar los datos en el orden correcto para satisfacer las restricciones de clave externa. Primero las tablas "padre" (sin claves foráneas que apunten a otras tablas aún no pobladas), luego las "hijas". Mi script sigue este orden: `roles`, `usuarios`, `categorias`, `productos`, `calificaciones`, `imagenes`, `etiquetas`.
+3.  **Desactivar `FOREIGN_KEY_CHECKS`:** He incluido `SET FOREIGN_KEY_CHECKS = 0;` al principio y `SET FOREIGN_KEY_CHECKS = 1;` al final. Esto es útil para cargar grandes volúmenes de datos o cuando el orden de inserción es complejo y podría generar errores temporales de clave externa. Sin embargo, en un escenario de producción y con un script bien ordenado, a menudo no es estrictamente necesario, pero es una buena práctica de "seguridad" para la carga inicial.
+4.  **Datos de ejemplo:** Los datos son solo ejemplos. Deberás reemplazarlos con tus propios datos reales. Presta especial atención a los tipos de datos (strings, números, fechas) y las longitudes máximas.
+5.  **Contraseñas (`clave`):** En un entorno real, **nunca** almacenarías las contraseñas en texto plano. Se deben usar funciones de hash como `SHA2()` o `MD5()` (aunque MD5 ya no es recomendado por seguridad).
+      * Ejemplo: `INSERT INTO ... VALUES (..., SHA2('miclavesegura', 256));`
+6.  **`NOW()` para fechas:** He usado `NOW()` para la columna `fecha_hora` en `calificaciones` para insertar la fecha y hora actuales.
+7.  **Ejecución del script:**
+      * Puedes copiar y pegar este script directamente en un cliente MySQL como phpMyAdmin, MySQL Workbench, o la línea de comandos de MySQL.
+      * Desde la línea de comandos: `mysql -u tu_usuario -p tu_base_de_datos < tu_script.sql` (te pedirá la contraseña).
+
+Espero que este script te sea de gran utilidad para poblar tu base de datos. ¡Hazme saber si tienes alguna otra pregunta o necesitas alguna modificación\!

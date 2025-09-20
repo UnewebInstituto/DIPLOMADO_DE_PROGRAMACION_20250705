@@ -1,0 +1,98 @@
+¡Excelente\! Ahora sí tengo la definición completa de tu base de datos.
+
+Basado en las sentencias `CREATE TABLE`, `PRIMARY KEY`, `FOREIGN KEY` y `AUTO_INCREMENT` que me proporcionaste, he generado un script de carga de datos con ejemplos. He priorizado el orden de inserción para respetar las claves foráneas y he incluido contraseñas hasheadas (`SHA2`) para los usuarios, como buena práctica de seguridad.
+
+```sql
+-- SQL SCRIPT PARA CARGA DE DATOS DE EJEMPLO
+-- Base de datos: `catalogo_profesor_bd`
+
+-- Desactivar temporalmente las comprobaciones de clave externa para facilitar la carga de datos
+-- Esto es útil para evitar errores de referencia durante la inserción si el orden no es perfecto
+SET FOREIGN_KEY_CHECKS = 0;
+
+USE `catalogo_profesor_bd`;
+
+-- ** 1. Carga de datos para la tabla 'roles' **
+-- La tabla 'roles' no tiene claves foráneas y es referenciada por 'usuarios'.
+INSERT INTO `roles` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Administrador', 'Rol con permisos completos sobre el sistema, gestión de usuarios, productos, etc.'),
+(2, 'Cliente', 'Rol para usuarios que pueden ver productos, realizar compras y dejar calificaciones.'),
+(3, 'Invitado', 'Rol básico para usuarios no registrados con acceso limitado.');
+
+-- ** 2. Carga de datos para la tabla 'usuarios' **
+-- La tabla 'usuarios' tiene una clave foránea `rol_id` que referencia a `roles`.
+-- Las contraseñas están hasheadas con SHA256 (SHA2 con 256 bits) por seguridad.
+INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `apellido`, `clave`, `rol_id`) VALUES
+(1, 'admin@example.com', 'Juan', 'Pérez', SHA2('admin123', 256), 1), -- Administrador
+(2, 'maria.gomez@example.com', 'María', 'Gómez', SHA2('cliente123', 256), 2), -- Cliente
+(3, 'pedro.lopez@example.com', 'Pedro', 'López', SHA2('mipassword', 256), 2), -- Cliente
+(4, 'invitado@example.com', 'Ana', 'Martínez', SHA2('passinvitado', 256), 3); -- Invitado
+
+-- ** 3. Carga de datos para la tabla 'categorias' **
+-- La tabla 'categorias' no tiene claves foráneas y es referenciada por 'productos'.
+INSERT INTO `categorias` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Electrónica', 'Dispositivos electrónicos, gadgets y componentes.'),
+(2, 'Libros', 'Todo tipo de libros, desde ficción hasta técnicos.'),
+(3, 'Hogar y Cocina', 'Artículos para el hogar, utensilios de cocina y decoración.'),
+(4, 'Deportes', 'Equipamiento y accesorios deportivos.');
+
+-- ** 4. Carga de datos para la tabla 'productos' **
+-- La tabla 'productos' tiene una clave foránea `categoria_id` que referencia a `categorias`.
+INSERT INTO `productos` (`id`, `nombre`, `cantidad`, `precio`, `descripcion`, `categoria_id`) VALUES
+(101, 'Laptop Ultrabook X', 15, 1250.00, 'Laptop ultradelgada y potente con procesador de última generación.', 1),
+(102, 'Smart TV 4K 55"', 20, 780.50, 'Televisor inteligente 4K con Android TV y alta resolución.', 1),
+(103, 'El Quijote de la Mancha', 30, 18.75, 'Edición clásica de la obra maestra de Cervantes.', 2),
+(104, 'Set de Cuchillos Premium', 50, 45.99, 'Juego de cuchillos de acero inoxidable de alta calidad para la cocina.', 3),
+(105, 'Balón de Fútbol Profesional', 80, 29.90, 'Balón oficial de tamaño 5 para partidos y entrenamiento.', 4);
+
+-- ** 5. Carga de datos para la tabla 'calificaciones' **
+-- La tabla 'calificaciones' tiene claves foráneas `usuario_id` y `producto_id`.
+INSERT INTO `calificaciones` (`id`, `usuario_id`, `producto_id`, `calificacion`, `fecha_hora`) VALUES
+(1, 2, 101, 5, '2025-09-19 10:30:00'), -- María califica Laptop con 5
+(2, 3, 101, 4, '2025-09-20 11:15:30'), -- Pedro califica Laptop con 4
+(3, 2, 103, 5, '2025-09-21 14:00:00'), -- María califica El Quijote con 5
+(4, 3, 104, 3, '2025-09-22 09:00:00'); -- Pedro califica Set de Cuchillos con 3
+
+-- ** 6. Carga de datos para la tabla 'imagenes' **
+-- La tabla 'imagenes' tiene una clave foránea `producto_id`.
+INSERT INTO `imagenes` (`id`, `producto_id`, `nombre`, `ruta`, `descripcion`) VALUES
+(1, 101, 'laptop_front.jpg', '/uploads/images/laptop_front.jpg', 'Vista frontal de la Laptop Ultrabook X.'),
+(2, 101, 'laptop_keyboard.jpg', '/uploads/images/laptop_keyboard.jpg', 'Detalle del teclado de la Laptop Ultrabook X.'),
+(3, 102, 'tv_view.png', '/uploads/images/tv_view.png', 'Imagen del Smart TV 4K encendido.'),
+(4, 103, 'quijote_cover.jpg', '/uploads/images/quijote_cover.jpg', 'Portada del libro El Quijote de la Mancha.'),
+(5, 104, 'knives_set.jpeg', '/uploads/images/knives_set.jpeg', 'Juego completo de cuchillos en su base.');
+
+-- ** 7. Carga de datos para la tabla 'etiquetas' **
+-- La tabla 'etiquetas' tiene una clave foránea `producto_id`.
+INSERT INTO `etiquetas` (`id`, `producto_id`, `nombre`, `descripcion`) VALUES
+(1, 101, 'gaming', 'Ideal para juegos de alta demanda.'),
+(2, 101, 'trabajo', 'Perfecta para productividad y multitarea.'),
+(3, 102, 'entretenimiento', 'Experiencia visual y de audio inmersiva.'),
+(4, 103, 'clásico', 'Obra literaria de valor histórico.'),
+(5, 104, 'cocina profesional', 'Calidad de chef para el hogar.');
+
+-- Reactivar las comprobaciones de clave externa
+SET FOREIGN_KEY_CHECKS = 1;
+
+COMMIT;
+
+```
+
+**Notas importantes sobre este script:**
+
+1.  **`USE catalogo_profesor_bd;`**: He añadido esta línea para asegurarme de que las inserciones se realicen en la base de datos correcta, según la definición que proporcionaste.
+2.  **`AUTO_INCREMENT` y `id`**: Tus tablas están definidas con `AUTO_INCREMENT` para la columna `id`. Sin embargo, en un `INSERT` puedes especificar el `id` manualmente si tienes un valor específico que deseas usar (como hice en este script para mantener un orden y claridad en los ejemplos). Si omites la columna `id` de la lista de columnas en el `INSERT`, MySQL asignará automáticamente el siguiente valor. Para este script, los he especificado para facilitar la referencia en las claves foráneas.
+3.  **Contraseñas (`clave`)**: Tal como mencioné antes, he utilizado `SHA2('tu_contraseña', 256)` para hashear las contraseñas. **Esto es una buena práctica de seguridad.** Nunca uses contraseñas en texto plano en una base de datos real.
+4.  **`fecha_hora`**: La columna `fecha_hora` en `calificaciones` tiene un `DEFAULT current_timestamp()`. Esto significa que si no la especificas en el `INSERT`, se usará la fecha y hora actuales. En el script, las he especificado explícitamente para los ejemplos.
+5.  **Orden de inserción**: El script está diseñado para insertar datos en un orden que respete las dependencias de claves foráneas:
+      * `roles` (no depende de nadie)
+      * `usuarios` (depende de `roles`)
+      * `categorias` (no depende de nadie)
+      * `productos` (depende de `categorias`)
+      * `calificaciones` (depende de `usuarios` y `productos`)
+      * `imagenes` (depende de `productos`)
+      * `etiquetas` (depende de `productos`)
+6.  **`SET FOREIGN_KEY_CHECKS = 0;` / `SET FOREIGN_KEY_CHECKS = 1;`**: Estas líneas son cruciales. Temporalmente desactivan las comprobaciones de claves foráneas, lo que permite insertar datos en tablas "hijas" antes que en sus tablas "padre" si fuera necesario, sin que MySQL arroje errores. Luego se reactivan.
+7.  **Datos de ejemplo**: Todos los datos son inventados. Asegúrate de reemplazarlos con información real cuando prepares tu base de datos para producción.
+
+Este script debería ser funcional para cargar datos de ejemplo en tu esquema de base de datos. ¡Si tienes alguna otra consulta, no dudes en preguntar\!

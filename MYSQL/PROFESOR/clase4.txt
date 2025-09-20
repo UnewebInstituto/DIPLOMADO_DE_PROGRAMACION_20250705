@@ -1,0 +1,607 @@
+
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases
+    -> ;
++--------------------------+
+| Database                 |
++--------------------------+
+| bd1_airon_20250830       |
+| bd1_barbara_20250830     |
+| bd1_daniel_20250913      |
+| bd1_ismael_20250913      |
+| bd1_movi_30482481        |
+| bd1_profesor_20250830    |
+| bd1_ricardo_20250830     |
+| bd1_ytzali_20250830      |
+| bd_airon_20250830        |
+| bd_barbara_20250830      |
+| bd_carrito_henry         |
+| bd_carrito_henry_restore |
+| bd_carrito_jose          |
+| bd_carrito_navileth      |
+| bd_carrito_nelson        |
+| bd_daniel_20250830       |
+| bd_frayner_20250830      |
+| bd_ismael_20250830       |
+| bd_movi_30482481         |
+| bd_nelly_20250830        |
+| bd_profesor_20250830     |
+| bd_ricardo_20250830      |
+| bd_ricardo_20253008      |
+| bd_ytzali_20250830       |
+| information_schema       |
+| mysql                    |
+| performance_schema       |
+| phpmyadmin               |
+| ricardo_20253008         |
+| test                     |
++--------------------------+
+30 rows in set (0.007 sec)
+
+MariaDB [(none)]> use bd_profesor_20250830
+Database changed
+MariaDB [bd_profesor_20250830]> show tables;
++--------------------------------+
+| Tables_in_bd_profesor_20250830 |
++--------------------------------+
+| alumnos                        |
+| alumnos_asignaturas            |
+| asignaturas                    |
+| contactos                      |
+| productos                      |
+| productos1                     |
+| proveedores                    |
+| proveedores1                   |
+| vista_proveedores_productos    |
+| vista_resumen_marcas           |
+| vista_resumen_productos        |
++--------------------------------+
+11 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> SELECT * FROM PROVEEDORES;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
+|  5 |          | AV. VICTORIA             | 02129998877 | info@blanco.com    |
+|  6 | NULL     | AV. ROOSVELT             | 02128887766 | info@nulo.com      |
++----+----------+--------------------------+-------------+--------------------+
+6 rows in set (0.003 sec)
+
+MariaDB [bd_profesor_20250830]> create table proveedores2(
+    ->     id integer AUTO_INCREMENT,
+    ->     nombre varchar(30),
+    ->     direccion text,
+    ->     telefono varchar(30),
+    ->     correo_electronico text,
+    ->     primary key(id),
+    ->     unique(correo_electronico)
+    -> );
+Query OK, 0 rows affected (0.223 sec)
+
+MariaDB [bd_profesor_20250830]> -- DECLARACIÓN DE LA TABLA PRODUCTOS
+MariaDB [bd_profesor_20250830]> create table productos2(
+    ->     id integer AUTO_INCREMENT,
+    ->     proveedor_id integer,
+    ->     nombre varchar(30),
+    ->     precio decimal(13,2),
+    ->     cantidad integer,
+    ->     primary key(id)
+    -> );
+Query OK, 0 rows affected (0.177 sec)
+
+MariaDB [bd_profesor_20250830]> INSERT INTO proveedores2(nombre, direccion, correo_electronico, telefono)
+    -> values
+    -> ('GE','AV. LECUNA','info@ge.com','02124431234'),
+    -> ('MABE','AV. RÓMULO GALLEGOS','info@mabe.com','02122631234'),
+    -> ('WHIRPOOL','AV. FRANCISCO DE MIRANDA','info@whirpool.com','02122062140'),
+    -> ('SIRAGON','AV. LIBERTADOR','info@sirangon.com','02127531234'),
+    -> ('LG','AV. PRESIDENTE MEDINA','info@lg.com','02123631234'),
+    -> ('DAMASCO','AV. ROOSVELT','info@damasco.com','02124062140'),
+    -> ('HIER','AV. PPAL. DEL VALLE','info@hier.com','02127531234');
+Query OK, 7 rows affected, 1 warning (0.004 sec)
+Records: 7  Duplicates: 0  Warnings: 1
+
+MariaDB [bd_profesor_20250830]> select * from proveedores2;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@ge.com        |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sirangon.com  |
+|  5 | LG       | AV. PRESIDENTE MEDINA    | 02123631234 | info@lg.com        |
+|  6 | DAMASCO  | AV. ROOSVELT             | 02124062140 | info@damasco.com   |
+|  7 | HIER     | AV. PPAL. DEL VALLE      | 02127531234 | info@hier.com      |
++----+----------+--------------------------+-------------+--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]> INSERT INTO productos2(proveedor_id, nombre, precio, cantidad)
+    -> values
+    -> (1,'NEVERA',500.25,6),
+    -> (1,'COCINA A GAS',300.75,12),
+    -> (1,'LAVADORA',350.50,3),
+    -> (1,'SECADORA',750.00,3),
+    -> (2,'AIRE ACONDICIONADO',450.75,4),
+    -> (2,'COCINA ELECTRICA',425.00,2),
+    -> (3,'LAVADORA',700.00,6),
+    -> (3,'CONGELADOR',250.75,5),
+    -> (4,'NEVERA',650.25,9),
+    -> (4,'COCINA A GAS',280.75,6),
+    -> (4,'LAVADORA',450.50,5),
+    -> (4,'SECADORA',550.00,5),
+    -> (99,'NEVERA',650.25,9),
+    -> (100,'COCINA A GAS',280.75,6),
+    -> (101,'LAVADORA',450.50,5),
+    -> (102,'SECADORA',550.00,5);
+Query OK, 16 rows affected (0.003 sec)
+Records: 16  Duplicates: 0  Warnings: 0
+
+MariaDB [bd_profesor_20250830]> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        inner join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+12 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> use bd_daniel_20250830;
+Database changed
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  8 | GE       | AV. LECUNA               | 02124431234 | info@maria.com     |
+|  9 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+| 10 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+| 11 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sira.com      |
+| 12 | DAMASCO  | AV. PRADOS DEL ESTE      | 02124431234 | info@muy.com       |
+| 13 | HIER     | AV. ANDRES BELLO         | 02122631234 | info@hier.com      |
+| 14 | SIRAGON  | AV. cCANDELARIA          | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from productos2;
++----+--------------+--------------------+--------+----------+
+| id | proveedor_id | nombre             | precio | cantidad |
++----+--------------+--------------------+--------+----------+
+|  1 |            1 | NEVERA             | 500.25 |        6 |
+|  2 |            1 | COCINA A GAS       | 300.75 |       12 |
+|  3 |            1 | LAVADORA           | 350.50 |        3 |
+|  4 |            1 | SECADORA           | 750.00 |        3 |
+|  5 |            2 | AIRE ACONDICIONADO | 450.75 |        4 |
+|  6 |            2 | COCINA ELECTRICA   | 425.00 |        2 |
+|  7 |            3 | LAVADORA           | 700.00 |        6 |
+|  8 |            3 | CONGELADOR         | 250.75 |        5 |
+|  9 |            4 | NEVERA             | 650.25 |        9 |
+| 10 |            4 | COCINA A GAS       | 280.75 |        6 |
+| 11 |            4 | LAVADORA           | 450.50 |        5 |
+| 12 |            4 | SECADORA           | 550.00 |        5 |
+| 13 |           99 | NEVERA             | 650.25 |        9 |
+| 14 |          100 | COCINA A GAS       | 280.75 |        6 |
+| 15 |          101 | LAVADORA           | 450.50 |        5 |
+| 16 |          102 | SECADORA           | 550.00 |        5 |
++----+--------------+--------------------+--------+----------+
+16 rows in set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
+Empty set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> select * from proveedores2;
++----+----------+--------------------------+-------------+--------------------+
+| id | nombre   | direccion                | telefono    | correo_electronico |
++----+----------+--------------------------+-------------+--------------------+
+|  1 | GE       | AV. LECUNA               | 02124431234 | info@maria.com     |
+|  2 | MABE     | AV. R?MULO GALLEGOS      | 02122631234 | info@mabe.com      |
+|  3 | WHIRPOOL | AV. FRANCISCO DE MIRANDA | 02122062140 | info@whirpool.com  |
+|  4 | SIRAGON  | AV. LIBERTADOR           | 02127531234 | info@sira.com      |
+|  5 | DAMASCO  | AV. PRADOS DEL ESTE      | 02124431234 | info@muy.com       |
+|  6 | HIER     | AV. ANDRES BELLO         | 02122631234 | info@hier.com      |
+|  7 | SIRAGON  | AV. cCANDELARIA          | 02127531234 | info@sirangon.com  |
++----+----------+--------------------------+-------------+--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [bd_daniel_20250830]> CREATE VIEW view_inner_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        inner join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [bd_daniel_20250830]>
+MariaDB [bd_daniel_20250830]> drop view view_inner_join_proveedores2_produtos2;
+ERROR 4092 (42S02): Unknown VIEW: 'bd_daniel_20250830.view_inner_join_proveedores2_produtos2'
+MariaDB [bd_daniel_20250830]> drop view view_inner_join_proveedores2_productos2;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [bd_daniel_20250830]> use bd_profesor_20250830;
+Database changed
+MariaDB [bd_profesor_20250830]> CREATE VIEW view_inner_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        inner join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> show tables;
++-----------------------------------------+
+| Tables_in_bd_profesor_20250830          |
++-----------------------------------------+
+| alumnos                                 |
+| alumnos_asignaturas                     |
+| asignaturas                             |
+| contactos                               |
+| productos                               |
+| productos1                              |
+| productos2                              |
+| proveedores                             |
+| proveedores1                            |
+| proveedores2                            |
+| view_inner_join_proveedores2_productos2 |
+| vista_proveedores_productos             |
+| vista_resumen_marcas                    |
+| vista_resumen_productos                 |
++-----------------------------------------+
+14 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> select * from view_inner_join_proveedores2_productos2;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+12 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        left join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| LG        | NULL               |   NULL |       NULL |
+| DAMASCO   | NULL               |   NULL |       NULL |
+| HIER      | NULL               |   NULL |       NULL |
++-----------+--------------------+--------+------------+
+15 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> CREATE VIEW view_left_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        inner join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> select * from view_left_join_proveedores2_productos2;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+12 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> drop view view_left_join_proveedores2_productos2;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> CREATE VIEW view_left_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        left join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> select * from view_left_join_proveedores2_productos2;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| LG        | NULL               |   NULL |       NULL |
+| DAMASCO   | NULL               |   NULL |       NULL |
+| HIER      | NULL               |   NULL |       NULL |
++-----------+--------------------+--------+------------+
+15 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        right join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| NULL      | NEVERA             | 650.25 |          9 |
+| NULL      | COCINA A GAS       | 280.75 |          6 |
+| NULL      | LAVADORA           | 450.50 |          5 |
+| NULL      | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+16 rows in set (0.000 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> CREATE VIEW view_right_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        right join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [bd_profesor_20250830]> select * from view_right_join_proveedores2_productos2;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| NULL      | NEVERA             | 650.25 |          9 |
+| NULL      | COCINA A GAS       | 280.75 |          6 |
+| NULL      | LAVADORA           | 450.50 |          5 |
+| NULL      | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+16 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> show tables;
++-----------------------------------------+
+| Tables_in_bd_profesor_20250830          |
++-----------------------------------------+
+| alumnos                                 |
+| alumnos_asignaturas                     |
+| asignaturas                             |
+| contactos                               |
+| productos                               |
+| productos1                              |
+| productos2                              |
+| proveedores                             |
+| proveedores1                            |
+| proveedores2                            |
+| view_inner_join_proveedores2_productos2 |
+| view_left_join_proveedores2_productos2  |
+| view_right_join_proveedores2_productos2 |
+| vista_proveedores_productos             |
+| vista_resumen_marcas                    |
+| vista_resumen_productos                 |
++-----------------------------------------+
+16 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]>
+MariaDB [bd_profesor_20250830]> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        left join productos2
+    ->        on proveedores2.id = productos2.proveedor_id
+    -> UNION
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        right join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| LG        | NULL               |   NULL |       NULL |
+| DAMASCO   | NULL               |   NULL |       NULL |
+| HIER      | NULL               |   NULL |       NULL |
+| NULL      | NEVERA             | 650.25 |          9 |
+| NULL      | COCINA A GAS       | 280.75 |          6 |
+| NULL      | LAVADORA           | 450.50 |          5 |
+| NULL      | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+19 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> CREATE VIEW view_full_join_proveedores2_productos2 as
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        left join productos2
+    ->        on proveedores2.id = productos2.proveedor_id
+    -> UNION
+    -> SELECT PROVEEDORES2.NOMBRE as proveedor,
+    ->        PRODUCTOS2.NOMBRE as producto,
+    ->        PRODUCTOS2.PRECIO as precio,
+    ->        PRODUCTOS2.CANTIDAD as existencia
+    ->        from proveedores2
+    ->        right join productos2
+    ->        on proveedores2.id = productos2.proveedor_id;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [bd_profesor_20250830]> show tables;
++-----------------------------------------+
+| Tables_in_bd_profesor_20250830          |
++-----------------------------------------+
+| alumnos                                 |
+| alumnos_asignaturas                     |
+| asignaturas                             |
+| contactos                               |
+| productos                               |
+| productos1                              |
+| productos2                              |
+| proveedores                             |
+| proveedores1                            |
+| proveedores2                            |
+| view_full_join_proveedores2_productos2  |
+| view_inner_join_proveedores2_productos2 |
+| view_left_join_proveedores2_productos2  |
+| view_right_join_proveedores2_productos2 |
+| vista_proveedores_productos             |
+| vista_resumen_marcas                    |
+| vista_resumen_productos                 |
++-----------------------------------------+
+17 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]> select * from view_full_join_proveedores2_productos2;
++-----------+--------------------+--------+------------+
+| proveedor | producto           | precio | existencia |
++-----------+--------------------+--------+------------+
+| GE        | NEVERA             | 500.25 |          6 |
+| GE        | COCINA A GAS       | 300.75 |         12 |
+| GE        | LAVADORA           | 350.50 |          3 |
+| GE        | SECADORA           | 750.00 |          3 |
+| MABE      | AIRE ACONDICIONADO | 450.75 |          4 |
+| MABE      | COCINA ELECTRICA   | 425.00 |          2 |
+| WHIRPOOL  | LAVADORA           | 700.00 |          6 |
+| WHIRPOOL  | CONGELADOR         | 250.75 |          5 |
+| SIRAGON   | NEVERA             | 650.25 |          9 |
+| SIRAGON   | COCINA A GAS       | 280.75 |          6 |
+| SIRAGON   | LAVADORA           | 450.50 |          5 |
+| SIRAGON   | SECADORA           | 550.00 |          5 |
+| LG        | NULL               |   NULL |       NULL |
+| DAMASCO   | NULL               |   NULL |       NULL |
+| HIER      | NULL               |   NULL |       NULL |
+| NULL      | NEVERA             | 650.25 |          9 |
+| NULL      | COCINA A GAS       | 280.75 |          6 |
+| NULL      | LAVADORA           | 450.50 |          5 |
+| NULL      | SECADORA           | 550.00 |          5 |
++-----------+--------------------+--------+------------+
+19 rows in set (0.001 sec)
+
+MariaDB [bd_profesor_20250830]>

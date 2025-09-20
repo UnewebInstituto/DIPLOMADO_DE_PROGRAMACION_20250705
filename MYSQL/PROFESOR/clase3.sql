@@ -215,7 +215,7 @@ insert into alumnos_asignaturas
     (6,4),
     (7,4);
 
--- CONUSULTA COMBINADA DE LAS 3 TABLAS
+-- CONSULTA COMBINADA DE LAS 3 TABLAS
 SELECT alumnos.nombre,
        alumnos.apellido,
        asignaturas.nombre
