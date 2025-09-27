@@ -1,0 +1,51 @@
+bvillasmils27@gmail.com;
+ytzalijimenez@gmail.com;
+airon03ortega@gmail.com;
+frayner.y.13@gmail.com;
+rojasdaniel424@gmail.com;
+liunyenelya@gmail.com;
+
+ALGORITMO:
+Es un conjunto de pasos, escrito en lenguaje natural,
+donde se describe la secuencia para solucionar un problema o alcanzar un objetivo.
+Ejemplos de algoritmo:
+- Recetas de cocina.
+- Procedimientos de ensamblaje.
+- Guías de paso a paso.
+- Otras.
+Se refiere entonces a cualquier procedimiento o guía de instrucciones para realizar una tarea.
+
+CPU: UNIDAD CENTRAL DE PROCESAMIENTO
+
+Gestiona:
+- ALU: UNIDAD LÓGICA Y ARITMÉTICA.
+- CU: UNIDAD DE CONTROL.
+- MU: UNIDAD DE MEMORIA.
+    Gestiona:
+    * DISPOSITIVOS DE ALMACENAMIENTO PRIMARIOS:
+        +ROM: MEMORIA DE SÓLO LECTURA
+        +RAM: MEMORIA DE ACCESO ALEATORIO.
+    * DISPOSITIVOS DE ALMACENAMIENTO SECUNDARIOS:
+        +DISCO DURO.
+        +MEMORIAS SD.
+        +DVD, CD, CARTUCHOS DE CINTA.
+    
+
+Tipos de datos
+https://en.wikipedia.org/wiki/Data_type
+
+Declaración de variables:
+
+Operador de asignación: Es una flecha en sentido derecha, izquierda
+donde a la derecha se encuentra el valor y a la izquierda el nombre
+de la variable
+
+
+
+
+
+
+
+
+
+

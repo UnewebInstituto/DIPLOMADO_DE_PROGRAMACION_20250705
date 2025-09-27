@@ -1,0 +1,4 @@
+* tipos de datos en computación.
+https://en.wikipedia.org/wiki/Data_type
+
+*

@@ -1,0 +1,28 @@
+Algoritmo:
+Es un conjunto de pasos escritos en lenguaje natural donde se describe la secuencia para solucionar un problema o alcanzar un objetivo.
+
+Ejemplos de Algoritmo:
+recetas de cocina
+procedimientos de ensamblaje
+guias paso a paso.
+otras
+
+Se refiere entonces a cualquier procedimineto escrito o guia de instrucciones para realizar una tarea.
+
+CPU: Central Proccess Unit
+Gestiona:
+Unidad logica y aritmetica
+Unidad de Control
+Unidad de Memoria
+    Gestiona:
+        Dispositivo de Alamacenamiento primarios:
+            ROM: Read only Memory
+            RAM: Random Access Memory
+        Dispositivo de Alamacenamiento secundarios:
+            Disco Duros
+            Memorias SD            
+
+Declaracion de Variables
+
+Operador de Asignación:
+Es una flecha en sentido derecha a izquierda donde a la derecha se encuentra el valor y a la izquierda el nombre de la variable

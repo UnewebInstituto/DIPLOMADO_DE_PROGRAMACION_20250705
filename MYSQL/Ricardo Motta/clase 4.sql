@@ -84,11 +84,75 @@ select PROVEEDORES2.NOMBRE as proveedor,
        PRODUCTOS2.PRECIO as precio,
        PRODUCTOS2.CANTIDAD as existencia
        from proveedores2
-       INNER JOIN productos2
+       LEFT JOIN productos2
        on proveedores2.id = productos2.proveedor_id;
 
 
 
 --RIGHT JOIN
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       RIGHT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id;
+
+--Vista a partir de la consulta right Join
+create view view_right_join_proveedores2_productos2 as
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       RIGHT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id;
+
 
 --FULL JOIN
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       LEFT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id
+UNION
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       RIGHT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id;
+
+--Vista a partir de la consulta full Join
+create view view_full_join_proveedores2_productos2 as
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       LEFT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id
+UNION
+select PROVEEDORES2.NOMBRE as proveedor,
+       PRODUCTOS2.NOMBRE as productos,
+       PRODUCTOS2.PRECIO as precio,
+       PRODUCTOS2.CANTIDAD as existencia
+       from proveedores2
+       RIGHT JOIN productos2
+       on proveedores2.id = productos2.proveedor_id;
+
+--Nombre Base de Datos
+--bd_catalogo_ricardo
+
+--Productos debe tener: id, nombre, precio, descripcion, categoria_id, cantidad
+--categrias debe tener: id, nombre y descripcion
+--imagenes: id, nombre, ruta, descripcion, producto_id 
+--etiqueta: id, producto_id, nombre, descripcion.
+--usuarios: id, correo, nombre, apellido, clave, rol_id.
+--roles: id, nombre, descripcion
+
+
+       
