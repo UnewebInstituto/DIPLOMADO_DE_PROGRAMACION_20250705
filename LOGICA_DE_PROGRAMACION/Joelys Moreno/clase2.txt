@@ -1,0 +1,29 @@
+Estructuras de control multiples
+
+SEGUN 
+*****
+Equivalente en lenguaje de programacion como Java, Javascript, C como 
+Switch
+
+Segun Variable 
+    Caso Valor1:
+        accion 1
+        accion 2
+    Caso Valor2:
+        accion 3
+        accion 4
+    En otro caso:
+
+Todo programa contiene la siguiente estructura.
+
+1 declaracion de librerias o dependencias a incluir o importar
+2 Declaracion de funciones
+3 Declracion de Variables
+4 Declaracion del cuerpo principal del programa
+
+Declaracion de funciones rn PseInt
+
+funcion variable_de_retorno <- nombre_funcion(arg1, arg2, argN)
+
+acciones
+fin funcion
