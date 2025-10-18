@@ -1,0 +1,118 @@
+ORDENAMIENTO DE ARREGLOS
+https://es.wikipedia.org/wiki/Algoritmo_de_ordenamiento
+
+
+https://es.wikipedia.org/wiki/Ordenamiento_de_burbuja
+
+
+
+¡Hola\! Asumo mi rol como **experto en PSeInt** con la versión **20240122** (con componentes clave como PSeInt **20230904-w32-wx3**). Me enfocaré en la **definición y uso de procesos** (también conocidos como **subprocesos** o **funciones**) en este entorno.
+
+-----
+
+## 🧐 Definición de Procesos en PSeInt
+
+En PSeInt, un **Proceso** (o **Subproceso**) es un bloque de código que realiza una tarea específica y que puede ser llamado desde el proceso principal (o desde otro subproceso). Permite dividir un programa complejo en partes más pequeñas, **modulares y reutilizables**.
+
+El uso de subprocesos se alinea con el concepto de **programación modular**, lo que mejora la **legibilidad**, el **mantenimiento** y la **eficiencia** del código.
+
+### Sintaxis de Definición
+
+La sintaxis básica para definir un subproceso es:
+
+```pseint
+SubProceso [variable_retorno] <- NombreDelProceso ( [argumento1, argumento2, ...] )
+    // Cuerpo del subproceso: instrucciones a ejecutar
+    [variable_retorno] <- valor_a_retornar; // Si el subproceso retorna un valor
+FinSubProceso
+```
+
+**Elementos clave de la definición:**
+
+| Elemento | Descripción |
+| :--- | :--- |
+| **`SubProceso`** | Palabra clave que marca el inicio de la definición. |
+| **`[variable_retorno] <-`** | **(Opcional)** Si el subproceso va a **retornar un valor**, se especifica una variable local donde se almacenará el resultado. El subproceso puede omitir este retorno, actuando como un **procedimiento**. |
+| **`NombreDelProceso`** | Identificador único para el subproceso. |
+| **`( [argumentos] )`** | **(Opcional)** Lista de **parámetros** (variables de entrada) que el subproceso necesita para operar. Van separados por comas. |
+| **`FinSubProceso`** | Palabra clave que marca el final de la definición. |
+
+-----
+
+## ⚙️ Uso de Procesos (Llamada)
+
+Una vez definido, el subproceso puede ser **llamado** (o **invocado**) desde el **Proceso principal** o desde cualquier otro subproceso definido. La forma de llamarlo depende de si el subproceso retorna un valor o no.
+
+### 1\. Llamada a un Procedimiento (Sin Retorno)
+
+Si el subproceso no retorna un valor (es decir, funciona como un **procedimiento**), se llama directamente:
+
+```pseint
+NombreDelProceso(valor1, valor2, ...);
+```
+
+**Ejemplo:**
+
+```pseint
+Proceso Principal
+    MostrarSaludo("Ana");
+FinProceso
+
+SubProceso MostrarSaludo (nombre)
+    Escribir "Hola, ", nombre, ". Bienvenido(a) a PSeInt.";
+FinSubProceso
+```
+
+### 2\. Llamada a una Función (Con Retorno)
+
+Si el subproceso retorna un valor (es decir, funciona como una **función**), su llamada se debe asignar a una variable o usar directamente en una expresión:
+
+```pseint
+variable_resultado <- NombreDelProceso(valor1, valor2, ...);
+```
+
+**Ejemplo:**
+
+```pseint
+Proceso Principal
+    Definir num1, num2, resultado Como Entero;
+    num1 <- 10;
+    num2 <- 5;
+    resultado <- Sumar(num1, num2);
+    Escribir "La suma es: ", resultado;
+FinProceso
+
+SubProceso res <- Sumar (a, b)
+    res <- a + b;
+FinSubProceso
+```
+
+**Nota Importante:** En PSeInt, tanto los procedimientos como las funciones se definen con la palabra clave `SubProceso`. La diferencia radica en si se especifica la variable de retorno (`res <- SubProceso...`) o no.
+
+-----
+
+## 🔄 Alcance de Variables (Ámbito)
+
+Es crucial entender el **alcance** o **ámbito** de las variables en relación con los procesos:
+
+  * **Variables Globales:** En PSeInt, **no existen variables globales explícitas** declaradas fuera de un proceso. Las variables que se definen **dentro** del Proceso principal o de un Subproceso son **locales** a ese bloque.
+  * **Variables Locales:** Una variable definida **dentro** de un proceso o subproceso (incluyendo los parámetros recibidos) solo existe y puede ser utilizada **dentro de ese bloque de código**.
+  * **Paso de Argumentos (Parámetros):** PSeInt utiliza el **paso por valor** por defecto para los argumentos, lo que significa que la subrutina recibe una **copia** del valor del argumento. No obstante, permite configurar el **paso por referencia** (si está habilitado en la configuración) para que el subproceso pueda modificar la variable original que fue pasada.
+
+**Ejemplo de Ámbito:**
+
+```pseint
+Proceso Principal
+    Definir a Como Entero;
+    a <- 5;
+    LlamarProceso(a); // Se pasa el valor 5
+    Escribir "En Principal, 'a' sigue siendo: ", a; // a es 5 (paso por valor por defecto)
+FinProceso
+
+SubProceso LlamarProceso (x)
+    // x es una copia de 'a' de Principal, es una variable local
+    x <- 10;
+    Escribir "En SubProceso, 'x' es: ", x; // x es 10
+FinSubProceso
+```
+

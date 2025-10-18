@@ -1,0 +1,177 @@
+Continuación de funciones
+
+¡Absolutamente\! Asumiendo mi rol de experto en PSeInt, el error que experimenta tu algoritmo en la **Línea 34 (inst 1): ERROR 125: No coinciden los tipos** es un problema clásico de **inconsistencia de tipos de datos** entre el valor de retorno de una función y la variable que intenta almacenarlo.
+
+El problema principal radica en cómo manejas la función `calcular_dividir` y cómo su resultado se asigna dentro del cuerpo del algoritmo principal.
+
+-----
+
+## 🔍 Análisis del Error y Solución
+
+El error se genera en la línea donde se llama a la función `calcular_dividir`:
+
+```pseint
+// Dentro del Algoritmo Principal 'Ejemplo17_Calculadora'
+// ...
+4:
+    resultado <- calcular_dividir(n1,n2) // Línea 34 (inst 1)
+// ...
+```
+
+### 1\. Inconsistencia de Tipos
+
+| Elemento | Tipo Declarado | Observación |
+| :--- | :--- | :--- |
+| **Variable `resultado`** | `Como Real` | Declarada en el `Algoritmo Ejemplo17_Calculadora`. |
+| **Función `calcular_dividir`** | **`Como Caracter`** | El rendimiento (`dividir`) está definido como `Caracter`. |
+
+Cuando PSeInt intenta asignar el resultado de `calcular_dividir` (que es un **Caracter**) a la variable `resultado` (que es **Real**), se produce el **Error 125: No coinciden los tipos**.
+
+### 2\. La Raíz del Problema en `calcular_dividir`
+
+La función `calcular_dividir` fue diseñada para devolver un `Caracter` porque maneja el caso de división por cero devolviendo la cadena **'Infinito'**:
+
+```pseint
+Funcion dividir <- calcular_dividir(arg_n1, arg_n2)
+	// ...
+	Definir dividir Como caracter  // <--- ¡Aquí está el origen!
+	Definir calculo Como Real
+	si arg_n2 = 0 Entonces
+		dividir <- 'Infinito' // Caracter
+	sino 
+		calculo <- arg_n1 / arg_n2
+		dividir <- ConvertirATexto(calculo) // Caracter
+	FinSi
+FinFuncion
+```
+
+### 3\. Soluciones Sugeridas
+
+Hay dos enfoques principales para resolver esto:
+
+#### Opción A: Devolver un Indicador Numérico de Error (Recomendada para consistencia)
+
+Modifica la función `calcular_dividir` para que siempre devuelva un valor **Real**. En el caso de división por cero, puedes devolver un valor especial que sepas que indica un error (por ejemplo, el **cero** o un número **negativo muy grande** si las entradas son positivas).
+
+**Modificación a la Función:**
+
+```pseint
+Funcion dividir <- calcular_dividir(arg_n1, arg_n2)
+	// Cambiamos el tipo de rendimiento a Real
+	Definir dividir Como Real 
+	si arg_n2 = 0 Entonces
+		dividir <- 0 // Usamos 0 como indicador de error para la división por cero
+	sino 
+		dividir <- arg_n1 / arg_n2
+	FinSi
+FinFuncion
+```
+
+**Modificación al Algoritmo Principal:**
+
+Además de esto, tendrás que **manejar el error de división por cero** en el algoritmo principal antes de imprimir el resultado:
+
+```pseint
+// ...
+			4:
+				resultado <- calcular_dividir(n1,n2)
+				Si n2 = 0 Entonces
+					mensaje <- 'El resultado es: Infinito (División por Cero)'
+				Sino
+					mensaje <- 'El resultado es: ' + ConvertirATexto(resultado)
+				FinSi
+			// ...
+		FinSegun
+		Escribir mensaje // Escribimos el mensaje que ya tiene el resultado o el error
+		// ...
+```
+
+#### Opción B: Cambiar la Lógica del Programa Principal (Más compleja)
+
+Esta opción implica que el `Segun` del programa principal no asigne nada a `resultado` cuando llama a funciones que devuelven un `Caracter` (como `calcular_dividir` y `error`), sino que asigne un **mensaje de texto** a una variable de tipo `Caracter` que luego será impresa.
+
+**Modificación a la Función `error` y `calcular_potencia` (Necesario por la misma inconsistencia):**
+
+La función `error` también devuelve un `Caracter` y su resultado se está asignando a `resultado` que es `Real`. **La función `calcular_potencia` también tiene un problema** ya que devuelve un `Entero` y se asigna a `resultado` (`Real`), aunque PSeInt generalmente tolera esto.
+
+**Corrección Global Sugerida (Aplicando el concepto de manejo de errores fuera del `resultado`):**
+
+Para simplificar y corregir todos los errores de tipo:
+
+1.  **Mantener `resultado` (Real)** para operaciones matemáticas.
+2.  **Usar una variable `mensaje` (Caracter)** para mostrar la salida, incluyendo errores y resultados de texto (como la división por cero).
+
+**Modificaciones clave:**
+
+1.  **Función `calcular_dividir`:** Debe devolver un `Real` o un valor de error numérico. Vamos a hacer que devuelva un valor irreal, como **-9999**, para indicar un error, y luego lo comprobamos en el principal.
+
+    ```pseint
+    Funcion dividir <- calcular_dividir(arg_n1, arg_n2)
+    	Definir dividir Como Real
+    	si arg_n2 = 0 Entonces
+    		dividir <- -9999 // Indicador de error numérico
+    	sino 
+    		dividir <- arg_n1 / arg_n2
+    	FinSi
+    FinFuncion
+    ```
+
+2.  **Función `error`:** Debe devolver un `Real` para no causar error de tipos al asignarse a `resultado`.
+
+    ```pseint
+    Funcion condicion_de_error <- error(arg_n1,arg_n2)
+    	Definir condicion_de_error Como Real // Cambiamos a Real
+    	condicion_de_error <- -12345 // Indicador de error numérico
+    FinFuncion
+    ```
+
+3.  **Algoritmo Principal (`Ejemplo17_Calculadora`):** Se verifica el valor devuelto para generar el mensaje final.
+
+    ```pseint
+    Algoritmo Ejemplo17_Calculadora
+    	// ...
+    	Definir resultado Como Real
+    	Definir mensaje_final Como Caracter // Nueva variable para el mensaje
+    	// ...
+    	Mientras Mayusculas(continuar) = 'S' Hacer
+    		// ... lectura de n1, n2, operacion
+    		Segun operacion hacer
+    			1:
+    				resultado <- calcular_sumar(n1,n2)
+    				mensaje_final <- 'El resultado es: ' + ConvertirATexto(resultado)
+    			2:
+    				resultado <- calcular_restar(n1,n2)
+    				mensaje_final <- 'El resultado es: ' + ConvertirATexto(resultado)
+    			3:
+    				resultado <- calcular_multiplicar(n1,n2)
+    				mensaje_final <- 'El resultado es: ' + ConvertirATexto(resultado)
+    			4:
+    				resultado <- calcular_dividir(n1,n2)
+    				Si resultado = -9999 Entonces
+    					mensaje_final <- 'El resultado es: Infinito (División por Cero)'
+    				Sino
+    					mensaje_final <- 'El resultado es: ' + ConvertirATexto(resultado)
+    				FinSi
+    			5:
+    				resultado <- calcular_potencia(n1,n2)
+    				mensaje_final <- 'El resultado es: ' + ConvertirATexto(resultado)
+    			De Otro Modo:
+    				resultado <- error(n1,n2) // Esto ahora devuelve un Real
+    				mensaje_final <- 'Operación no definida para la calculadora' // Se asigna el mensaje de error directamente
+    		FinSegun
+    		Escribir mensaje_final // Imprimimos el mensaje final
+    		// ...
+    	FinMientras
+    FinAlgoritmo
+    ```
+
+    **Con este conjunto de cambios, se garantiza la coherencia de tipos y se maneja la lógica de errores de forma adecuada.**
+
+
+	1)Desarrollar el algoritmo del juego de la vieja en pseint.
+	2)Desarrollar el algoritmo del método de la burbuja para el 
+	ordenamiento de un arreglo unidimensional de 8 elementos.
+
+	https://es.wikipedia.org/wiki/Algoritmo_de_ordenamiento
+
+	https://es.wikipedia.org/wiki/Ordenamiento_de_burbuja

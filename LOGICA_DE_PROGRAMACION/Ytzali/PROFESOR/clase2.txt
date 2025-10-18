@@ -1,0 +1,42 @@
+ESTRUCTUCTURAS DE CONTROL MÚLTIPLES
+
+SEGÚN
+*****
+Equivalente en lenguajes de programación como Java, Javascript, php, C a "Switch"
+
+Según Variable
+    Caso Valor1:
+      Acción 1
+      Acción 2
+      ...
+    Caso Valor2:
+      Acción 3
+      Acción 4
+    En Otro Caso:
+      Acción 5
+      Acción 6
+Fin Según
+
+Asignación:
+Para el sábado 11/10, traer el ejemplo de la Serie Fibonacci,
+adaptado para los ciclo Repetir y Para
+
+
+Todo programa, cotiene la siguiente estructura:
+
+1) Declaración de librerías o dependencias a incluir o importar
+2) Declaración de funciones
+3) Declaración de variables
+4) Declaracion del cuerpo principal del programa.
+
+Declaración de funciones en pseint
+
+Función variable_de_retorno <- nombre_función(arg1, arg2,..,argn)
+
+    acciones
+finFuncion
+
+
+
+
+

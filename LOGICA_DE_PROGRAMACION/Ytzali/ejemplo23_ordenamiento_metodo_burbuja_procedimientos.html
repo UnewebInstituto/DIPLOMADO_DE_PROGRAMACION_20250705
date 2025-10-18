@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Declaración de procedimientos
+        function ingresar_datos(){
+            let contador = 0; // Variable privada al procedimiento
+            while (contador < 6) {
+		        notas[contador] = prompt("Ingrese la calificación del estudiante "+(contador+1)+":");
+    		    contador = contador + 1;
+	        }
+        }
+
+        function mostrar_datos(){
+            // Declaración de variables privadas
+            let contador = 0;
+            // \n SALTO DE LÍNEA
+            let mensaje = 'REPORTE DE NOTAS\n';
+            do{
+                mensaje = mensaje + notas[contador] + '\n';
+                contador = contador + 1;
+            }while (contador < 6)
+            alert(mensaje);
+        }
+
+        function ordenar_datos(){
+           	n = 6;
+            i = 1;
+            while (i <= n-1) {
+                j = 0;
+                while (j < n-i) {
+                    if (notas[j] > notas[j+1]) {
+                        aux = notas[j];
+                        notas[j] = notas[j+1];
+                        notas[j+1] = aux;
+                    }
+                    j = j+1;
+                }
+                i = i+1;
+            }
+        }
+
+        // Declaración de variables públicas
+        var notas = [6]; // Arreglo de 6 posiciones
+        var contador = 0;
+	    var i = 0;
+	    var j = 0;
+	    var aux = 0;
+	    var n = 0;
+        var continuar = 'S';
+
+        // Cuerpo principal del programa
+        while (continuar.toUpperCase() == 'S'){
+            ingresar_datos();
+            mostrar_datos();
+            ordenar_datos();
+            mostrar_datos();
+            continuar = prompt("¿Desea ingresar los datos de otras 6 calificaciones (S/N)?");
+        }
+    </script>
+</body>
+</html>
