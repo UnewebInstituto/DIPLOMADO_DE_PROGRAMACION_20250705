@@ -1,0 +1,12 @@
+- PROCESO DE INSTALACIÓN
+    + Sitio de descarga
+    https://www.postgresql.org/
+
+    + Se debe indicar la clave para el usuario de 
+    mayor nivel de BBDD, en estre caso el usuario
+    postgresql.
+
+    + Se debe indicar el puerto a través del cual 
+    se efectuará la conexión, por omisión es el 5432.
+
+    

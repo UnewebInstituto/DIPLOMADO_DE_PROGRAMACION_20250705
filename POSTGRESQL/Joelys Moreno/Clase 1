@@ -1,0 +1,5 @@
+Proceso de instalacion
+
+se debe indicar la clave para el usiario de mayor nivel, en este caso con el usuario postgresql
+
+se debe indicar el puerto atravez del cual se efectuara la conecion,por omision es el 5432

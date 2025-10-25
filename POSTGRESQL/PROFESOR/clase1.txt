@@ -1,0 +1,2344 @@
+- PROCESO DE INSTALACIÓN
+    + Sitio de descarga
+    https://www.postgresql.org/
+
+    + Se debe indicar la clave para el usuario de 
+    mayor nivel de BBDD, en estre caso el usuario
+    postgresql.
+
+    + Se debe indicar el puerto a través del cual 
+    se efectuará la conexión, por omisión es el 5432.
+
+    Asumo mi rol como experto en bases de datos.
+
+La **codificación (Character Set)** y el **cotejamiento (Collation)** son fundamentales en las bases de datos porque determinan cómo se almacenan, representan y comparan los datos de texto. Una elección incorrecta puede llevar a errores de datos, problemas de visualización (los famosos 'mojibake' o caracteres extraños) y búsquedas inconsistentes.
+
+---
+
+## 1. Codificación (Character Set)
+
+La **codificación** define el conjunto de caracteres que una base de datos puede almacenar y la forma en que esos caracteres se representan como bytes en el disco. Esencialmente, es el "alfabeto" que la base de datos entiende.
+
+### Descripción
+Un **Character Set** (conjunto de caracteres) es un mapa que asigna un número único a cada carácter (letra, número, símbolo, etc.). La codificación es la regla que traduce ese número a una secuencia de bytes para su almacenamiento.
+
+### Ejemplo Clave: UTF-8 vs. Latin1
+
+| Aspecto | `UTF-8` (Unicode Transformation Format) | `Latin1` (ISO-8859-1) |
+| :--- | :--- | :--- |
+| **Cobertura** | **Universal**. Soporta casi todos los caracteres y lenguajes del mundo, incluyendo caracteres especiales, asiáticos, emojis, y acentos. | **Limitada**. Principalmente lenguajes de Europa Occidental. No soporta la mayoría de los caracteres especiales o emojis. |
+| **Almacenamiento** | **Variable**. Los caracteres comunes usan 1 byte; los caracteres especiales (como emojis o caracteres chinos) usan 2, 3 o 4 bytes. | **Fijo**. Cada carácter usa 1 byte. |
+| **Importancia** | **Estándar moderno.** Necesario si su aplicación debe manejar usuarios o contenido global, o usar caracteres especiales modernos. | **Obsoleto para aplicaciones web modernas.** Podría usarse en sistemas heredados o muy específicos. |
+
+**Ejemplo Práctico:**
+
+Supongamos que un usuario introduce la palabra **"Mañana 🚀"** en una aplicación:
+
+* **Con codificación `UTF-8` (Recomendada):** El sistema puede almacenar y mostrar correctamente la palabra y el emoji sin problemas.
+* **Con codificación `Latin1`:** La palabra **"Mañana"** podría almacenarse (aunque la 'ñ' podría no ser correcta si no es exactamente `latin1_spanish_ci`), pero el **emoji** (`🚀`) no tiene una representación válida de 1 byte y se almacenará como un **carácter de reemplazo ('?')** o generará un error de inserción, llevando a la pérdida de datos o 'mojibake'.
+
+---
+
+## 2. Cotejamiento (Collation)
+
+El **cotejamiento** es un conjunto de reglas que define cómo se comparan y ordenan los datos de texto (el `ORDER BY` y las comparaciones `WHERE`) dentro de una codificación específica. La codificación establece *qué* caracteres existen; el cotejamiento establece *cómo* se comportan esos caracteres en las búsquedas y la clasificación.
+
+### Descripción
+Un **Collation** se define siempre dentro de un Character Set. Por ejemplo, `utf8_spanish_ci` es un cotejamiento dentro del *Character Set* `UTF8`.
+
+Las reglas de cotejamiento cubren aspectos como:
+
+1.  **Sensibilidad a Mayúsculas/Minúsculas (Case Sensitivity - CS):** Si 'a' es igual a 'A'.
+2.  **Sensibilidad a Acentos/Diacríticos (Accent Sensitivity - AS):** Si 'a' es igual a 'á' o 'ä'.
+3.  **Reglas de Ordenación Específicas del Idioma:** Cómo se ordenan caracteres especiales como la 'ñ' en español o la 'ß' en alemán.
+
+### Ejemplo Clave: Sensibilidad y Ordenación
+
+Consideremos el Character Set `UTF8` y dos Collation diferentes:
+
+| Cotejamiento (Collation) | Descripción | Comportamiento de Búsqueda (`WHERE name = 'pepe'`) | Comportamiento de Ordenación (`ORDER BY name`) |
+| :--- | :--- | :--- | :--- |
+| **`utf8_general_ci`** | **Case Insensitive (CI)** y **Accent Insensitive (AI)**. (General e insensible a mayúsculas/acentos). | `pepe` coincide con `Pepe`, `PEPE`, `pépé`, `pÉpE`. | Ordena `a, á, A, Á` como si fueran el mismo carácter base `a`. |
+| **`utf8_bin`** | **Binario.** Trata cada byte de forma individual. Es **Case Sensitive** y **Accent Sensitive**. | `pepe` **NO** coincide con `Pepe`, `PEPE`, `pépé`. | Ordena según el valor binario del byte. `A` viene antes de `a`. |
+
+**Ejemplo Práctico (Ordenación en Español):**
+
+Si tiene los nombres: `Canal`, `Cañon`, `Canoa`:
+
+* **Con `utf8_general_ci` (Cotejamiento Genérico/Binario):** Podría ordenar así: `Cañon`, `Canal`, `Canoa`. (La `ñ` se trata como una `n` para la ordenación).
+* **Con `utf8_spanish_ci` (Cotejamiento Específico del Idioma):** Ordenaría correctamente según las reglas del español: `Canal`, `Canoa`, `Cañon`. (La `ñ` se trata como una letra separada, después de la `n`).
+
+### Resumen y Recomendación
+
+| Concepto | Rol | Recomendación |
+| :--- | :--- | :--- |
+| **Codificación (Character Set)** | Define el **alfabeto** y la **representación en bytes**. | Utilice **`UTF8MB4`** (la versión completa de UTF-8 que incluye soporte para 4-byte, crucial para emojis) para bases de datos modernas. |
+| **Cotejamiento (Collation)** | Define las **reglas de comparación y ordenación**. | Utilice un cotejamiento **sensible al idioma** si su aplicación está en un solo idioma (`utf8mb4_spanish_ci`) o un cotejamiento **general e insensible** si necesita búsquedas flexibles (`utf8mb4_unicode_ci` es una buena opción general moderna). |
+
+
+PostgreSQL maneja una amplia gama de tipos de datos, lo que le permite almacenar y gestionar eficientemente prácticamente cualquier tipo de información. Estos tipos se agrupan en categorías principales:
+
+## Tipos de Datos Numéricos
+
+Se utilizan para almacenar valores numéricos, ya sean enteros, de punto flotante o de precisión exacta.
+
+| Tipo | Descripción | Ejemplo de Uso |
+| :--- | :--- | :--- |
+| **`smallint`**, **`integer`** (**`int`**), **`bigint`** | Números enteros de 2, 4 y 8 bytes, respectivamente. | `edad INT`, `cantidad_productos SMALLINT` |
+| **`decimal`** (**`numeric`**) | Números de precisión exacta definible por el usuario. Es ideal para datos monetarios donde no se permiten errores de redondeo. | `precio NUMERIC(10, 2)` (10 dígitos en total, 2 después del punto decimal) |
+| **`real`** (**`float4`**), **`double precision`** (**`float8`**) | Números de punto flotante (con decimales) de precisión variable e inexacta. Usados para cálculos científicos o donde la precisión no es crítica. | `temperatura REAL`, `longitud DOUBLE PRECISION` |
+| **`serial`**, **`bigserial`**, **`smallserial`** | Son tipos pseudo-numéricos que crean automáticamente una columna de enteros autoincrementable. Se usan comúnmente para llaves primarias. | `id SERIAL PRIMARY KEY` |
+
+---
+
+## Tipos de Datos de Caracteres (Cadenas)
+
+Se usan para almacenar texto.
+
+| Tipo | Descripción | Ejemplo de Uso |
+| :--- | :--- | :--- |
+| **`text`** | Cadena de caracteres de longitud variable e **ilimitada**. Opción preferida para textos largos. | `descripcion TEXT` |
+| **`varchar(n)`** (**`character varying(n)`**) | Cadena de caracteres de longitud variable con un **límite máximo** de *n* caracteres. | `nombre VARCHAR(100)` |
+| **`char(n)`** (**`character(n)`**) | Cadena de caracteres de longitud **fija**. El valor se rellena con espacios hasta alcanzar la longitud *n*. Poco común en bases de datos modernas. | `codigo_pais CHAR(3)` |
+
+---
+
+## Tipos de Datos de Fecha/Hora
+
+Se usan para almacenar momentos específicos, fechas, horas o intervalos de tiempo.
+
+| Tipo | Descripción | Ejemplo de Uso |
+| :--- | :--- | :--- |
+| **`date`** | Solo fecha (año, mes, día). | `fecha_nacimiento DATE` |
+| **`time`** | Solo hora (hora, minuto, segundo), sin fecha. | `hora_apertura TIME` |
+| **`timestamp`** (**`timestamp without time zone`**) | Fecha y hora sin información de zona horaria. | `fecha_creacion TIMESTAMP` |
+| **`timestamptz`** (**`timestamp with time zone`**) | Fecha y hora **con información de zona horaria**. Es el tipo recomendado para aplicaciones globales. | `ultima_conexion TIMESTAMPTZ` |
+| **`interval`** | Un periodo de tiempo o diferencia entre dos fechas/horas. | `duracion_pelicula INTERVAL` |
+
+---
+
+## Tipos de Datos Booleanos y Binarios
+
+| Tipo | Descripción | Ejemplo de Uso |
+| :--- | :--- | :--- |
+| **`boolean`** (**`bool`**) | Almacena valores de verdad: `TRUE`, `FALSE` o `NULL`. PostgreSQL también acepta 't', 'f', 'y', 'n', '1', '0' y otros como entrada. | `esta_activo BOOLEAN` |
+| **`bytea`** | Cadena de bytes de longitud variable. Se utiliza para almacenar datos binarios "crudos", como imágenes, archivos o cualquier secuencia de bytes. | `archivo_pdf BYTEA` |
+
+---
+
+## Tipos de Datos Estructurados y Especiales
+
+PostgreSQL es conocido por su robusto soporte para tipos de datos complejos y especializados:
+
+| Tipo | Descripción | Ejemplo de Uso |
+| :--- | :--- | :--- |
+| **`json`** / **`jsonb`** | **`JSON`** almacena la representación de texto plano de datos JSON. **`JSONB`** (Binario) es el más recomendado, ya que almacena el JSON en un formato binario descompuesto, lo que permite una indexación más rápida y operaciones más eficientes. | `datos_configuracion JSONB` |
+| **`uuid`** | Identificador Universal Único. Perfecto para generar llaves primarias que no dependan de una secuencia numérica centralizada. | `token_sesion UUID` |
+| **`array`** | Permite definir una columna como un arreglo de cualquier otro tipo de datos de PostgreSQL. | `etiquetas TEXT[]` (Arreglo de textos) |
+| **`point`**, **`box`**, **`path`**, **`circle`** | Tipos de datos **geométricos** que permiten manipular coordenadas y formas espaciales. | `ubicacion_gps POINT` |
+| **`inet`**, **`cidr`**, **`macaddr`** | Tipos para direcciones de red: IPv4/IPv6 (host y red) y direcciones MAC, respectivamente. | `direccion_ip INET` |
+
+---
+Este video de YouTube cubre una introducción a los tipos de datos más utilizados en PostgreSQL, lo cual es relevante para la pregunta sobre cómo definir campos en una tabla. [06 - Tipos de Datos más usados | Curso de Base de Datos PostgreSQL](https://www.youtube.com/watch?v=5gk3-VsDkE0)
+http://googleusercontent.com/youtube_content/0
+
+
+
+  \d[S+]            listar tablas, vistas y secuencias
+  \d[S+]  NOMBRE    describir tabla, Ýndice, secuencia o vista
+  \da[S]  [PATRËN]  listar funciones de agregaci¾n
+  \dA[+]  [PATRËN]  listar mÚtodos de acceso
+  \dAc[+] [AMPTRN [TYPEPTRN]]  listar las clases de operadores
+  \dAf[+] [AMPTRN [TYPEPTRN]]  listar las familias de operadores
+  \dAo[+] [AMPTRN [OPFPTRN]]   listar los operadores de la familia de operadores
+  \dAp[+] [AMPTRN [OPFPTRN]]   enumera las funciones de la familia de operadores
+  \db[+]  [PATRËN]  listar tablespaces
+  \dc[S+] [PATRËN]  listar conversiones
+  \dconfig[+] [PATRËN]  listar parßmetros de configuraci¾n
+  \dC[+]  [PATRËN]  listar conversiones de tipo (casts)
+  \dd[S]  [PATRËN]  listar comentarios de objetos que no aparecen en otra parte
+  \dD[S+] [PATRËN]  listar dominios
+  \ddp    [PATRËN]  listar privilegios por omisi¾n
+  \dE[S+] [PATRËN]  listar tablas forßneas
+  \des[+] [PATRËN]  listar servidores forßneos
+  \det[+] [PATRËN]  listar tablas forßneas
+  \deu[+] [PATRËN]  listar mapeos de usuario
+  \dew[+] [PATRËN]  listar conectores de datos externos
+  \df[anptw][S+] [FUNCPTRN [TYPEPTRN ...]]
+                    listar funciones [s¾lo ag./normal/proc./trigger/ventana]
+  \dF[+]  [PATRËN]  listar configuraciones de b·squeda en texto
+  \dFd[+] [PATRËN]  listar diccionarios de b·squeda en texto
+  \dFp[+] [PATRËN]  listar analizadores (parsers) de b·sq. en texto
+  \dFt[+] [PATRËN]  listar plantillas de b·squeda en texto
+  \dg[S+] [PATRËN]  listar roles
+  \di[S+] [PATRËN]  listar Ýndices
+  \dl[+]            listar objetos grandes, lo mismo que \lo_list
+  \dL[S+] [PATRËN]  listar lenguajes procedurales
+  \dm[S+] [PATRËN]  listar vistas materializadas
+  \dn[S+] [PATRËN]  listar esquemas
+  \do[S+] [OPPTRN [TYPEPTRN [TYPEPTRN]]]
+                    listar operadores
+  \dO[S]  [PATRËN]  listar ordenamientos (collations)
+  \dp     [PATRËN]  listar privilegios de acceso a tablas, vistas y secuencias
+  \dP[tin+] [PATRËN] listar relaciones particionadas (s¾lo tablas/Ýndices) [n=anidadas]
+  \drds [PATRËN_ROL [PATRËN_BASE]]
+                    listar parßmetros de rol por base de datos
+  \dRp[+] [PATRËN]  listar publicaciones de replicaci¾n
+  \dRs[+] [PATRËN]  listar suscripciones de replicaci¾n
+  \ds[S+] [PATRËN]  listar secuencias
+  \dt[S+] [PATRËN]  listar tablas
+  \dT[S+] [PATRËN]  listar tipos de dato
+  \du[S+] [PATRËN]  listar roles
+  \dv[S+] [PATRËN]  listar vistas
+  \dx[+]  [PATRËN]  listar extensiones
+  \dX     [PATRËN]  listar estadÝsticas extendidas
+  \dy[+]  [PATRËN]  listar disparadores por eventos
+
+
+
+
+
+  https://www.ilerna.es/blog/modelo-entidad-relacion-base-datos#:~:text=Qu%C3%A9%20es%20el%20modelo%20entidad%20relaci%C3%B3n,-El%20modelo%20entidad&text=El%20modelo%20ER%20permite%20organizar,almacenar%C3%A1n%20y%20relacionar%C3%A1n%20los%20datos.
+
+
+  Para generar una muestra de 100 registros de productos de línea blanca que se vinculen a los proveedores con IDs 1, 2, 3 y 4, usaré sentencias **`INSERT`** de PostgreSQL.
+
+A continuación, se presentan los datos simulados. Primero, se insertarán los proveedores, aunque ya se asumió que existen con los IDs 1, 2, 3 y 4. Luego, se insertarán 100 productos, distribuyendo la asignación de `proveedor_id` de forma cíclica (1, 2, 3, 4, 1, 2, 3, 4, ...) para asegurar una distribución equitativa.
+
+-----
+
+## 1\. Sentencias INSERT para Proveedores (Referencia)
+
+Estos registros aseguran que las claves foráneas en la tabla `productos` sean válidas.
+
+```sql
+INSERT INTO proveedores (id, nombre, direccion, telefono, correo_electronico) VALUES
+(1, 'Electro Hogar S.A.', 'Av. Principal #100, Caracas', '0212-5551000', 'contacto@electrohsa.com'),
+(2, 'Tecno Blanca C.A.', 'Calle El Sol, Edif. Blanco, Valencia', '0241-5552000', 'ventas@tecnoblanca.net'),
+(3, 'RefrigeMaster Ltd.', 'Zona Industrial Oeste, Lote 5, Barquisimeto', '0251-5553000', 'soporte@refrige.com'),
+(4, 'LavaTodo Global', 'Sector La Trinidad, Galpón 8, Maracaibo', '0261-5554000', 'admin@lavatodo.com');
+```
+
+-----
+
+## 2\. Sentencias INSERT para Productos (100 Registros) 🧺
+
+Los productos son de línea blanca (refrigeradores, lavadoras, secadoras, cocinas, microondas, aires acondicionados, etc.). Los precios, existencias y los IDs de proveedor son simulados.
+
+```sql
+INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+-- Refrigeración (proveedor_id cíclico: 1, 2, 3, 4)
+(1, 'Refrigerador No Frost 300L Inox', 750.00, 25),
+(2, 'Congelador Vertical 150L', 420.50, 15),
+(3, 'Nevera Ejecutiva 100L Negra', 280.99, 40),
+(4, 'Refrigerador Side by Side 650L', 1250.75, 12),
+(1, 'Mini Bar 50L', 150.00, 50),
+(2, 'Frigobar de Acero Inoxidable', 185.25, 30),
+(3, 'Refrigerador de Vinos Dual Zone', 980.00, 8),
+(4, 'Congelador Horizontal 200L', 510.99, 20),
+(1, 'Refrigerador Smart Inverter 450L', 920.50, 18),
+(2, 'Nevera de 2 Puertas 350L', 680.00, 22),
+(3, 'Congelador Tipo Cofre 300L', 600.00, 17),
+(4, 'Refrigerador French Door 550L', 1150.25, 10),
+
+-- Lavado y Secado (proveedor_id cíclico: 1, 2, 3, 4)
+(1, 'Lavadora Carga Superior 15kg', 550.00, 35),
+(2, 'Secadora Eléctrica de 8kg', 480.90, 28),
+(3, 'Lavasecadora 10/7kg Inverter', 899.99, 15),
+(4, 'Lavadora Carga Frontal 12kg', 720.50, 20),
+(1, 'Secadora a Gas de Gran Capacidad', 650.00, 10),
+(2, 'Lavadora Semi-Automática 18kg', 320.75, 45),
+(3, 'Centro de Lavado Compacto', 950.00, 14),
+(4, 'Bomba de Drenaje para Lavadora', 45.00, 100),
+(1, 'Lavadora Portátil 5kg', 190.00, 60),
+(2, 'Secadora por Condensación 7kg', 580.00, 25),
+(3, 'Lavadora con Tecnología EcoBubble', 780.00, 18),
+(4, 'Base Antivibración para Lavadora', 25.50, 120),
+(1, 'Manguera de Desagüe Reforzada', 15.00, 150),
+
+-- Cocinas y Hornos (proveedor_id cíclico: 2, 3, 4, 1)
+(2, 'Cocina a Gas 4 Quemadores Acero', 350.00, 30),
+(3, 'Horno Eléctrico Empotrable 60cm', 520.50, 25),
+(4, 'Microondas Digital 20 Litros', 85.99, 70),
+(1, 'Estufa de Inducción Portátil', 120.00, 55),
+(2, 'Cocina Eléctrica Vitrocerámica', 410.75, 22),
+(3, 'Horno Microondas con Grill', 115.00, 65),
+(4, 'Campana Extractora de Pared 90cm', 290.00, 18),
+(1, 'Cocina Industrial 6 Hornillas', 850.00, 9),
+(2, 'Parrilla Eléctrica de Mesa', 55.99, 90),
+(3, 'Horno de Convección Multifunción', 680.00, 11),
+(4, 'Cocina Compacta 2 Placas', 95.00, 80),
+(1, 'Microondas de Gran Capacidad 30L', 130.25, 40),
+(2, 'Tostadora de Pan Automática', 35.00, 110),
+
+-- Calentamiento y Climatización (proveedor_id cíclico: 3, 4, 1, 2)
+(3, 'Aire Acondicionado Split 12000 BTU', 450.00, 30),
+(4, 'Calentador de Agua a Gas 10L', 210.99, 25),
+(1, 'Calefactor Cerámico Oscilante', 65.50, 50),
+(2, 'Aire Acondicionado Portátil 9000 BTU', 380.00, 20),
+(3, 'Deshumidificador 15L/Día', 199.99, 35),
+(4, 'Ventilador de Pedestal con Control', 40.00, 90),
+(1, 'Termostato Inteligente Wi-Fi', 85.00, 45),
+(2, 'Cortina de Aire Industrial', 420.00, 15),
+(3, 'Calentador de Ambiente de Bajo Consumo', 75.25, 40),
+(4, 'Aire Acondicionado Inverter 18000 BTU', 690.00, 10),
+(1, 'Purificador de Aire con Filtro HEPA', 150.00, 30),
+(2, 'Ventilador de Techo con Luz LED', 95.00, 50),
+
+-- Electrodomésticos Menores y Varios (proveedor_id cíclico: 3, 4, 1, 2, ...)
+(3, 'Aspiradora Robot Inteligente', 299.99, 15),
+(4, 'Batidora de Mano con Accesorios', 45.90, 80),
+(1, 'Licuadora de Alta Potencia', 75.00, 60),
+(2, 'Cafetera Programable 12 Tazas', 55.20, 75),
+(3, 'Olla Arrocera Eléctrica 1.8L', 30.50, 100),
+(4, 'Plancha de Ropa a Vapor', 35.00, 95),
+(1, 'Extractor de Jugos Industrial', 190.00, 20),
+(2, 'Procesador de Alimentos Multifuncional', 88.00, 40),
+(3, 'Sandwichera 2 Puestos', 25.00, 110),
+(4, 'Hervidor Eléctrico de Acero', 40.00, 85),
+(1, 'Balanza Digital de Cocina', 18.99, 130),
+(2, 'Vaso de Repuesto para Licuadora', 12.00, 200),
+(3, 'Filtros de Carbón para Campana', 10.00, 150),
+(4, 'Bolsas para Aspiradora (Paquete x5)', 8.50, 220),
+(1, 'Cable de Alimentación Universal', 5.00, 300),
+(2, 'Rejilla para Horno de 60cm', 22.50, 90),
+(3, 'Manilla de Puerta de Nevera Universal', 15.99, 70),
+(4, 'Termómetro Digital para Congelador', 11.00, 100),
+(1, 'Cubetera Automática para Refrigerador', 55.00, 35),
+(2, 'Kit de Limpieza para Vidrio de Cocina', 14.99, 120),
+(3, 'Cepillo de Limpieza para Secadora', 9.00, 150),
+(4, 'Rodillos de Goma para Lavadora', 20.00, 80),
+(1, 'Manguera de Entrada de Agua Fria', 18.00, 95),
+(2, 'Filtro de Agua Interno para Nevera', 45.00, 50),
+(3, 'Funda Protectora para Lavadora', 28.00, 60),
+(4, 'Grifo Doble para Conexión de Agua', 16.50, 110),
+(1, 'Dispensador de Jabón Líquido Automático', 35.00, 40),
+(2, 'Contenedor de Basura de Sensor', 65.00, 30),
+(3, 'Ambientador Eléctrico para Hogar', 15.00, 150),
+(4, 'Kit de Instalación para A/A Split', 40.00, 70),
+(1, 'Batería de Respaldo para Nevera Smart', 90.00, 25),
+(2, 'Convertidor de Gas a Electricidad', 75.00, 15),
+(3, 'Cesta de Cubiertos para Lavavajillas', 19.99, 100),
+(4, 'Juego de Quemadores de Cocina', 55.00, 55),
+(1, 'Resistencia de Horno de 2000W', 48.00, 65),
+(2, 'Temporizador Digital para Electrodomésticos', 25.00, 80),
+(3, 'Cable de Extensión de 3 Metros', 10.50, 180),
+(4, 'Fusible de Protección 15A (Paquete x10)', 6.00, 250),
+(1, 'Cinta Aislante Térmica', 9.00, 160),
+(2, 'Kit de Herramientas de Reparación Básica', 30.00, 70),
+(3, 'Luz LED Interna para Nevera', 14.00, 90),
+(4, 'Bandeja de Descongelación Rápida', 22.00, 50),
+(1, 'Soporte Universal para Microondas', 38.00, 45),
+(2, 'Filtro de Pelusas para Secadora', 12.50, 110),
+(3, 'Guantes de Goma para Lavado', 7.00, 200),
+(4, 'Boquilla para Aspiradora de Esquinas', 15.00, 100),
+(1, 'Cepillo de Limpieza para Serpentines', 8.50, 120),
+(2, 'Aceite Lubricante para Motor', 11.50, 130),
+(3, 'Detector de Fugas de Gas', 55.00, 30),
+(4, 'Manta de Aislamiento Térmico', 35.00, 40),
+(1, 'Regulador de Voltaje 2000W', 150.00, 20),
+(2, 'Protector de Sobretensión para Refrigerador', 45.00, 60),
+(3, 'Reloj Digital de Cocina', 18.00, 90),
+(4, 'Soporte de Pared para TV (Aplica para Línea Blanca)', 25.00, 100),
+(1, 'Cargador Universal para Baterías', 28.00, 75),
+(2, 'Kit de Puesta a Tierra', 10.00, 150),
+(3, 'Sensor de Humedad para Secadora', 32.00, 40),
+(4, 'Cuchillas de Licuadora de Repuesto', 15.00, 85),
+(1, 'Resistencia de Calentador de Agua', 30.00, 50),
+(2, 'Válvula de Entrada de Agua', 22.00, 70),
+(3, 'Bomba de Recirculación de Agua', 80.00, 25),
+(4, 'Módulo de Control Electrónico (Genérico)', 120.00, 15);
+```
+
+### Resumen de Distribución
+
+Esta muestra genera **100 registros de productos** y asegura que la columna **`proveedor_id`** tenga una distribución uniforme, vinculando los productos con los IDs de proveedores (1, 2, 3, 4) según lo solicitado.
+
+
+¡Excelente observación\! El error que mencionaste (`ERROR: carácter con secuencia de bytes 0x81 en codificación «WIN1252» no tiene equivalente en la codificación «UTF8»`) confirma la importancia de la codificación. Ocurre porque la base de datos (PostgreSQL) espera datos codificados en **UTF-8** (el estándar moderno), pero los datos que estás insertando, especialmente los acentos o caracteres especiales como la 'ñ' o los símbolos (si los hubieras usado), están siendo interpretados como **WIN1252** (una codificación antigua de Windows).
+
+Para solucionarlo, simplemente hay que **re-generar las sentencias sin caracteres especiales problemáticos** o asegurarse de que el cliente (la herramienta que usas para ejecutar SQL, como pgAdmin o psql) esté enviando los datos correctamente como UTF-8.
+
+A continuación, genero las 50 sentencias **`INSERT`** para los productos, utilizando nombres que solo contienen caracteres seguros del estándar UTF-8 (eliminando la 'ñ', la 'í' acentuada, y asegurando una buena práctica de codificación).
+
+-----
+
+## 1\. Sentencias INSERT para Proveedores (Referencia)
+
+Estos registros se mantienen como referencia para los IDs 1, 2, 3 y 4.
+
+```sql
+INSERT INTO proveedores (id, nombre, direccion, telefono, correo_electronico) VALUES
+(1, 'Electro Hogar S.A.', 'Av. Principal #100, Caracas', '0212-5551000', 'contacto@electrohsa.com'),
+(2, 'Tecno Blanca C.A.', 'Calle El Sol, Edif. Blanco, Valencia', '0241-5552000', 'ventas@tecnoblanca.net'),
+(3, 'RefrigeMaster Ltda.', 'Zona Industrial Oeste, Lote 5, Barquisimeto', '0251-5553000', 'soporte@refrige.com'),
+(4, 'LavaTodo Global', 'Sector La Trinidad, Galpon 8, Maracaibo', '0261-5554000', 'admin@lavatodo.com');
+```
+
+-----
+
+## 2\. Sentencias INSERT para Productos (50 Registros Seguros en UTF-8) 🧊
+
+La asignación de **`proveedor_id`** es cíclica (1, 2, 3, 4, ...) para una distribución equitativa. Se usan **solo caracteres ASCII básicos** para prevenir el error de codificación.
+
+```sql
+INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+-- Refrigeracion (1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+(1, 'Refrigerador No Frost 300L Inox', 750.00, 25),
+(2, 'Congelador Vertical 150L', 420.50, 15),
+(3, 'Nevera Ejecutiva 100L Negra', 280.99, 40),
+(4, 'Refrigerador Side by Side 650L', 1250.75, 12),
+(1, 'Mini Bar 50 Litros', 150.00, 50),
+(2, 'Frigobar Acero Inoxidable', 185.25, 30),
+(3, 'Refrigerador de Vinos Dual Zone', 980.00, 8),
+(4, 'Congelador Horizontal 200L', 510.99, 20),
+(1, 'Refrigerador Smart 450L', 920.50, 18),
+(2, 'Nevera de 2 Puertas 350L', 680.00, 22),
+(3, 'Bebedero de Agua Fria', 110.00, 35),
+(4, 'Refrigerador French Door 550L', 1150.25, 10),
+(1, 'Maquina de Hielo Portatil', 195.00, 45),
+
+-- Lavado y Secado (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+(2, 'Lavadora Carga Superior 15kg', 550.00, 35),
+(3, 'Secadora Electrica de 8kg', 480.90, 28),
+(4, 'Lavasecadora 10/7kg Inverter', 899.99, 15),
+(1, 'Lavadora Carga Frontal 12kg', 720.50, 20),
+(2, 'Secadora a Gas Gran Capacidad', 650.00, 10),
+(3, 'Lavadora Semi-Automatica 18kg', 320.75, 45),
+(4, 'Centro de Lavado Compacto', 950.00, 14),
+(1, 'Bomba de Drenaje para Lavadora', 45.00, 100),
+(2, 'Lavadora Portatil 5kg', 190.00, 60),
+(3, 'Secadora por Condensacion 7kg', 580.00, 25),
+(4, 'Lavadora Tecnologia EcoBubble', 780.00, 18),
+(1, 'Base Antivibracion Lavadora', 25.50, 120),
+
+-- Cocinas y Hornos (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+(2, 'Cocina a Gas 4 Quemadores Acero', 350.00, 30),
+(3, 'Horno Electrico Empotrable 60cm', 520.50, 25),
+(4, 'Microondas Digital 20 Litros', 85.99, 70),
+(1, 'Estufa de Induccion Portatil', 120.00, 55),
+(2, 'Cocina Electrica Vitroceramica', 410.75, 22),
+(3, 'Horno Microondas con Grill', 115.00, 65),
+(4, 'Campana Extractora de Pared 90cm', 290.00, 18),
+(1, 'Cocina Industrial 6 Hornillas', 850.00, 9),
+(2, 'Parrilla Electrica de Mesa', 55.99, 90),
+(3, 'Horno de Conveccion Multifuncion', 680.00, 11),
+(4, 'Cocina Compacta 2 Placas', 95.00, 80),
+(1, 'Microondas Gran Capacidad 30L', 130.25, 40),
+
+-- Climatizacion y Varios (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4)
+(2, 'Aire Acondicionado Split 12000 BTU', 450.00, 30),
+(3, 'Calentador de Agua a Gas 10L', 210.99, 25),
+(4, 'Calefactor Ceramico Oscilante', 65.50, 50),
+(1, 'Aire Acondicionado Portatil 9000 BTU', 380.00, 20),
+(2, 'Deshumidificador 15L/Dia', 199.99, 35),
+(3, 'Ventilador de Pedestal Control', 40.00, 90),
+(4, 'Termostato Inteligente Wi-Fi', 85.00, 45),
+(1, 'Cortina de Aire Industrial', 420.00, 15),
+(2, 'Purificador de Aire Filtro HEPA', 150.00, 30),
+(3, 'Ventilador de Techo con Luz LED', 95.00, 50),
+(4, 'Aspiradora Robot Inteligente', 299.99, 15);
+```
+
+### Recomendación Adicional sobre la Codificación
+
+Si desea usar caracteres especiales como la 'ñ' o acentos (lo cual es lo ideal para nombres de productos en español), la solución no es modificar la data, sino **configurar la sesión o el cliente SQL** para que envíe los datos como UTF-8:
+
+1.  **Asegúrese de que el archivo `.sql`** donde están estas sentencias esté guardado con codificación **UTF-8**.
+2.  **En PostgreSQL (pgAdmin/psql):** Verifique la configuración de conexión o use el comando `SET client_encoding TO 'UTF8';` antes de ejecutar los `INSERT`. Esto le dice al servidor que los datos que está a punto de recibir están en UTF-8, resolviendo la incompatibilidad.
+
+Al utilizar los nombres sin acentos ni 'ñ' en la muestra de 50 registros, se garantiza que no haya caracteres multibyte que puedan ser malinterpretados por la configuración predeterminada de su cliente, resolviendo el error de inmediato.
+
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# \?
+General
+  \copyright      mostrar tÚrminos de uso y distribuci¾n de PostgreSQL
+  \crosstabview [COLUMNAS]
+                  ejecutar la consulta y desplegar en ½crosstab╗
+  \errverbose     mostrar error mßs reciente en mßxima verbosidad
+  \g [(OPTIONS)] [FILE]
+                  ejecuta la consulta (y envÝa el resultado a un fichero o |pipe);
+                  \g sin argumentos es equivalente a un punto y coma
+  \gdesc          describir resultado de la consulta, sin ejecutarla
+  \gexec          ejecutar la consulta, luego ejecuta cada valor del resultado
+  \gset [PREFIJO] ejecutar la consulta y almacenar el resultado en variables
+                  de psql
+  \gx [(OPTIONS)] [FILE]
+                  como \g, pero fuerza el modo de salida expandido
+  \q              salir de psql
+  \watch [SEGS]   ejecutar consulta cada SEGS segundos
+
+Ayuda
+  \? [commands]   desplegar ayuda sobre las ¾rdenes backslash
+  \? options      desplegar ayuda sobre opciones de lÝnea de ¾rdenes
+  \? variables    desplegar ayuda sobre variables especiales
+  \h [NOMBRE]     mostrar ayuda de sintaxis de ¾rdenes SQL;
+                  use ½*╗ para todas las ¾rdenes
+
+B·fer de consulta
+  \e [ARCHIVO] [L═NEA]
+                  editar el b·fer de consulta (o archivo) con editor externo
+  \ef [NOMBRE-FUNCIËN [L═NEA]]
+                  editar una funci¾n con editor externo
+  \ev [NOMBRE-VISTA [L═NEA]]
+                  editar definici¾n de una vista con editor externo
+  \p              mostrar el contenido del b·fer de consulta
+  \r              reiniciar (limpiar) el b·fer de consulta
+  \w ARCHIVO      escribir b·fer de consulta a archivo
+
+Entrada/Salida
+        (con -n, donde existe, se omite el salto de lÝnea final)
+  \copy ...            ejecutar orden SQL COPY con flujo de datos al cliente
+  \echo [-n] [STRING]  escribe la cadena en la salida estßndar
+  \i ARCHIVO           ejecutar ¾rdenes desde archivo
+  \ir ARCHIVO          como \i, pero relativo a la ubicaci¾n del script actual
+  \o [ARCHIVO]         enviar resultados de consultas a archivo u |orden
+  \qecho [-n] [STRING] escribe la cadena hacia flujo de salida \o
+  \warn [-n] [STRING]  escribe la cadena a la salida de error estßndar
+
+Condicional
+  \if EXPRESIËN   inicia bloque condicional
+  \elif EXPR      alternativa dentro del bloque condicional actual
+  \else           alternativa final dentro del bloque condicional actual
+  \endif          termina el bloque condicional
+
+Informativo
+   (opciones: S = desplegar objetos de sistema, + = agregar mßs detalle)
+  \d[S+]            listar tablas, vistas y secuencias
+  \d[S+]  NOMBRE    describir tabla, Ýndice, secuencia o vista
+  \da[S]  [PATRËN]  listar funciones de agregaci¾n
+  \dA[+]  [PATRËN]  listar mÚtodos de acceso
+  \dAc[+] [AMPTRN [TYPEPTRN]]  listar las clases de operadores
+  \dAf[+] [AMPTRN [TYPEPTRN]]  listar las familias de operadores
+  \dAo[+] [AMPTRN [OPFPTRN]]   listar los operadores de la familia de operadores
+  \dAp[+] [AMPTRN [OPFPTRN]]   enumera las funciones de la familia de operadores
+  \db[+]  [PATRËN]  listar tablespaces
+  \dc[S+] [PATRËN]  listar conversiones
+  \dconfig[+] [PATRËN]  listar parßmetros de configuraci¾n
+  \dC[+]  [PATRËN]  listar conversiones de tipo (casts)
+  \dd[S]  [PATRËN]  listar comentarios de objetos que no aparecen en otra parte
+  \dD[S+] [PATRËN]  listar dominios
+  \ddp    [PATRËN]  listar privilegios por omisi¾n
+  \dE[S+] [PATRËN]  listar tablas forßneas
+  \des[+] [PATRËN]  listar servidores forßneos
+  \det[+] [PATRËN]  listar tablas forßneas
+  \deu[+] [PATRËN]  listar mapeos de usuario
+  \dew[+] [PATRËN]  listar conectores de datos externos
+  \df[anptw][S+] [FUNCPTRN [TYPEPTRN ...]]
+                    listar funciones [s¾lo ag./normal/proc./trigger/ventana]
+  \dF[+]  [PATRËN]  listar configuraciones de b·squeda en texto
+  \dFd[+] [PATRËN]  listar diccionarios de b·squeda en texto
+  \dFp[+] [PATRËN]  listar analizadores (parsers) de b·sq. en texto
+  \dFt[+] [PATRËN]  listar plantillas de b·squeda en texto
+  \dg[S+] [PATRËN]  listar roles
+  \di[S+] [PATRËN]  listar Ýndices
+  \dl[+]            listar objetos grandes, lo mismo que \lo_list
+  \dL[S+] [PATRËN]  listar lenguajes procedurales
+  \dm[S+] [PATRËN]  listar vistas materializadas
+  \dn[S+] [PATRËN]  listar esquemas
+  \do[S+] [OPPTRN [TYPEPTRN [TYPEPTRN]]]
+                    listar operadores
+  \dO[S]  [PATRËN]  listar ordenamientos (collations)
+  \dp     [PATRËN]  listar privilegios de acceso a tablas, vistas y secuencias
+  \dP[tin+] [PATRËN] listar relaciones particionadas (s¾lo tablas/Ýndices) [n=anidadas]
+  \drds [PATRËN_ROL [PATRËN_BASE]]
+                    listar parßmetros de rol por base de datos
+  \dRp[+] [PATRËN]  listar publicaciones de replicaci¾n
+  \dRs[+] [PATRËN]  listar suscripciones de replicaci¾n
+  \ds[S+] [PATRËN]  listar secuencias
+  \dt[S+] [PATRËN]  listar tablas
+  \dT[S+] [PATRËN]  listar tipos de dato
+  \du[S+] [PATRËN]  listar roles
+  \dv[S+] [PATRËN]  listar vistas
+  \dx[+]  [PATRËN]  listar extensiones
+  \dX     [PATRËN]  listar estadÝsticas extendidas
+  \dy[+]  [PATRËN]  listar disparadores por eventos
+  \l[+]   [PATRËN]  listar bases de datos
+  \sf[+]  FUNCIËN   mostrar la definici¾n de una funci¾n
+  \sv[+]  VISTA     mostrar la definici¾n de una vista
+  \z      [PATRËN]  lo mismo que \dp
+
+Objetos Grandes
+  \lo_export LOBOID ARCHIVO escribir objeto grande a archivo
+  \lo_import ARCHIVO [COMENTARIO]
+                    leer objeto grande desde archivo
+  \lo_list[+]       listar objetos grandes
+  \lo_unlink LOBOID borrar un objeto grande
+
+Formato
+  \a              cambiar entre modo de salida alineado y sin alinear
+  \C [CADENA]     definir tÝtulo de tabla, o indefinir si es vacÝo
+  \f [CADENA]     mostrar o definir separador de campos para
+                  modo de salida sin alinear
+  \H              cambiar modo de salida HTML (actualmente desactivado)
+  \pset [NOMBRE [VALOR]]  define opci¾n de tabla de salida
+                  (border|columns|csv_fieldsep|expanded|fieldsep|fieldsep_zero|
+                   footer|format|linestyle|null|numericlocale|pager|
+                   pager_min_lines|recordsep|recordsep_zero|tableattr|title|
+                   tuples_only|unicode_border_linestyle|unicode_column_linestyle|
+                   unicode_header_linestyle)
+  \t [on|off]      mostrar s¾lo filas (actualmente desactivado)
+  \T [CADENA]      definir atributos HTML de <table>, o indefinir si es vacÝo
+  \x [on|off|auto] cambiar modo expandido (actualmente desactivado)
+
+Conexiones
+  \c[onnect] [BASE-DE-DATOS|- USUARIO|- ANFITRIËN|- PUERTO|- | conninfo]
+                  conectar a una nueva base de datos (actual: ½postgres╗)
+  \conninfo       despliega la informaci¾n sobre la conexi¾n actual
+  \encoding [CODIFICACIËN]
+                  mostrar o definir codificaci¾n del cliente
+  \password [USUARIO]
+                  cambiar la contrase±a para un usuario en forma segura
+
+Sistema Operativo
+  \cd [DIR]        cambiar el directorio de trabajo actual
+  \getenv PSQLVAR ENVVAR obtener variable de ambiente
+  \setenv NOMBRE [VALOR]
+                   definir o indefinir variable de ambiente
+  \timing [on|off] mostrar tiempo de ejecuci¾n de ¾rdenes
+                   (actualmente desactivado)
+  \! [ORDEN]       ejecutar orden en intÚrprete de ¾rdenes (shell),
+                   o iniciar intÚrprete interactivo
+
+Variables
+  \prompt [TEXTO] NOMBRE  preguntar al usuario el valor de la variable
+  \set [NOMBRE [VALOR]]   definir variables internas,
+                          listar todas si no se dan parßmetros
+  \unset NOMBRE           indefinir (eliminar) variable interna
+
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=# \h
+Ayuda disponible:
+  ABORT                            CREATE USER MAPPING
+  ALTER AGGREGATE                  CREATE VIEW
+  ALTER COLLATION                  DEALLOCATE
+  ALTER CONVERSION                 DECLARE
+  ALTER DATABASE                   DELETE
+  ALTER DEFAULT PRIVILEGES         DISCARD
+  ALTER DOMAIN                     DO
+  ALTER EVENT TRIGGER              DROP ACCESS METHOD
+  ALTER EXTENSION                  DROP AGGREGATE
+  ALTER FOREIGN DATA WRAPPER       DROP CAST
+  ALTER FOREIGN TABLE              DROP COLLATION
+  ALTER FUNCTION                   DROP CONVERSION
+  ALTER GROUP                      DROP DATABASE
+  ALTER INDEX                      DROP DOMAIN
+  ALTER LANGUAGE                   DROP EVENT TRIGGER
+  ALTER LARGE OBJECT               DROP EXTENSION
+  ALTER MATERIALIZED VIEW          DROP FOREIGN DATA WRAPPER
+  ALTER OPERATOR                   DROP FOREIGN TABLE
+  ALTER OPERATOR CLASS             DROP FUNCTION
+  ALTER OPERATOR FAMILY            DROP GROUP
+  ALTER POLICY                     DROP INDEX
+  ALTER PROCEDURE                  DROP LANGUAGE
+  ALTER PUBLICATION                DROP MATERIALIZED VIEW
+  ALTER ROLE                       DROP OPERATOR
+  ALTER ROUTINE                    DROP OPERATOR CLASS
+  ALTER RULE                       DROP OPERATOR FAMILY
+  ALTER SCHEMA                     DROP OWNED
+  ALTER SEQUENCE                   DROP POLICY
+  ALTER SERVER                     DROP PROCEDURE
+  ALTER STATISTICS                 DROP PUBLICATION
+  ALTER SUBSCRIPTION               DROP ROLE
+  ALTER SYSTEM                     DROP ROUTINE
+  ALTER TABLE                      DROP RULE
+  ALTER TABLESPACE                 DROP SCHEMA
+  ALTER TEXT SEARCH CONFIGURATION  DROP SEQUENCE
+  ALTER TEXT SEARCH DICTIONARY     DROP SERVER
+  ALTER TEXT SEARCH PARSER         DROP STATISTICS
+  ALTER TEXT SEARCH TEMPLATE       DROP SUBSCRIPTION
+  ALTER TRIGGER                    DROP TABLE
+  ALTER TYPE                       DROP TABLESPACE
+  ALTER USER                       DROP TEXT SEARCH CONFIGURATION
+  ALTER USER MAPPING               DROP TEXT SEARCH DICTIONARY
+  ALTER VIEW                       DROP TEXT SEARCH PARSER
+  ANALYZE                          DROP TEXT SEARCH TEMPLATE
+  BEGIN                            DROP TRANSFORM
+  CALL                             DROP TRIGGER
+  CHECKPOINT                       DROP TYPE
+  CLOSE                            DROP USER
+  CLUSTER                          DROP USER MAPPING
+  COMMENT                          DROP VIEW
+  COMMIT                           END
+  COMMIT PREPARED                  EXECUTE
+  COPY                             EXPLAIN
+  CREATE ACCESS METHOD             FETCH
+  CREATE AGGREGATE                 GRANT
+  CREATE CAST                      IMPORT FOREIGN SCHEMA
+  CREATE COLLATION                 INSERT
+  CREATE CONVERSION                LISTEN
+  CREATE DATABASE                  LOAD
+  CREATE DOMAIN                    LOCK
+  CREATE EVENT TRIGGER             MERGE
+  CREATE EXTENSION                 MOVE
+  CREATE FOREIGN DATA WRAPPER      NOTIFY
+  CREATE FOREIGN TABLE             PREPARE
+  CREATE FUNCTION                  PREPARE TRANSACTION
+  CREATE GROUP                     REASSIGN OWNED
+  CREATE INDEX                     REFRESH MATERIALIZED VIEW
+  CREATE LANGUAGE                  REINDEX
+  CREATE MATERIALIZED VIEW         RELEASE SAVEPOINT
+  CREATE OPERATOR                  RESET
+  CREATE OPERATOR CLASS            REVOKE
+  CREATE OPERATOR FAMILY           ROLLBACK
+  CREATE POLICY                    ROLLBACK PREPARED
+  CREATE PROCEDURE                 ROLLBACK TO SAVEPOINT
+  CREATE PUBLICATION               SAVEPOINT
+  CREATE ROLE                      SECURITY LABEL
+  CREATE RULE                      SELECT
+  CREATE SCHEMA                    SELECT INTO
+  CREATE SEQUENCE                  SET
+  CREATE SERVER                    SET CONSTRAINTS
+  CREATE STATISTICS                SET ROLE
+  CREATE SUBSCRIPTION              SET SESSION AUTHORIZATION
+  CREATE TABLE                     SET TRANSACTION
+  CREATE TABLE AS                  SHOW
+  CREATE TABLESPACE                START TRANSACTION
+  CREATE TEXT SEARCH CONFIGURATION TABLE
+  CREATE TEXT SEARCH DICTIONARY    TRUNCATE
+  CREATE TEXT SEARCH PARSER        UNLISTEN
+  CREATE TEXT SEARCH TEMPLATE      UPDATE
+  CREATE TRANSFORM                 VACUUM
+  CREATE TRIGGER                   VALUES
+  CREATE TYPE                      WITH
+  CREATE USER
+
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=#
+postgres=# \h create table
+Orden:       CREATE TABLE
+Descripci¾n: define una nueva tabla
+Sintaxis:
+CREATE [ [ GLOBAL | LOCAL ] { TEMPORARY | TEMP } | UNLOGGED ] TABLE [ IF NOT EXISTS ] nombre_de_tabla ( [
+  { nombre_de_columna tipo_de_dato [ COMPRESSION mÚtodo_de_compresi¾n ] [ COLLATE ordenamiento ] [ restricci¾n_de_columna [ ... ] ]
+    | restricci¾n_de_tabla
+    | LIKE tabla_origen [ opci¾n_de_like ... ] }
+    [, ... ]
+] )
+[ INHERITS ( tabla_padre [, ... ] ) ]
+[ PARTITION BY { RANGE | LIST | HASH } ( { nombre_de_columna | ( expresi¾n ) } [ COLLATE ordenamiento ] [ clase_de_ops ] [, ... ] ) ]
+[ USING mÚtodo ]
+[ WITH ( parßmetro_de_almacenamiento [= valor] [, ... ] ) | WITHOUT OIDS ]
+[ ON COMMIT { PRESERVE ROWS | DELETE ROWS | DROP } ]
+[ TABLESPACE nombre_de_tablespace ]
+
+CREATE [ [ GLOBAL | LOCAL ] { TEMPORARY | TEMP } | UNLOGGED ] TABLE [ IF NOT EXISTS ] nombre_de_tabla
+    OF nombre_de_tipo [ (
+  { nombre_de_columna [ WITH OPTIONS ] [ restricci¾n_de_columna [ ... ] ]
+    | restricci¾n_de_tabla }
+    [, ... ]
+) ]
+[ PARTITION BY { RANGE | LIST | HASH } ( { nombre_de_columna | ( expresi¾n ) } [ COLLATE ordenamiento ] [ clase_de_ops ] [, ... ] ) ]
+[ USING mÚtodo ]
+[ WITH ( parßmetro_de_almacenamiento [= valor] [, ... ] ) | WITHOUT OIDS ]
+[ ON COMMIT { PRESERVE ROWS | DELETE ROWS | DROP } ]
+[ TABLESPACE nombre_de_tablespace ]
+
+CREATE [ [ GLOBAL | LOCAL ] { TEMPORARY | TEMP } | UNLOGGED ] TABLE [ IF NOT EXISTS ] nombre_de_tabla
+    PARTITION OF tabla_padre [ (
+  { nombre_de_columna [ WITH OPTIONS ] [ restricci¾n_de_columna [ ... ] ]
+    | restricci¾n_de_tabla }
+    [, ... ]
+) ] { FOR VALUES borde_de_partici¾n | DEFAULT }
+[ PARTITION BY { RANGE | LIST | HASH } ( { nombre_de_columna | ( expresi¾n ) } [ COLLATE ordenamiento ] [ clase_de_ops ] [, ... ] ) ]
+[ USING mÚtodo ]
+[ WITH ( parßmetro_de_almacenamiento [= valor] [, ... ] ) | WITHOUT OIDS ]
+[ ON COMMIT { PRESERVE ROWS | DELETE ROWS | DROP } ]
+[ TABLESPACE nombre_de_tablespace ]
+
+donde restricci¾n_de_columna es:
+
+[ CONSTRAINT nombre_restricci¾n ]
+{ NOT NULL |
+  NULL |
+  CHECK ( expresi¾n ) [ NO INHERIT ] |
+  DEFAULT expr_por_omisi¾n |
+  GENERATED ALWAYS AS ( expr_de_generaci¾n ) STORED |
+  GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY [ ( opciones_de_secuencia ) ] |
+  UNIQUE [ NULLS [ NOT ] DISTINCT ] parßmetros_de_Ýndice |
+  PRIMARY KEY parßmetros_de_Ýndice |
+  REFERENCES tabla_ref [ ( columna_ref ) ] [ MATCH FULL | MATCH PARTIAL | MATCH SIMPLE ]
+    [ ON DELETE acci¾n_referencial ] [ ON UPDATE acci¾n_referencial ] }
+[ DEFERRABLE | NOT DEFERRABLE ] [ INITIALLY DEFERRED | INITIALLY IMMEDIATE ]
+
+y restricci¾n_de_tabla es:
+
+[ CONSTRAINT nombre_restricci¾n ]
+{ CHECK ( expresi¾n ) [ NO INHERIT ] |
+  UNIQUE [ NULLS [ NOT ] DISTINCT ] ( nombre_de_columna [, ... ] ) parßmetros_de_Ýndice |
+  PRIMARY KEY ( nombre_de_columna [, ... ] ) parßmetros_de_Ýndice |
+  EXCLUDE [ USING mÚtodo_de_Ýndice ] ( elemento_de_exclusi¾n WITH operador [, ... ] ) parßmetros_de_Ýndice [ WHERE ( predicado ) ] |
+  FOREIGN KEY ( nombre_de_columna [, ... ] ) REFERENCES tabla_ref [ ( columna_ref [, ... ] ) ]
+    [ MATCH FULL | MATCH PARTIAL | MATCH SIMPLE ] [ ON DELETE acci¾n_referencial ] [ ON UPDATE acci¾n_referencial ] }
+[ DEFERRABLE | NOT DEFERRABLE ] [ INITIALLY DEFERRED | INITIALLY IMMEDIATE ]
+
+y opci¾n_de_like es:
+
+{ INCLUDING | EXCLUDING } { COMMENTS | COMPRESSION | CONSTRAINTS | DEFAULTS | GENERATED | IDENTITY | INDEXES | STATISTICS | STORAGE | ALL }
+
+y borde_de_partici¾n es:
+
+IN ( expresi¾n_de_borde_de_partici¾n [, ...] ) |
+FROM ( { expresi¾n_de_borde_de_partici¾n | MINVALUE | MAXVALUE } [, ...] )
+  TO ( { expresi¾n_de_borde_de_partici¾n | MINVALUE | MAXVALUE } [, ...] ) |
+WITH ( MODULUS literal_numÚrico, REMAINDER literal_numÚrico )
+
+parßmetros_de_Ýndice en UNIQUE, PRIMARY KEY y EXCLUDE son:
+
+[ INCLUDE ( nombre_de_columna [, ... ] ) ]
+[ WITH ( parßmetro_de_almacenamiento [= valor] [, ... ] ) ]
+[ USING INDEX TABLESPACE nombre_de_tablespace ]
+
+elemento_de_exclusi¾n en una restricci¾n EXCLUDE es:
+
+{ nombre_de_columna | ( expresi¾n ) } [ COLLATE ordenamiento ] [ clase_de_ops [ ( parßmetro_opclass = valor [, ... ] ) ] ] [ ASC | DESC ] [ NULLS { FIRST | LAST } ]
+
+acci¾n_referencial en una restricci¾n FOREIGN KEY/REFERENCES es:
+
+{ NO ACTION | RESTRICT | CASCADE | SET NULL [ ( nombre_de_columna [, ... ] ) ] | SET DEFAULT [ ( nombre_de_columna [, ... ] ) ] }
+
+URL: https://www.postgresql.org/docs/15/sql-createtable.html
+
+
+postgres=#
+postgres=#
+postgres=# create database bd20251025_profesor;
+CREATE DATABASE
+postgres=# \l *bd20251025*;
+                                                                Listado de base de datos
+       Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+---------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_airon    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_barbara  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_joelys   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ytzali   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(6 filas)
+
+
+postgres=# \l *ytzali;
+                                                               Listado de base de datos
+      Nombre       |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+-------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_ytzali | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(1 fila)
+
+
+postgres=# \l *ar*;
+                                                                Listado de base de datos
+       Nombre       |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+--------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_barbara | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(2 filas)
+
+
+postgres=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \c postgres
+Ahora está conectado a la base de datos «postgres» con el usuario «postgres».
+postgres=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \l
+                                                                     Listado de base de datos
+       Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale |      Privilegios
+---------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-----------------------
+ bd20251025_airon    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_barbara  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_daniel   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_joelys   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ytzali   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ postgres            | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ template0           | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                | =c/postgres          +
+                     |          |              |                        |                        |                   |                     | postgres=CTc/postgres
+ template1           | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                | =c/postgres          +
+                     |          |              |                        |                        |                   |                     | postgres=CTc/postgres
+(10 filas)
+
+
+bd20251025_profesor=# create table contactos(
+bd20251025_profesor(#     nombres varchar(100),
+bd20251025_profesor(#     apellidos varchar(100),
+bd20251025_profesor(#     correo_electronico varchar(100),
+bd20251025_profesor(#     telefono varchar(100)
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# create table "Contactos"(
+bd20251025_profesor(#     "Nombres" varchar(100),
+bd20251025_profesor(#     "Apellidos" varchar(100),
+bd20251025_profesor(#     "Correo electrónico" varchar(100),
+bd20251025_profesor(#     "Teléfono" varchar(100)
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# \? \d*
+General
+  \copyright      mostrar tÚrminos de uso y distribuci¾n de PostgreSQL
+  \crosstabview [COLUMNAS]
+                  ejecutar la consulta y desplegar en ½crosstab╗
+  \errverbose     mostrar error mßs reciente en mßxima verbosidad
+  \g [(OPTIONS)] [FILE]
+                  ejecuta la consulta (y envÝa el resultado a un fichero o |pipe);
+                  \g sin argumentos es equivalente a un punto y coma
+  \gdesc          describir resultado de la consulta, sin ejecutarla
+  \gexec          ejecutar la consulta, luego ejecuta cada valor del resultado
+  \gset [PREFIJO] ejecutar la consulta y almacenar el resultado en variables
+                  de psql
+  \gx [(OPTIONS)] [FILE]
+                  como \g, pero fuerza el modo de salida expandido
+  \q              salir de psql
+  \watch [SEGS]   ejecutar consulta cada SEGS segundos
+
+Ayuda
+  \? [commands]   desplegar ayuda sobre las ¾rdenes backslash
+  \? options      desplegar ayuda sobre opciones de lÝnea de ¾rdenes
+  \? variables    desplegar ayuda sobre variables especiales
+  \h [NOMBRE]     mostrar ayuda de sintaxis de ¾rdenes SQL;
+                  use ½*╗ para todas las ¾rdenes
+
+B·fer de consulta
+  \e [ARCHIVO] [L═NEA]
+                  editar el b·fer de consulta (o archivo) con editor externo
+  \ef [NOMBRE-FUNCIËN [L═NEA]]
+                  editar una funci¾n con editor externo
+  \ev [NOMBRE-VISTA [L═NEA]]
+                  editar definici¾n de una vista con editor externo
+  \p              mostrar el contenido del b·fer de consulta
+  \r              reiniciar (limpiar) el b·fer de consulta
+  \w ARCHIVO      escribir b·fer de consulta a archivo
+
+Entrada/Salida
+        (con -n, donde existe, se omite el salto de lÝnea final)
+  \copy ...            ejecutar orden SQL COPY con flujo de datos al cliente
+  \echo [-n] [STRING]  escribe la cadena en la salida estßndar
+  \i ARCHIVO           ejecutar ¾rdenes desde archivo
+  \ir ARCHIVO          como \i, pero relativo a la ubicaci¾n del script actual
+  \o [ARCHIVO]         enviar resultados de consultas a archivo u |orden
+  \qecho [-n] [STRING] escribe la cadena hacia flujo de salida \o
+  \warn [-n] [STRING]  escribe la cadena a la salida de error estßndar
+
+Condicional
+  \if EXPRESIËN   inicia bloque condicional
+  \elif EXPR      alternativa dentro del bloque condicional actual
+  \else           alternativa final dentro del bloque condicional actual
+  \endif          termina el bloque condicional
+
+Informativo
+   (opciones: S = desplegar objetos de sistema, + = agregar mßs detalle)
+  \d[S+]            listar tablas, vistas y secuencias
+  \d[S+]  NOMBRE    describir tabla, Ýndice, secuencia o vista
+  \da[S]  [PATRËN]  listar funciones de agregaci¾n
+  \dA[+]  [PATRËN]  listar mÚtodos de acceso
+  \dAc[+] [AMPTRN [TYPEPTRN]]  listar las clases de operadores
+  \dAf[+] [AMPTRN [TYPEPTRN]]  listar las familias de operadores
+  \dAo[+] [AMPTRN [OPFPTRN]]   listar los operadores de la familia de operadores
+  \dAp[+] [AMPTRN [OPFPTRN]]   enumera las funciones de la familia de operadores
+  \db[+]  [PATRËN]  listar tablespaces
+  \dc[S+] [PATRËN]  listar conversiones
+  \dconfig[+] [PATRËN]  listar parßmetros de configuraci¾n
+  \dC[+]  [PATRËN]  listar conversiones de tipo (casts)
+  \dd[S]  [PATRËN]  listar comentarios de objetos que no aparecen en otra parte
+  \dD[S+] [PATRËN]  listar dominios
+  \ddp    [PATRËN]  listar privilegios por omisi¾n
+  \dE[S+] [PATRËN]  listar tablas forßneas
+  \des[+] [PATRËN]  listar servidores forßneos
+  \det[+] [PATRËN]  listar tablas forßneas
+  \deu[+] [PATRËN]  listar mapeos de usuario
+  \dew[+] [PATRËN]  listar conectores de datos externos
+  \df[anptw][S+] [FUNCPTRN [TYPEPTRN ...]]
+                    listar funciones [s¾lo ag./normal/proc./trigger/ventana]
+  \dF[+]  [PATRËN]  listar configuraciones de b·squeda en texto
+  \dFd[+] [PATRËN]  listar diccionarios de b·squeda en texto
+  \dFp[+] [PATRËN]  listar analizadores (parsers) de b·sq. en texto
+  \dFt[+] [PATRËN]  listar plantillas de b·squeda en texto
+  \dg[S+] [PATRËN]  listar roles
+  \di[S+] [PATRËN]  listar Ýndices
+  \dl[+]            listar objetos grandes, lo mismo que \lo_list
+  \dL[S+] [PATRËN]  listar lenguajes procedurales
+  \dm[S+] [PATRËN]  listar vistas materializadas
+  \dn[S+] [PATRËN]  listar esquemas
+  \do[S+] [OPPTRN [TYPEPTRN [TYPEPTRN]]]
+                    listar operadores
+  \dO[S]  [PATRËN]  listar ordenamientos (collations)
+  \dp     [PATRËN]  listar privilegios de acceso a tablas, vistas y secuencias
+  \dP[tin+] [PATRËN] listar relaciones particionadas (s¾lo tablas/Ýndices) [n=anidadas]
+  \drds [PATRËN_ROL [PATRËN_BASE]]
+                    listar parßmetros de rol por base de datos
+  \dRp[+] [PATRËN]  listar publicaciones de replicaci¾n
+  \dRs[+] [PATRËN]  listar suscripciones de replicaci¾n
+  \ds[S+] [PATRËN]  listar secuencias
+  \dt[S+] [PATRËN]  listar tablas
+  \dT[S+] [PATRËN]  listar tipos de dato
+  \du[S+] [PATRËN]  listar roles
+  \dv[S+] [PATRËN]  listar vistas
+  \dx[+]  [PATRËN]  listar extensiones
+  \dX     [PATRËN]  listar estadÝsticas extendidas
+  \dy[+]  [PATRËN]  listar disparadores por eventos
+  \l[+]   [PATRËN]  listar bases de datos
+  \sf[+]  FUNCIËN   mostrar la definici¾n de una funci¾n
+  \sv[+]  VISTA     mostrar la definici¾n de una vista
+  \z      [PATRËN]  lo mismo que \dp
+
+Objetos Grandes
+  \lo_export LOBOID ARCHIVO escribir objeto grande a archivo
+  \lo_import ARCHIVO [COMENTARIO]
+                    leer objeto grande desde archivo
+  \lo_list[+]       listar objetos grandes
+  \lo_unlink LOBOID borrar un objeto grande
+
+Formato
+  \a              cambiar entre modo de salida alineado y sin alinear
+  \C [CADENA]     definir tÝtulo de tabla, o indefinir si es vacÝo
+  \f [CADENA]     mostrar o definir separador de campos para
+                  modo de salida sin alinear
+  \H              cambiar modo de salida HTML (actualmente desactivado)
+  \pset [NOMBRE [VALOR]]  define opci¾n de tabla de salida
+                  (border|columns|csv_fieldsep|expanded|fieldsep|fieldsep_zero|
+                   footer|format|linestyle|null|numericlocale|pager|
+                   pager_min_lines|recordsep|recordsep_zero|tableattr|title|
+                   tuples_only|unicode_border_linestyle|unicode_column_linestyle|
+                   unicode_header_linestyle)
+  \t [on|off]      mostrar s¾lo filas (actualmente desactivado)
+  \T [CADENA]      definir atributos HTML de <table>, o indefinir si es vacÝo
+  \x [on|off|auto] cambiar modo expandido (actualmente desactivado)
+
+Conexiones
+  \c[onnect] [BASE-DE-DATOS|- USUARIO|- ANFITRIËN|- PUERTO|- | conninfo]
+                  conectar a una nueva base de datos (actual: ½bd20251025_profesor╗)
+  \conninfo       despliega la informaci¾n sobre la conexi¾n actual
+  \encoding [CODIFICACIËN]
+                  mostrar o definir codificaci¾n del cliente
+  \password [USUARIO]
+                  cambiar la contrase±a para un usuario en forma segura
+
+Sistema Operativo
+  \cd [DIR]        cambiar el directorio de trabajo actual
+  \getenv PSQLVAR ENVVAR obtener variable de ambiente
+  \setenv NOMBRE [VALOR]
+                   definir o indefinir variable de ambiente
+  \timing [on|off] mostrar tiempo de ejecuci¾n de ¾rdenes
+                   (actualmente desactivado)
+  \! [ORDEN]       ejecutar orden en intÚrprete de ¾rdenes (shell),
+                   o iniciar intÚrprete interactivo
+
+Variables
+  \prompt [TEXTO] NOMBRE  preguntar al usuario el valor de la variable
+  \set [NOMBRE [VALOR]]   definir variables internas,
+                          listar todas si no se dan parßmetros
+  \unset NOMBRE           indefinir (eliminar) variable interna
+
+orden \d* no válida
+Digite \? para obtener ayuda.
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# \? d*
+General
+  \copyright      mostrar tÚrminos de uso y distribuci¾n de PostgreSQL
+  \crosstabview [COLUMNAS]
+                  ejecutar la consulta y desplegar en ½crosstab╗
+  \errverbose     mostrar error mßs reciente en mßxima verbosidad
+  \g [(OPTIONS)] [FILE]
+                  ejecuta la consulta (y envÝa el resultado a un fichero o |pipe);
+                  \g sin argumentos es equivalente a un punto y coma
+  \gdesc          describir resultado de la consulta, sin ejecutarla
+  \gexec          ejecutar la consulta, luego ejecuta cada valor del resultado
+  \gset [PREFIJO] ejecutar la consulta y almacenar el resultado en variables
+                  de psql
+  \gx [(OPTIONS)] [FILE]
+                  como \g, pero fuerza el modo de salida expandido
+  \q              salir de psql
+  \watch [SEGS]   ejecutar consulta cada SEGS segundos
+
+Ayuda
+  \? [commands]   desplegar ayuda sobre las ¾rdenes backslash
+  \? options      desplegar ayuda sobre opciones de lÝnea de ¾rdenes
+  \? variables    desplegar ayuda sobre variables especiales
+  \h [NOMBRE]     mostrar ayuda de sintaxis de ¾rdenes SQL;
+                  use ½*╗ para todas las ¾rdenes
+
+B·fer de consulta
+  \e [ARCHIVO] [L═NEA]
+                  editar el b·fer de consulta (o archivo) con editor externo
+  \ef [NOMBRE-FUNCIËN [L═NEA]]
+                  editar una funci¾n con editor externo
+  \ev [NOMBRE-VISTA [L═NEA]]
+                  editar definici¾n de una vista con editor externo
+  \p              mostrar el contenido del b·fer de consulta
+  \r              reiniciar (limpiar) el b·fer de consulta
+  \w ARCHIVO      escribir b·fer de consulta a archivo
+
+Entrada/Salida
+        (con -n, donde existe, se omite el salto de lÝnea final)
+  \copy ...            ejecutar orden SQL COPY con flujo de datos al cliente
+  \echo [-n] [STRING]  escribe la cadena en la salida estßndar
+  \i ARCHIVO           ejecutar ¾rdenes desde archivo
+  \ir ARCHIVO          como \i, pero relativo a la ubicaci¾n del script actual
+  \o [ARCHIVO]         enviar resultados de consultas a archivo u |orden
+  \qecho [-n] [STRING] escribe la cadena hacia flujo de salida \o
+  \warn [-n] [STRING]  escribe la cadena a la salida de error estßndar
+
+Condicional
+  \if EXPRESIËN   inicia bloque condicional
+  \elif EXPR      alternativa dentro del bloque condicional actual
+  \else           alternativa final dentro del bloque condicional actual
+  \endif          termina el bloque condicional
+
+Informativo
+   (opciones: S = desplegar objetos de sistema, + = agregar mßs detalle)
+  \d[S+]            listar tablas, vistas y secuencias
+  \d[S+]  NOMBRE    describir tabla, Ýndice, secuencia o vista
+  \da[S]  [PATRËN]  listar funciones de agregaci¾n
+  \dA[+]  [PATRËN]  listar mÚtodos de acceso
+  \dAc[+] [AMPTRN [TYPEPTRN]]  listar las clases de operadores
+  \dAf[+] [AMPTRN [TYPEPTRN]]  listar las familias de operadores
+  \dAo[+] [AMPTRN [OPFPTRN]]   listar los operadores de la familia de operadores
+  \dAp[+] [AMPTRN [OPFPTRN]]   enumera las funciones de la familia de operadores
+  \db[+]  [PATRËN]  listar tablespaces
+  \dc[S+] [PATRËN]  listar conversiones
+  \dconfig[+] [PATRËN]  listar parßmetros de configuraci¾n
+  \dC[+]  [PATRËN]  listar conversiones de tipo (casts)
+  \dd[S]  [PATRËN]  listar comentarios de objetos que no aparecen en otra parte
+  \dD[S+] [PATRËN]  listar dominios
+  \ddp    [PATRËN]  listar privilegios por omisi¾n
+  \dE[S+] [PATRËN]  listar tablas forßneas
+  \des[+] [PATRËN]  listar servidores forßneos
+  \det[+] [PATRËN]  listar tablas forßneas
+  \deu[+] [PATRËN]  listar mapeos de usuario
+  \dew[+] [PATRËN]  listar conectores de datos externos
+  \df[anptw][S+] [FUNCPTRN [TYPEPTRN ...]]
+                    listar funciones [s¾lo ag./normal/proc./trigger/ventana]
+  \dF[+]  [PATRËN]  listar configuraciones de b·squeda en texto
+  \dFd[+] [PATRËN]  listar diccionarios de b·squeda en texto
+  \dFp[+] [PATRËN]  listar analizadores (parsers) de b·sq. en texto
+  \dFt[+] [PATRËN]  listar plantillas de b·squeda en texto
+  \dg[S+] [PATRËN]  listar roles
+  \di[S+] [PATRËN]  listar Ýndices
+  \dl[+]            listar objetos grandes, lo mismo que \lo_list
+  \dL[S+] [PATRËN]  listar lenguajes procedurales
+  \dm[S+] [PATRËN]  listar vistas materializadas
+  \dn[S+] [PATRËN]  listar esquemas
+  \do[S+] [OPPTRN [TYPEPTRN [TYPEPTRN]]]
+                    listar operadores
+  \dO[S]  [PATRËN]  listar ordenamientos (collations)
+  \dp     [PATRËN]  listar privilegios de acceso a tablas, vistas y secuencias
+  \dP[tin+] [PATRËN] listar relaciones particionadas (s¾lo tablas/Ýndices) [n=anidadas]
+  \drds [PATRËN_ROL [PATRËN_BASE]]
+                    listar parßmetros de rol por base de datos
+  \dRp[+] [PATRËN]  listar publicaciones de replicaci¾n
+  \dRs[+] [PATRËN]  listar suscripciones de replicaci¾n
+  \ds[S+] [PATRËN]  listar secuencias
+  \dt[S+] [PATRËN]  listar tablas
+  \dT[S+] [PATRËN]  listar tipos de dato
+  \du[S+] [PATRËN]  listar roles
+  \dv[S+] [PATRËN]  listar vistas
+  \dx[+]  [PATRËN]  listar extensiones
+  \dX     [PATRËN]  listar estadÝsticas extendidas
+  \dy[+]  [PATRËN]  listar disparadores por eventos
+  \l[+]   [PATRËN]  listar bases de datos
+  \sf[+]  FUNCIËN   mostrar la definici¾n de una funci¾n
+  \sv[+]  VISTA     mostrar la definici¾n de una vista
+  \z      [PATRËN]  lo mismo que \dp
+
+Objetos Grandes
+  \lo_export LOBOID ARCHIVO escribir objeto grande a archivo
+  \lo_import ARCHIVO [COMENTARIO]
+                    leer objeto grande desde archivo
+  \lo_list[+]       listar objetos grandes
+  \lo_unlink LOBOID borrar un objeto grande
+
+Formato
+  \a              cambiar entre modo de salida alineado y sin alinear
+  \C [CADENA]     definir tÝtulo de tabla, o indefinir si es vacÝo
+  \f [CADENA]     mostrar o definir separador de campos para
+                  modo de salida sin alinear
+  \H              cambiar modo de salida HTML (actualmente desactivado)
+  \pset [NOMBRE [VALOR]]  define opci¾n de tabla de salida
+                  (border|columns|csv_fieldsep|expanded|fieldsep|fieldsep_zero|
+                   footer|format|linestyle|null|numericlocale|pager|
+                   pager_min_lines|recordsep|recordsep_zero|tableattr|title|
+                   tuples_only|unicode_border_linestyle|unicode_column_linestyle|
+                   unicode_header_linestyle)
+  \t [on|off]      mostrar s¾lo filas (actualmente desactivado)
+  \T [CADENA]      definir atributos HTML de <table>, o indefinir si es vacÝo
+  \x [on|off|auto] cambiar modo expandido (actualmente desactivado)
+
+Conexiones
+  \c[onnect] [BASE-DE-DATOS|- USUARIO|- ANFITRIËN|- PUERTO|- | conninfo]
+                  conectar a una nueva base de datos (actual: ½bd20251025_profesor╗)
+  \conninfo       despliega la informaci¾n sobre la conexi¾n actual
+  \encoding [CODIFICACIËN]
+                  mostrar o definir codificaci¾n del cliente
+  \password [USUARIO]
+                  cambiar la contrase±a para un usuario en forma segura
+
+Sistema Operativo
+  \cd [DIR]        cambiar el directorio de trabajo actual
+  \getenv PSQLVAR ENVVAR obtener variable de ambiente
+  \setenv NOMBRE [VALOR]
+                   definir o indefinir variable de ambiente
+  \timing [on|off] mostrar tiempo de ejecuci¾n de ¾rdenes
+                   (actualmente desactivado)
+  \! [ORDEN]       ejecutar orden en intÚrprete de ¾rdenes (shell),
+                   o iniciar intÚrprete interactivo
+
+Variables
+  \prompt [TEXTO] NOMBRE  preguntar al usuario el valor de la variable
+  \set [NOMBRE [VALOR]]   definir variables internas,
+                          listar todas si no se dan parßmetros
+  \unset NOMBRE           indefinir (eliminar) variable interna
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# \d contactos;
+                              Tabla ½public.contactos╗
+      Columna       |          Tipo          | Ordenamiento | Nulable | Por omisi¾n
+--------------------+------------------------+--------------+---------+-------------
+ nombres            | character varying(100) |              |         |
+ apellidos          | character varying(100) |              |         |
+ correo_electronico | character varying(100) |              |         |
+ telefono           | character varying(100) |              |         |
+
+
+bd20251025_profesor=# \d "Contactos"
+                              Tabla ½public.Contactos╗
+      Columna       |          Tipo          | Ordenamiento | Nulable | Por omisi¾n
+--------------------+------------------------+--------------+---------+-------------
+ Nombres            | character varying(100) |              |         |
+ Apellidos          | character varying(100) |              |         |
+ Correo electrónico | character varying(100) |              |         |
+ Teléfono           | character varying(100) |              |         |
+
+
+bd20251025_profesor=# \dt
+         Listado de relaciones
+ Esquema |  Nombre   | Tipo  |  Due±o
+---------+-----------+-------+----------
+ public  | Contactos | tabla | postgres
+ public  | contactos | tabla | postgres
+(2 filas)
+
+
+bd20251025_profesor=# create table contactos1(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     nombres varchar(100),
+bd20251025_profesor(#     apellidos varchar(100),
+bd20251025_profesor(#     correo_electronico varchar(100),
+bd20251025_profesor(#     telefono varchar(100),
+bd20251025_profesor(#     primary key(id),
+bd20251025_profesor(# );
+ERROR:  error de sintaxis en o cerca de «)»
+LÍNEA 8: );
+         ^
+bd20251025_profesor=# create table contactos1(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     nombres varchar(100),
+bd20251025_profesor(#     apellidos varchar(100),
+bd20251025_profesor(#     correo_electronico varchar(100),
+bd20251025_profesor(#     telefono varchar(100),
+bd20251025_profesor(#     primary key(id)
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# \d contactos1;
+                                           Tabla ½public.contactos1╗
+      Columna       |          Tipo          | Ordenamiento | Nulable  |              Por omisi¾n
+--------------------+------------------------+--------------+----------+----------------------------------------
+ id                 | integer                |              | not null | nextval('contactos1_id_seq'::regclass)
+ nombres            | character varying(100) |              |          |
+ apellidos          | character varying(100) |              |          |
+ correo_electronico | character varying(100) |              |          |
+ telefono           | character varying(100) |              |          |
+═ndices:
+    "contactos1_pkey" PRIMARY KEY, btree (id)
+
+
+bd20251025_profesor=# \d
+               Listado de relaciones
+ Esquema |      Nombre       |   Tipo    |  Due±o
+---------+-------------------+-----------+----------
+ public  | Contactos         | tabla     | postgres
+ public  | contactos         | tabla     | postgres
+ public  | contactos1        | tabla     | postgres
+ public  | contactos1_id_seq | secuencia | postgres
+(4 filas)
+
+
+bd20251025_profesor=#  \ds
+               Listado de relaciones
+ Esquema |      Nombre       |   Tipo    |  Due±o
+---------+-------------------+-----------+----------
+ public  | contactos1_id_seq | secuencia | postgres
+(1 fila)
+
+
+bd20251025_profesor=# alter table contactos1 add unique(correo_electronico);
+ALTER TABLE
+bd20251025_profesor=# \d
+               Listado de relaciones
+ Esquema |      Nombre       |   Tipo    |  Due±o
+---------+-------------------+-----------+----------
+ public  | Contactos         | tabla     | postgres
+ public  | contactos         | tabla     | postgres
+ public  | contactos1        | tabla     | postgres
+ public  | contactos1_id_seq | secuencia | postgres
+(4 filas)
+
+
+bd20251025_profesor=# \d contactos1;
+                                           Tabla ½public.contactos1╗
+      Columna       |          Tipo          | Ordenamiento | Nulable  |              Por omisi¾n
+--------------------+------------------------+--------------+----------+----------------------------------------
+ id                 | integer                |              | not null | nextval('contactos1_id_seq'::regclass)
+ nombres            | character varying(100) |              |          |
+ apellidos          | character varying(100) |              |          |
+ correo_electronico | character varying(100) |              |          |
+ telefono           | character varying(100) |              |          |
+═ndices:
+    "contactos1_pkey" PRIMARY KEY, btree (id)
+    "contactos1_correo_electronico_key" UNIQUE CONSTRAINT, btree (correo_electronico)
+
+
+bd20251025_profesor=# INSERT INTO contactos1(nombres, apellidos, correo_electronico, telefono)
+bd20251025_profesor-# VALUES
+bd20251025_profesor-# ('ANA','VASQUEZ','av@gmail.com','+58 414 12345678'),
+bd20251025_profesor-# ('YOLANDA','TORTOZA','yt@gmail.com','+58 414 92345678'),
+bd20251025_profesor-# ('NELLY','CONTRERAS','nc@hotmail.com','+58 414 82345678');
+INSERT 0 3
+bd20251025_profesor=# SELECT * FROM contactos1;
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  1 | ANA     | VASQUEZ   | av@gmail.com       | +58 414 12345678
+  2 | YOLANDA | TORTOZA   | yt@gmail.com       | +58 414 92345678
+  3 | NELLY   | CONTRERAS | nc@hotmail.com     | +58 414 82345678
+(3 filas)
+
+
+bd20251025_profesor=# INSERT INTO contactos1(nombres, apellidos, correo_electronico, telefono)
+bd20251025_profesor-# VALUES
+bd20251025_profesor-# ('NORMA','CEVALLOS','nc@hotmail.com','+58 414 72345678');
+ERROR:  llave duplicada viola restricción de unicidad «contactos1_correo_electronico_key»
+DETALLE:  Ya existe la llave (correo_electronico)=(nc@hotmail.com).
+bd20251025_profesor=# INSERT INTO contactos1(nombres, apellidos, correo_electronico, telefono)
+bd20251025_profesor-# VALUES
+bd20251025_profesor-# ('NORMA','CEVALLOS','nc@gmail.com','+58 414 72345678');
+INSERT 0 1
+bd20251025_profesor=# SELECT * FROM contactos1;
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  1 | ANA     | VASQUEZ   | av@gmail.com       | +58 414 12345678
+  2 | YOLANDA | TORTOZA   | yt@gmail.com       | +58 414 92345678
+  3 | NELLY   | CONTRERAS | nc@hotmail.com     | +58 414 82345678
+  5 | NORMA   | CEVALLOS  | nc@gmail.com       | +58 414 72345678
+(4 filas)
+
+
+bd20251025_profesor=# SELECT * FROM contactos1;
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  1 | ANA     | VASQUEZ   | av@gmail.com       | +58 414 12345678
+  2 | YOLANDA | TORTOZA   | yt@gmail.com       | +58 414 92345678
+  3 | NELLY   | CONTRERAS | nc@hotmail.com     | +58 414 82345678
+  5 | NORMA   | CEVALLOS  | nc@gmail.com       | +58 414 72345678
+(4 filas)
+
+
+bd20251025_profesor=# --
+bd20251025_profesor=# SELECT * FROM contactos1 WHERE id = 2;
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  2 | YOLANDA | TORTOZA   | yt@gmail.com       | +58 414 92345678
+(1 fila)
+
+
+bd20251025_profesor=# --
+bd20251025_profesor=# SELECT nombres, apellidos FROM contactos1 WHERE id = 2;
+ nombres | apellidos
+---------+-----------
+ YOLANDA | TORTOZA
+(1 fila)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# UPDATE contactos1 SET correo_electronico = 'avasquez@gmail.com' WHERE id = 1;
+UPDATE 1
+bd20251025_profesor=# select * from contactos1;
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  2 | YOLANDA | TORTOZA   | yt@gmail.com       | +58 414 92345678
+  3 | NELLY   | CONTRERAS | nc@hotmail.com     | +58 414 82345678
+  5 | NORMA   | CEVALLOS  | nc@gmail.com       | +58 414 72345678
+  1 | ANA     | VASQUEZ   | avasquez@gmail.com | +58 414 12345678
+(4 filas)
+
+
+bd20251025_profesor=# SELECT * FROM contactos1 WHERE nombre = 'ANA';
+ERROR:  no existe la columna «nombre»
+LÍNEA 1: SELECT * FROM contactos1 WHERE nombre = 'ANA';
+                                        ^
+SUGERENCIA:  Probablemente quiera hacer referencia a la columna «contactos1.nombres».
+bd20251025_profesor=# SELECT * FROM contactos1 WHERE nombres = 'ANA';
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  1 | ANA     | VASQUEZ   | avasquez@gmail.com | +58 414 12345678
+(1 fila)
+
+
+bd20251025_profesor=# INSERT INTO contactos1(nombres, apellidos, correo_electronico, telefono)
+bd20251025_profesor-# VALUES
+bd20251025_profesor-# ('ANA MARIA','PEREZ','amp@gmail.com','+58 414 62345678'),
+bd20251025_profesor-# ('ANA LUCIA','YEPEZ','aly@gmail.com','+58 414 52345678'),
+bd20251025_profesor-# ('VICTORIA ANA','CEBALLOS','vac@hotmail.com','+58 414 42345678');
+INSERT 0 3
+bd20251025_profesor=# SELECT * FROM contactos1 WHERE nombres = 'ANA';
+ id | nombres | apellidos | correo_electronico |     telefono
+----+---------+-----------+--------------------+------------------
+  1 | ANA     | VASQUEZ   | avasquez@gmail.com | +58 414 12345678
+(1 fila)
+
+
+bd20251025_profesor=# SELECT * FROM contactos1 WHERE nombres LIKE '%ANA%';
+ id |   nombres    | apellidos | correo_electronico |     telefono
+----+--------------+-----------+--------------------+------------------
+  1 | ANA          | VASQUEZ   | avasquez@gmail.com | +58 414 12345678
+  6 | ANA MARIA    | PEREZ     | amp@gmail.com      | +58 414 62345678
+  7 | ANA LUCIA    | YEPEZ     | aly@gmail.com      | +58 414 52345678
+  8 | VICTORIA ANA | CEBALLOS  | vac@hotmail.com    | +58 414 42345678
+(4 filas)
+
+
+bd20251025_profesor=# SELECT ID, NOMBRES, APELLIDOS FROM contactos1 WHERE nombres LIKE '%ANA%';
+ id |   nombres    | apellidos
+----+--------------+-----------
+  1 | ANA          | VASQUEZ
+  6 | ANA MARIA    | PEREZ
+  7 | ANA LUCIA    | YEPEZ
+  8 | VICTORIA ANA | CEBALLOS
+(4 filas)
+
+
+bd20251025_profesor=# DELETE FROM contactos1 WHERE id = 8;
+DELETE 1
+bd20251025_profesor=# SELECT ID, NOMBRES, APELLIDOS FROM contactos1 WHERE nombres LIKE '%ANA%';
+ id |  nombres  | apellidos
+----+-----------+-----------
+  1 | ANA       | VASQUEZ
+  6 | ANA MARIA | PEREZ
+  7 | ANA LUCIA | YEPEZ
+(3 filas)
+
+
+bd20251025_profesor=# create table proveedores(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     nombre varchar(100),
+bd20251025_profesor(#     direccion text,
+bd20251025_profesor(#     telefono varchar(100),
+bd20251025_profesor(#     correo_electronico varchar(100),
+bd20251025_profesor(#     primary key(id)
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=#
+bd20251025_profesor=# create table productos(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     proveedor_id integer,
+bd20251025_profesor(#     nombre varchar(100),
+bd20251025_profesor(#     precio numeric(13,2),
+bd20251025_profesor(#     existencia integer,
+bd20251025_profesor(#     primary key(id),
+bd20251025_profesor(#     foreign key(proveedor_id) references proveedores(id) on delete cascade on update cascade
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# \c bd20251025_joelys
+Ahora está conectado a la base de datos «bd20251025_joelys» con el usuario «postgres».
+bd20251025_joelys=# \d
+               Listado de relaciones
+ Esquema |      Nombre       |   Tipo    |  Due±o
+---------+-------------------+-----------+----------
+ public  | Contactos         | tabla     | postgres
+ public  | contactos         | tabla     | postgres
+ public  | contactos1        | tabla     | postgres
+ public  | contactos1_id_seq | secuencia | postgres
+(4 filas)
+
+
+bd20251025_joelys=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# insert into proveedores(nombre, direccion, telefono, correo_electronico)
+bd20251025_profesor-# values
+bd20251025_profesor-# ('GENERAL ELECTRIC','AV. LECUNA','+58 212 5876543', 'info@ge.com'),
+bd20251025_profesor-# ('WHIRPOOL','AV. BARALT','+58 212 4876543', 'info@whirpool.com'),
+bd20251025_profesor-# ('SAMSUNG','AV. SAN MARTIN','+58 212 7876543', 'info@samsung.com'),
+bd20251025_profesor-# ('ADMIRAL','AV. ROMULO GALLEGOS','+58 212 2876543', 'info@admiral.com');
+INSERT 0 4
+bd20251025_profesor=# INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+bd20251025_profesor-# -- Refrigeración (proveedor_id cíclico: 1, 2, 3, 4)
+bd20251025_profesor-# (1, 'Refrigerador No Frost 300L Inox', 750.00, 25),
+bd20251025_profesor-# (2, 'Congelador Vertical 150L', 420.50, 15),
+bd20251025_profesor-# (3, 'Nevera Ejecutiva 100L Negra', 280.99, 40),
+bd20251025_profesor-# (4, 'Refrigerador Side by Side 650L', 1250.75, 12),
+bd20251025_profesor-# (1, 'Mini Bar 50L', 150.00, 50),
+bd20251025_profesor-# (2, 'Frigobar de Acero Inoxidable', 185.25, 30),
+bd20251025_profesor-# (3, 'Refrigerador de Vinos Dual Zone', 980.00, 8),
+bd20251025_profesor-# (4, 'Congelador Horizontal 200L', 510.99, 20),
+bd20251025_profesor-# (1, 'Refrigerador Smart Inverter 450L', 920.50, 18),
+bd20251025_profesor-# (2, 'Nevera de 2 Puertas 350L', 680.00, 22),
+bd20251025_profesor-# (3, 'Congelador Tipo Cofre 300L', 600.00, 17),
+bd20251025_profesor-# (4, 'Refrigerador French Door 550L', 1150.25, 10),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Lavado y Secado (proveedor_id cíclico: 1, 2, 3, 4)
+bd20251025_profesor-# (1, 'Lavadora Carga Superior 15kg', 550.00, 35),
+bd20251025_profesor-# (2, 'Secadora Eléctrica de 8kg', 480.90, 28),
+bd20251025_profesor-# (3, 'Lavasecadora 10/7kg Inverter', 899.99, 15),
+bd20251025_profesor-# (4, 'Lavadora Carga Frontal 12kg', 720.50, 20),
+bd20251025_profesor-# (1, 'Secadora a Gas de Gran Capacidad', 650.00, 10),
+bd20251025_profesor-# (2, 'Lavadora Semi-Automática 18kg', 320.75, 45),
+bd20251025_profesor-# (3, 'Centro de Lavado Compacto', 950.00, 14),
+bd20251025_profesor-# (4, 'Bomba de Drenaje para Lavadora', 45.00, 100),
+bd20251025_profesor-# (1, 'Lavadora Portátil 5kg', 190.00, 60),
+bd20251025_profesor-# (2, 'Secadora por Condensación 7kg', 580.00, 25),
+bd20251025_profesor-# (3, 'Lavadora con Tecnología EcoBubble', 780.00, 18),
+bd20251025_profesor-# (4, 'Base Antivibración para Lavadora', 25.50, 120),
+bd20251025_profesor-# (1, 'Manguera de Desagüe Reforzada', 15.00, 150),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Cocinas y Hornos (proveedor_id cíclico: 2, 3, 4, 1)
+bd20251025_profesor-# (2, 'Cocina a Gas 4 Quemadores Acero', 350.00, 30),
+bd20251025_profesor-# (3, 'Horno Eléctrico Empotrable 60cm', 520.50, 25),
+bd20251025_profesor-# (4, 'Microondas Digital 20 Litros', 85.99, 70),
+bd20251025_profesor-# (1, 'Estufa de Inducción Portátil', 120.00, 55),
+bd20251025_profesor-# (2, 'Cocina Eléctrica Vitrocerámica', 410.75, 22),
+bd20251025_profesor-# (3, 'Horno Microondas con Grill', 115.00, 65),
+bd20251025_profesor-# (4, 'Campana Extractora de Pared 90cm', 290.00, 18),
+bd20251025_profesor-# (1, 'Cocina Industrial 6 Hornillas', 850.00, 9),
+bd20251025_profesor-# (2, 'Parrilla Eléctrica de Mesa', 55.99, 90),
+bd20251025_profesor-# (3, 'Horno de Convección Multifunción', 680.00, 11),
+bd20251025_profesor-# (4, 'Cocina Compacta 2 Placas', 95.00, 80),
+bd20251025_profesor-# (1, 'Microondas de Gran Capacidad 30L', 130.25, 40),
+bd20251025_profesor-# (2, 'Tostadora de Pan Automática', 35.00, 110),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Calentamiento y Climatización (proveedor_id cíclico: 3, 4, 1, 2)
+bd20251025_profesor-# (3, 'Aire Acondicionado Split 12000 BTU', 450.00, 30),
+bd20251025_profesor-# (4, 'Calentador de Agua a Gas 10L', 210.99, 25),
+bd20251025_profesor-# (1, 'Calefactor Cerámico Oscilante', 65.50, 50),
+bd20251025_profesor-# (2, 'Aire Acondicionado Portátil 9000 BTU', 380.00, 20),
+bd20251025_profesor-# (3, 'Deshumidificador 15L/Día', 199.99, 35),
+bd20251025_profesor-# (4, 'Ventilador de Pedestal con Control', 40.00, 90),
+bd20251025_profesor-# (1, 'Termostato Inteligente Wi-Fi', 85.00, 45),
+bd20251025_profesor-# (2, 'Cortina de Aire Industrial', 420.00, 15),
+bd20251025_profesor-# (3, 'Calentador de Ambiente de Bajo Consumo', 75.25, 40),
+bd20251025_profesor-# (4, 'Aire Acondicionado Inverter 18000 BTU', 690.00, 10),
+bd20251025_profesor-# (1, 'Purificador de Aire con Filtro HEPA', 150.00, 30),
+bd20251025_profesor-# (2, 'Ventilador de Techo con Luz LED', 95.00, 50),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Electrodomésticos Menores y Varios (proveedor_id cíclico: 3, 4, 1, 2, ...)
+bd20251025_profesor-# (3, 'Aspiradora Robot Inteligente', 299.99, 15),
+bd20251025_profesor-# (4, 'Batidora de Mano con Accesorios', 45.90, 80),
+bd20251025_profesor-# (1, 'Licuadora de Alta Potencia', 75.00, 60),
+bd20251025_profesor-# (2, 'Cafetera Programable 12 Tazas', 55.20, 75),
+bd20251025_profesor-# (3, 'Olla Arrocera Eléctrica 1.8L', 30.50, 100),
+bd20251025_profesor-# (4, 'Plancha de Ropa a Vapor', 35.00, 95),
+bd20251025_profesor-# (1, 'Extractor de Jugos Industrial', 190.00, 20),
+bd20251025_profesor-# (2, 'Procesador de Alimentos Multifuncional', 88.00, 40),
+bd20251025_profesor-# (3, 'Sandwichera 2 Puestos', 25.00, 110),
+bd20251025_profesor-# (4, 'Hervidor Eléctrico de Acero', 40.00, 85),
+bd20251025_profesor-# (1, 'Balanza Digital de Cocina', 18.99, 130),
+bd20251025_profesor-# (2, 'Vaso de Repuesto para Licuadora', 12.00, 200),
+bd20251025_profesor-# (3, 'Filtros de Carbón para Campana', 10.00, 150),
+bd20251025_profesor-# (4, 'Bolsas para Aspiradora (Paquete x5)', 8.50, 220),
+bd20251025_profesor-# (1, 'Cable de Alimentación Universal', 5.00, 300),
+bd20251025_profesor-# (2, 'Rejilla para Horno de 60cm', 22.50, 90),
+bd20251025_profesor-# (3, 'Manilla de Puerta de Nevera Universal', 15.99, 70),
+bd20251025_profesor-# (4, 'Termómetro Digital para Congelador', 11.00, 100),
+bd20251025_profesor-# (1, 'Cubetera Automática para Refrigerador', 55.00, 35),
+bd20251025_profesor-# (2, 'Kit de Limpieza para Vidrio de Cocina', 14.99, 120),
+bd20251025_profesor-# (3, 'Cepillo de Limpieza para Secadora', 9.00, 150),
+bd20251025_profesor-# (4, 'Rodillos de Goma para Lavadora', 20.00, 80),
+bd20251025_profesor-# (1, 'Manguera de Entrada de Agua Fria', 18.00, 95),
+bd20251025_profesor-# (2, 'Filtro de Agua Interno para Nevera', 45.00, 50),
+bd20251025_profesor-# (3, 'Funda Protectora para Lavadora', 28.00, 60),
+bd20251025_profesor-# (4, 'Grifo Doble para Conexión de Agua', 16.50, 110),
+bd20251025_profesor-# (1, 'Dispensador de Jabón Líquido Automático', 35.00, 40),
+bd20251025_profesor-# (2, 'Contenedor de Basura de Sensor', 65.00, 30),
+bd20251025_profesor-# (3, 'Ambientador Eléctrico para Hogar', 15.00, 150),
+bd20251025_profesor-# (4, 'Kit de Instalación para A/A Split', 40.00, 70),
+bd20251025_profesor-# (1, 'Batería de Respaldo para Nevera Smart', 90.00, 25),
+bd20251025_profesor-# (2, 'Convertidor de Gas a Electricidad', 75.00, 15),
+bd20251025_profesor-# (3, 'Cesta de Cubiertos para Lavavajillas', 19.99, 100),
+bd20251025_profesor-# (4, 'Juego de Quemadores de Cocina', 55.00, 55),
+bd20251025_profesor-# (1, 'Resistencia de Horno de 2000W', 48.00, 65),
+bd20251025_profesor-# (2, 'Temporizador Digital para Electrodomésticos', 25.00, 80),
+bd20251025_profesor-# (3, 'Cable de Extensión de 3 Metros', 10.50, 180),
+bd20251025_profesor-# (4, 'Fusible de Protección 15A (Paquete x10)', 6.00, 250),
+bd20251025_profesor-# (1, 'Cinta Aislante Térmica', 9.00, 160),
+bd20251025_profesor-# (2, 'Kit de Herramientas de Reparación Básica', 30.00, 70),
+bd20251025_profesor-# (3, 'Luz LED Interna para Nevera', 14.00, 90),
+bd20251025_profesor-# (4, 'Bandeja de Descongelación Rápida', 22.00, 50),
+bd20251025_profesor-# (1, 'Soporte Universal para Microondas', 38.00, 45),
+bd20251025_profesor-# (2, 'Filtro de Pelusas para Secadora', 12.50, 110),
+bd20251025_profesor-# (3, 'Guantes de Goma para Lavado', 7.00, 200),
+bd20251025_profesor-# (4, 'Boquilla para Aspiradora de Esquinas', 15.00, 100),
+bd20251025_profesor-# (1, 'Cepillo de Limpieza para Serpentines', 8.50, 120),
+bd20251025_profesor-# (2, 'Aceite Lubricante para Motor', 11.50, 130),
+bd20251025_profesor-# (3, 'Detector de Fugas de Gas', 55.00, 30),
+bd20251025_profesor-# (4, 'Manta de Aislamiento Térmico', 35.00, 40),
+bd20251025_profesor-# (1, 'Regulador de Voltaje 2000W', 150.00, 20),
+bd20251025_profesor-# (2, 'Protector de Sobretensión para Refrigerador', 45.00, 60),
+bd20251025_profesor-# (3, 'Reloj Digital de Cocina', 18.00, 90),
+bd20251025_profesor-# (4, 'Soporte de Pared para TV (Aplica para Línea Blanca)', 25.00, 100),
+bd20251025_profesor-# (1, 'Cargador Universal para Baterías', 28.00, 75),
+bd20251025_profesor-# (2, 'Kit de Puesta a Tierra', 10.00, 150),
+bd20251025_profesor-# (3, 'Sensor de Humedad para Secadora', 32.00, 40),
+bd20251025_profesor-# (4, 'Cuchillas de Licuadora de Repuesto', 15.00, 85),
+bd20251025_profesor-# (1, 'Resistencia de Calentador de Agua', 30.00, 50),
+bd20251025_profesor-# (2, 'Válvula de Entrada de Agua', 22.00, 70),
+bd20251025_profesor-# (3, 'Bomba de Recirculación de Agua', 80.00, 25),
+bd20251025_profesor-# (4, 'Módulo de Control Electrónico (Genérico)', 120.00, 15);
+ERROR:  carácter con secuencia de bytes 0x81 en codificación «WIN1252» no tiene equivalente en la codificación «UTF8»
+bd20251025_profesor=#
+bd20251025_profesor=# INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+bd20251025_profesor-# -- Refrigeracion (1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (1, 'Refrigerador No Frost 300L Inox', 750.00, 25),
+bd20251025_profesor-# (2, 'Congelador Vertical 150L', 420.50, 15),
+bd20251025_profesor-# (3, 'Nevera Ejecutiva 100L Negra', 280.99, 40),
+bd20251025_profesor-# (4, 'Refrigerador Side by Side 650L', 1250.75, 12),
+bd20251025_profesor-# (1, 'Mini Bar 50 Litros', 150.00, 50),
+bd20251025_profesor-# (2, 'Frigobar Acero Inoxidable', 185.25, 30),
+bd20251025_profesor-# (3, 'Refrigerador de Vinos Dual Zone', 980.00, 8),
+bd20251025_profesor-# (4, 'Congelador Horizontal 200L', 510.99, 20),
+bd20251025_profesor-# (1, 'Refrigerador Smart 450L', 920.50, 18),
+bd20251025_profesor-# (2, 'Nevera de 2 Puertas 350L', 680.00, 22),
+bd20251025_profesor-# (3, 'Bebedero de Agua Fria', 110.00, 35),
+bd20251025_profesor-# (4, 'Refrigerador French Door 550L', 1150.25, 10),
+bd20251025_profesor-# (1, 'Maquina de Hielo Portatil', 195.00, 45),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Lavado y Secado (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (2, 'Lavadora Carga Superior 15kg', 550.00, 35),
+bd20251025_profesor-# (3, 'Secadora Electrica de 8kg', 480.90, 28),
+bd20251025_profesor-# (4, 'Lavasecadora 10/7kg Inverter', 899.99, 15),
+bd20251025_profesor-# (1, 'Lavadora Carga Frontal 12kg', 720.50, 20),
+bd20251025_profesor-# (2, 'Secadora a Gas Gran Capacidad', 650.00, 10),
+bd20251025_profesor-# (3, 'Lavadora Semi-Automatica 18kg', 320.75, 45),
+bd20251025_profesor-# (4, 'Centro de Lavado Compacto', 950.00, 14),
+bd20251025_profesor-# (1, 'Bomba de Drenaje para Lavadora', 45.00, 100),
+bd20251025_profesor-# (2, 'Lavadora Portatil 5kg', 190.00, 60),
+bd20251025_profesor-# (3, 'Secadora por Condensacion 7kg', 580.00, 25),
+bd20251025_profesor-# (4, 'Lavadora Tecnologia EcoBubble', 780.00, 18),
+bd20251025_profesor-# (1, 'Base Antivibracion Lavadora', 25.50, 120),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Cocinas y Hornos (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (2, 'Cocina a Gas 4 Quemadores Acero', 350.00, 30),
+bd20251025_profesor-# (3, 'Horno Electrico Empotrable 60cm', 520.50, 25),
+bd20251025_profesor-# (4, 'Microondas Digital 20 Litros', 85.99, 70),
+bd20251025_profesor-# (1, 'Estufa de Induccion Portatil', 120.00, 55),
+bd20251025_profesor-# (2, 'Cocina Electrica Vitroceramica', 410.75, 22),
+bd20251025_profesor-# (3, 'Horno Microondas con Grill', 115.00, 65),
+bd20251025_profesor-# (4, 'Campana Extractora de Pared 90cm', 290.00, 18),
+bd20251025_profesor-# (1, 'Cocina Industrial 6 Hornillas', 850.00, 9),
+bd20251025_profesor-# (2, 'Parrilla Electrica de Mesa', 55.99, 90),
+bd20251025_profesor-# (3, 'Horno de Conveccion Multifuncion', 680.00, 11),
+bd20251025_profesor-# (4, 'Cocina Compacta 2 Placas', 95.00, 80),
+bd20251025_profesor-# (1, 'Microondas Gran Capacidad 30L', 130.25, 40),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Climatizacion y Varios (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4)
+bd20251025_profesor-# (2, 'Aire Acondicionado Split 12000 BTU', 450.00, 30),
+bd20251025_profesor-# (3, 'Calentador de Agua a Gas 10L', 210.99, 25),
+bd20251025_profesor-# (4, 'Calefactor Ceramico Oscilante', 65.50, 50),
+bd20251025_profesor-# (1, 'Aire Acondicionado Portatil 9000 BTU', 380.00, 20),
+bd20251025_profesor-# (2, 'Deshumidificador 15L/Dia', 199.99, 35),
+bd20251025_profesor-# (3, 'Ventilador de Pedestal Control', 40.00, 90),
+bd20251025_profesor-# (4, 'Termostato Inteligente Wi-Fi', 85.00, 45),
+bd20251025_profesor-# (1, 'Cortina de Aire Industrial', 420.00, 15),
+bd20251025_profesor-# (2, 'Purificador de Aire Filtro HEPA', 150.00, 30),
+bd20251025_profesor-# (3, 'Ventilador de Techo con Luz LED', 95.00, 50),
+bd20251025_profesor-# (4, 'Aspiradora Robot Inteligente', 299.99, 15);
+INSERT 0 48
+bd20251025_profesor=# select * from productos;
+ id | proveedor_id |                nombre                | precio  | existencia
+----+--------------+--------------------------------------+---------+------------
+  1 |            1 | Refrigerador No Frost 300L Inox      |  750.00 |         25
+  2 |            2 | Congelador Vertical 150L             |  420.50 |         15
+  3 |            3 | Nevera Ejecutiva 100L Negra          |  280.99 |         40
+  4 |            4 | Refrigerador Side by Side 650L       | 1250.75 |         12
+  5 |            1 | Mini Bar 50 Litros                   |  150.00 |         50
+  6 |            2 | Frigobar Acero Inoxidable            |  185.25 |         30
+  7 |            3 | Refrigerador de Vinos Dual Zone      |  980.00 |          8
+  8 |            4 | Congelador Horizontal 200L           |  510.99 |         20
+  9 |            1 | Refrigerador Smart 450L              |  920.50 |         18
+ 10 |            2 | Nevera de 2 Puertas 350L             |  680.00 |         22
+ 11 |            3 | Bebedero de Agua Fria                |  110.00 |         35
+ 12 |            4 | Refrigerador French Door 550L        | 1150.25 |         10
+ 13 |            1 | Maquina de Hielo Portatil            |  195.00 |         45
+ 14 |            2 | Lavadora Carga Superior 15kg         |  550.00 |         35
+ 15 |            3 | Secadora Electrica de 8kg            |  480.90 |         28
+ 16 |            4 | Lavasecadora 10/7kg Inverter         |  899.99 |         15
+ 17 |            1 | Lavadora Carga Frontal 12kg          |  720.50 |         20
+ 18 |            2 | Secadora a Gas Gran Capacidad        |  650.00 |         10
+ 19 |            3 | Lavadora Semi-Automatica 18kg        |  320.75 |         45
+ 20 |            4 | Centro de Lavado Compacto            |  950.00 |         14
+ 21 |            1 | Bomba de Drenaje para Lavadora       |   45.00 |        100
+ 22 |            2 | Lavadora Portatil 5kg                |  190.00 |         60
+ 23 |            3 | Secadora por Condensacion 7kg        |  580.00 |         25
+ 24 |            4 | Lavadora Tecnologia EcoBubble        |  780.00 |         18
+ 25 |            1 | Base Antivibracion Lavadora          |   25.50 |        120
+ 26 |            2 | Cocina a Gas 4 Quemadores Acero      |  350.00 |         30
+ 27 |            3 | Horno Electrico Empotrable 60cm      |  520.50 |         25
+ 28 |            4 | Microondas Digital 20 Litros         |   85.99 |         70
+ 29 |            1 | Estufa de Induccion Portatil         |  120.00 |         55
+ 30 |            2 | Cocina Electrica Vitroceramica       |  410.75 |         22
+ 31 |            3 | Horno Microondas con Grill           |  115.00 |         65
+ 32 |            4 | Campana Extractora de Pared 90cm     |  290.00 |         18
+ 33 |            1 | Cocina Industrial 6 Hornillas        |  850.00 |          9
+ 34 |            2 | Parrilla Electrica de Mesa           |   55.99 |         90
+ 35 |            3 | Horno de Conveccion Multifuncion     |  680.00 |         11
+ 36 |            4 | Cocina Compacta 2 Placas             |   95.00 |         80
+ 37 |            1 | Microondas Gran Capacidad 30L        |  130.25 |         40
+ 38 |            2 | Aire Acondicionado Split 12000 BTU   |  450.00 |         30
+ 39 |            3 | Calentador de Agua a Gas 10L         |  210.99 |         25
+ 40 |            4 | Calefactor Ceramico Oscilante        |   65.50 |         50
+ 41 |            1 | Aire Acondicionado Portatil 9000 BTU |  380.00 |         20
+ 42 |            2 | Deshumidificador 15L/Dia             |  199.99 |         35
+ 43 |            3 | Ventilador de Pedestal Control       |   40.00 |         90
+ 44 |            4 | Termostato Inteligente Wi-Fi         |   85.00 |         45
+ 45 |            1 | Cortina de Aire Industrial           |  420.00 |         15
+ 46 |            2 | Purificador de Aire Filtro HEPA      |  150.00 |         30
+ 47 |            3 | Ventilador de Techo con Luz LED      |   95.00 |         50
+ 48 |            4 | Aspiradora Robot Inteligente         |  299.99 |         15
+(48 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+bd20251025_profesor-# (10, 'Refrigerador No Frost 300L Inox', 750.00, 25);
+ERROR:  inserción o actualización en la tabla «productos» viola la llave foránea «productos_proveedor_id_fkey»
+DETALLE:  La llave (proveedor_id)=(10) no está presente en la tabla «proveedores».
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# \c bd20251015_ricardo
+falló la conexión al servidor en «localhost» (::1), puerto 5432: FATAL:  no existe la base de datos «bd20251015_ricardo»
+Se ha mantenido la conexión anterior
+bd20251025_profesor=# \c bd20251025_ricardo
+Ahora está conectado a la base de datos «bd20251025_ricardo» con el usuario «postgres».
+bd20251025_ricardo=# \d
+                Listado de relaciones
+ Esquema |       Nombre       |   Tipo    |  Due±o
+---------+--------------------+-----------+----------
+ public  | Contactos          | tabla     | postgres
+ public  | contactos          | tabla     | postgres
+ public  | contactos1         | tabla     | postgres
+ public  | contactos1_id_seq  | secuencia | postgres
+ public  | productos          | tabla     | postgres
+ public  | productos_id_seq   | secuencia | postgres
+ public  | proveedores        | tabla     | postgres
+ public  | proveedores_id_seq | secuencia | postgres
+(8 filas)
+
+
+bd20251025_ricardo=# \d productos;
+                                        Tabla ½public.productos╗
+   Columna    |          Tipo          | Ordenamiento | Nulable  |              Por omisi¾n
+--------------+------------------------+--------------+----------+---------------------------------------
+ id           | integer                |              | not null | nextval('productos_id_seq'::regclass)
+ proveedor_id | integer                |              |          |
+ nombre       | character varying(100) |              |          |
+ precio       | numeric(13,2)          |              |          |
+ existencia   | integer                |              |          |
+═ndices:
+    "productos_pkey" PRIMARY KEY, btree (id)
+Restricciones de llave forßnea:
+    "productos_proveedor_id_fkey" FOREIGN KEY (proveedor_id) REFERENCES productos(id) ON UPDATE CASCADE ON DELETE CASCADE
+Referenciada por:
+    TABLE "productos" CONSTRAINT "productos_proveedor_id_fkey" FOREIGN KEY (proveedor_id) REFERENCES productos(id) ON UPDATE CASCADE ON DELETE CASCADE
+
+
+bd20251025_ricardo=# \d proveedores;
+                                           Tabla ½public.proveedores╗
+      Columna       |          Tipo          | Ordenamiento | Nulable  |               Por omisi¾n
+--------------------+------------------------+--------------+----------+-----------------------------------------
+ id                 | integer                |              | not null | nextval('proveedores_id_seq'::regclass)
+ nombre             | character varying(100) |              |          |
+ direccion          | text                   |              |          |
+ telefono           | character varying(100) |              |          |
+ correo_electronico | character varying(100) |              |          |
+═ndices:
+    "proveedores_pkey" PRIMARY KEY, btree (id)
+
+
+bd20251025_ricardo=# select * from productos;
+ id | proveedor_id |                nombre                | precio  | existencia
+----+--------------+--------------------------------------+---------+------------
+  1 |            1 | Refrigerador No Frost 300L Inox      |  750.00 |         25
+  2 |            2 | Congelador Vertical 150L             |  420.50 |         15
+  3 |            3 | Nevera Ejecutiva 100L Negra          |  280.99 |         40
+  4 |            4 | Refrigerador Side by Side 650L       | 1250.75 |         12
+  5 |            1 | Mini Bar 50 Litros                   |  150.00 |         50
+  6 |            2 | Frigobar Acero Inoxidable            |  185.25 |         30
+  7 |            3 | Refrigerador de Vinos Dual Zone      |  980.00 |          8
+  8 |            4 | Congelador Horizontal 200L           |  510.99 |         20
+  9 |            1 | Refrigerador Smart 450L              |  920.50 |         18
+ 10 |            2 | Nevera de 2 Puertas 350L             |  680.00 |         22
+ 11 |            3 | Bebedero de Agua Fria                |  110.00 |         35
+ 12 |            4 | Refrigerador French Door 550L        | 1150.25 |         10
+ 13 |            1 | Maquina de Hielo Portatil            |  195.00 |         45
+ 14 |            2 | Lavadora Carga Superior 15kg         |  550.00 |         35
+ 15 |            3 | Secadora Electrica de 8kg            |  480.90 |         28
+ 16 |            4 | Lavasecadora 10/7kg Inverter         |  899.99 |         15
+ 17 |            1 | Lavadora Carga Frontal 12kg          |  720.50 |         20
+ 18 |            2 | Secadora a Gas Gran Capacidad        |  650.00 |         10
+ 19 |            3 | Lavadora Semi-Automatica 18kg        |  320.75 |         45
+ 20 |            4 | Centro de Lavado Compacto            |  950.00 |         14
+ 21 |            1 | Bomba de Drenaje para Lavadora       |   45.00 |        100
+ 22 |            2 | Lavadora Portatil 5kg                |  190.00 |         60
+ 23 |            3 | Secadora por Condensacion 7kg        |  580.00 |         25
+ 24 |            4 | Lavadora Tecnologia EcoBubble        |  780.00 |         18
+ 25 |            1 | Base Antivibracion Lavadora          |   25.50 |        120
+ 26 |            2 | Cocina a Gas 4 Quemadores Acero      |  350.00 |         30
+ 27 |            3 | Horno Electrico Empotrable 60cm      |  520.50 |         25
+ 28 |            4 | Microondas Digital 20 Litros         |   85.99 |         70
+ 29 |            1 | Estufa de Induccion Portatil         |  120.00 |         55
+ 30 |            2 | Cocina Electrica Vitroceramica       |  410.75 |         22
+ 31 |            3 | Horno Microondas con Grill           |  115.00 |         65
+ 32 |            4 | Campana Extractora de Pared 90cm     |  290.00 |         18
+ 33 |            1 | Cocina Industrial 6 Hornillas        |  850.00 |          9
+ 34 |            2 | Parrilla Electrica de Mesa           |   55.99 |         90
+ 35 |            3 | Horno de Conveccion Multifuncion     |  680.00 |         11
+ 36 |            4 | Cocina Compacta 2 Placas             |   95.00 |         80
+ 37 |            1 | Microondas Gran Capacidad 30L        |  130.25 |         40
+ 38 |            2 | Aire Acondicionado Split 12000 BTU   |  450.00 |         30
+ 39 |            3 | Calentador de Agua a Gas 10L         |  210.99 |         25
+ 40 |            4 | Calefactor Ceramico Oscilante        |   65.50 |         50
+ 41 |            1 | Aire Acondicionado Portatil 9000 BTU |  380.00 |         20
+ 42 |            2 | Deshumidificador 15L/Dia             |  199.99 |         35
+ 43 |            3 | Ventilador de Pedestal Control       |   40.00 |         90
+ 44 |            4 | Termostato Inteligente Wi-Fi         |   85.00 |         45
+ 45 |            1 | Cortina de Aire Industrial           |  420.00 |         15
+ 46 |            2 | Purificador de Aire Filtro HEPA      |  150.00 |         30
+ 47 |            3 | Ventilador de Techo con Luz LED      |   95.00 |         50
+ 48 |            4 | Aspiradora Robot Inteligente         |  299.99 |         15
+ 49 |           10 | Refrigerador No Frost 300L Inox      |  750.00 |         25
+ 50 |           10 | Refrigerador No Frost 300L Inox      |  750.00 |         25
+(50 filas)
+
+
+bd20251025_ricardo=#
+bd20251025_ricardo=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# DROP TABLE PRODUCTOS;
+DROP TABLE
+bd20251025_profesor=# DROP TABLE PROVEEDORES;
+DROP TABLE
+bd20251025_profesor=#
+bd20251025_profesor=# create table proveedores(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     nombre varchar(100),
+bd20251025_profesor(#     direccion text,
+bd20251025_profesor(#     telefono varchar(100),
+bd20251025_profesor(#     correo_electronico varchar(100),
+bd20251025_profesor(#     primary key(id)
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# create table productos(
+bd20251025_profesor(#     id serial,
+bd20251025_profesor(#     proveedor_id integer,
+bd20251025_profesor(#     nombre varchar(100),
+bd20251025_profesor(#     precio numeric(13,2),
+bd20251025_profesor(#     existencia integer,
+bd20251025_profesor(#     primary key(id),
+bd20251025_profesor(#     foreign key(proveedor_id) references proveedores(id) on delete cascade on update cascade
+bd20251025_profesor(# );
+CREATE TABLE
+bd20251025_profesor=# insert into proveedores(nombre, direccion, telefono, correo_electronico)
+bd20251025_profesor-# values
+bd20251025_profesor-# ('GENERAL ELECTRIC','AV. LECUNA','+58 212 5876543', 'info@ge.com'),
+bd20251025_profesor-# ('WHIRPOOL','AV. BARALT','+58 212 4876543', 'info@whirpool.com'),
+bd20251025_profesor-# ('SAMSUNG','AV. SAN MARTIN','+58 212 7876543', 'info@samsung.com'),
+bd20251025_profesor-# ('ADMIRAL','AV. ROMULO GALLEGOS','+58 212 2876543', 'info@admiral.com');
+INSERT 0 4
+bd20251025_profesor=# INSERT INTO productos (proveedor_id, nombre, precio, existencia) VALUES
+bd20251025_profesor-# -- Refrigeracion (1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (1, 'Refrigerador No Frost 300L Inox', 750.00, 25),
+bd20251025_profesor-# (2, 'Congelador Vertical 150L', 420.50, 15),
+bd20251025_profesor-# (3, 'Nevera Ejecutiva 100L Negra', 280.99, 40),
+bd20251025_profesor-# (4, 'Refrigerador Side by Side 650L', 1250.75, 12),
+bd20251025_profesor-# (1, 'Mini Bar 50 Litros', 150.00, 50),
+bd20251025_profesor-# (2, 'Frigobar Acero Inoxidable', 185.25, 30),
+bd20251025_profesor-# (3, 'Refrigerador de Vinos Dual Zone', 980.00, 8),
+bd20251025_profesor-# (4, 'Congelador Horizontal 200L', 510.99, 20),
+bd20251025_profesor-# (1, 'Refrigerador Smart 450L', 920.50, 18),
+bd20251025_profesor-# (2, 'Nevera de 2 Puertas 350L', 680.00, 22),
+bd20251025_profesor-# (3, 'Bebedero de Agua Fria', 110.00, 35),
+bd20251025_profesor-# (4, 'Refrigerador French Door 550L', 1150.25, 10),
+bd20251025_profesor-# (1, 'Maquina de Hielo Portatil', 195.00, 45),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Lavado y Secado (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (2, 'Lavadora Carga Superior 15kg', 550.00, 35),
+bd20251025_profesor-# (3, 'Secadora Electrica de 8kg', 480.90, 28),
+bd20251025_profesor-# (4, 'Lavasecadora 10/7kg Inverter', 899.99, 15),
+bd20251025_profesor-# (1, 'Lavadora Carga Frontal 12kg', 720.50, 20),
+bd20251025_profesor-# (2, 'Secadora a Gas Gran Capacidad', 650.00, 10),
+bd20251025_profesor-# (3, 'Lavadora Semi-Automatica 18kg', 320.75, 45),
+bd20251025_profesor-# (4, 'Centro de Lavado Compacto', 950.00, 14),
+bd20251025_profesor-# (1, 'Bomba de Drenaje para Lavadora', 45.00, 100),
+bd20251025_profesor-# (2, 'Lavadora Portatil 5kg', 190.00, 60),
+bd20251025_profesor-# (3, 'Secadora por Condensacion 7kg', 580.00, 25),
+bd20251025_profesor-# (4, 'Lavadora Tecnologia EcoBubble', 780.00, 18),
+bd20251025_profesor-# (1, 'Base Antivibracion Lavadora', 25.50, 120),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Cocinas y Hornos (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1)
+bd20251025_profesor-# (2, 'Cocina a Gas 4 Quemadores Acero', 350.00, 30),
+bd20251025_profesor-# (3, 'Horno Electrico Empotrable 60cm', 520.50, 25),
+bd20251025_profesor-# (4, 'Microondas Digital 20 Litros', 85.99, 70),
+bd20251025_profesor-# (1, 'Estufa de Induccion Portatil', 120.00, 55),
+bd20251025_profesor-# (2, 'Cocina Electrica Vitroceramica', 410.75, 22),
+bd20251025_profesor-# (3, 'Horno Microondas con Grill', 115.00, 65),
+bd20251025_profesor-# (4, 'Campana Extractora de Pared 90cm', 290.00, 18),
+bd20251025_profesor-# (1, 'Cocina Industrial 6 Hornillas', 850.00, 9),
+bd20251025_profesor-# (2, 'Parrilla Electrica de Mesa', 55.99, 90),
+bd20251025_profesor-# (3, 'Horno de Conveccion Multifuncion', 680.00, 11),
+bd20251025_profesor-# (4, 'Cocina Compacta 2 Placas', 95.00, 80),
+bd20251025_profesor-# (1, 'Microondas Gran Capacidad 30L', 130.25, 40),
+bd20251025_profesor-#
+bd20251025_profesor-# -- Climatizacion y Varios (2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4)
+bd20251025_profesor-# (2, 'Aire Acondicionado Split 12000 BTU', 450.00, 30),
+bd20251025_profesor-# (3, 'Calentador de Agua a Gas 10L', 210.99, 25),
+bd20251025_profesor-# (4, 'Calefactor Ceramico Oscilante', 65.50, 50),
+bd20251025_profesor-# (1, 'Aire Acondicionado Portatil 9000 BTU', 380.00, 20),
+bd20251025_profesor-# (2, 'Deshumidificador 15L/Dia', 199.99, 35),
+bd20251025_profesor-# (3, 'Ventilador de Pedestal Control', 40.00, 90),
+bd20251025_profesor-# (4, 'Termostato Inteligente Wi-Fi', 85.00, 45),
+bd20251025_profesor-# (1, 'Cortina de Aire Industrial', 420.00, 15),
+bd20251025_profesor-# (2, 'Purificador de Aire Filtro HEPA', 150.00, 30),
+bd20251025_profesor-# (3, 'Ventilador de Techo con Luz LED', 95.00, 50),
+bd20251025_profesor-# (4, 'Aspiradora Robot Inteligente', 299.99, 15);
+INSERT 0 48
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# UPDATE proveedores SET id = 10 where id = 1;
+UPDATE 1
+bd20251025_profesor=# select * from proveedores;
+ id |      nombre      |      direccion      |    telefono     | correo_electronico
+----+------------------+---------------------+-----------------+--------------------
+  2 | WHIRPOOL         | AV. BARALT          | +58 212 4876543 | info@whirpool.com
+  3 | SAMSUNG          | AV. SAN MARTIN      | +58 212 7876543 | info@samsung.com
+  4 | ADMIRAL          | AV. ROMULO GALLEGOS | +58 212 2876543 | info@admiral.com
+ 10 | GENERAL ELECTRIC | AV. LECUNA          | +58 212 5876543 | info@ge.com
+(4 filas)
+
+
+bd20251025_profesor=# select * from productos;
+ id | proveedor_id |                nombre                | precio  | existencia
+----+--------------+--------------------------------------+---------+------------
+  2 |            2 | Congelador Vertical 150L             |  420.50 |         15
+  3 |            3 | Nevera Ejecutiva 100L Negra          |  280.99 |         40
+  4 |            4 | Refrigerador Side by Side 650L       | 1250.75 |         12
+  6 |            2 | Frigobar Acero Inoxidable            |  185.25 |         30
+  7 |            3 | Refrigerador de Vinos Dual Zone      |  980.00 |          8
+  8 |            4 | Congelador Horizontal 200L           |  510.99 |         20
+ 10 |            2 | Nevera de 2 Puertas 350L             |  680.00 |         22
+ 11 |            3 | Bebedero de Agua Fria                |  110.00 |         35
+ 12 |            4 | Refrigerador French Door 550L        | 1150.25 |         10
+ 14 |            2 | Lavadora Carga Superior 15kg         |  550.00 |         35
+ 15 |            3 | Secadora Electrica de 8kg            |  480.90 |         28
+ 16 |            4 | Lavasecadora 10/7kg Inverter         |  899.99 |         15
+ 18 |            2 | Secadora a Gas Gran Capacidad        |  650.00 |         10
+ 19 |            3 | Lavadora Semi-Automatica 18kg        |  320.75 |         45
+ 20 |            4 | Centro de Lavado Compacto            |  950.00 |         14
+ 22 |            2 | Lavadora Portatil 5kg                |  190.00 |         60
+ 23 |            3 | Secadora por Condensacion 7kg        |  580.00 |         25
+ 24 |            4 | Lavadora Tecnologia EcoBubble        |  780.00 |         18
+ 26 |            2 | Cocina a Gas 4 Quemadores Acero      |  350.00 |         30
+ 27 |            3 | Horno Electrico Empotrable 60cm      |  520.50 |         25
+ 28 |            4 | Microondas Digital 20 Litros         |   85.99 |         70
+ 30 |            2 | Cocina Electrica Vitroceramica       |  410.75 |         22
+ 31 |            3 | Horno Microondas con Grill           |  115.00 |         65
+ 32 |            4 | Campana Extractora de Pared 90cm     |  290.00 |         18
+ 34 |            2 | Parrilla Electrica de Mesa           |   55.99 |         90
+ 35 |            3 | Horno de Conveccion Multifuncion     |  680.00 |         11
+ 36 |            4 | Cocina Compacta 2 Placas             |   95.00 |         80
+ 38 |            2 | Aire Acondicionado Split 12000 BTU   |  450.00 |         30
+ 39 |            3 | Calentador de Agua a Gas 10L         |  210.99 |         25
+ 40 |            4 | Calefactor Ceramico Oscilante        |   65.50 |         50
+ 42 |            2 | Deshumidificador 15L/Dia             |  199.99 |         35
+ 43 |            3 | Ventilador de Pedestal Control       |   40.00 |         90
+ 44 |            4 | Termostato Inteligente Wi-Fi         |   85.00 |         45
+ 46 |            2 | Purificador de Aire Filtro HEPA      |  150.00 |         30
+ 47 |            3 | Ventilador de Techo con Luz LED      |   95.00 |         50
+ 48 |            4 | Aspiradora Robot Inteligente         |  299.99 |         15
+  1 |           10 | Refrigerador No Frost 300L Inox      |  750.00 |         25
+  5 |           10 | Mini Bar 50 Litros                   |  150.00 |         50
+  9 |           10 | Refrigerador Smart 450L              |  920.50 |         18
+ 13 |           10 | Maquina de Hielo Portatil            |  195.00 |         45
+ 17 |           10 | Lavadora Carga Frontal 12kg          |  720.50 |         20
+ 21 |           10 | Bomba de Drenaje para Lavadora       |   45.00 |        100
+ 25 |           10 | Base Antivibracion Lavadora          |   25.50 |        120
+ 29 |           10 | Estufa de Induccion Portatil         |  120.00 |         55
+ 33 |           10 | Cocina Industrial 6 Hornillas        |  850.00 |          9
+ 37 |           10 | Microondas Gran Capacidad 30L        |  130.25 |         40
+ 41 |           10 | Aire Acondicionado Portatil 9000 BTU |  380.00 |         20
+ 45 |           10 | Cortina de Aire Industrial           |  420.00 |         15
+(48 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# DELETE proveedores where id = 10;
+ERROR:  error de sintaxis en o cerca de «proveedores»
+LÍNEA 1: DELETE proveedores where id = 10;
+                ^
+bd20251025_profesor=# DELETE from proveedores where id = 10;
+DELETE 1
+bd20251025_profesor=# select * from proveedores;
+ id |  nombre  |      direccion      |    telefono     | correo_electronico
+----+----------+---------------------+-----------------+--------------------
+  2 | WHIRPOOL | AV. BARALT          | +58 212 4876543 | info@whirpool.com
+  3 | SAMSUNG  | AV. SAN MARTIN      | +58 212 7876543 | info@samsung.com
+  4 | ADMIRAL  | AV. ROMULO GALLEGOS | +58 212 2876543 | info@admiral.com
+(3 filas)
+
+
+bd20251025_profesor=# select * from productos;
+ id | proveedor_id |               nombre               | precio  | existencia
+----+--------------+------------------------------------+---------+------------
+  2 |            2 | Congelador Vertical 150L           |  420.50 |         15
+  3 |            3 | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+  4 |            4 | Refrigerador Side by Side 650L     | 1250.75 |         12
+  6 |            2 | Frigobar Acero Inoxidable          |  185.25 |         30
+  7 |            3 | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+  8 |            4 | Congelador Horizontal 200L         |  510.99 |         20
+ 10 |            2 | Nevera de 2 Puertas 350L           |  680.00 |         22
+ 11 |            3 | Bebedero de Agua Fria              |  110.00 |         35
+ 12 |            4 | Refrigerador French Door 550L      | 1150.25 |         10
+ 14 |            2 | Lavadora Carga Superior 15kg       |  550.00 |         35
+ 15 |            3 | Secadora Electrica de 8kg          |  480.90 |         28
+ 16 |            4 | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ 18 |            2 | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ 19 |            3 | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ 20 |            4 | Centro de Lavado Compacto          |  950.00 |         14
+ 22 |            2 | Lavadora Portatil 5kg              |  190.00 |         60
+ 23 |            3 | Secadora por Condensacion 7kg      |  580.00 |         25
+ 24 |            4 | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ 26 |            2 | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ 27 |            3 | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ 28 |            4 | Microondas Digital 20 Litros       |   85.99 |         70
+ 30 |            2 | Cocina Electrica Vitroceramica     |  410.75 |         22
+ 31 |            3 | Horno Microondas con Grill         |  115.00 |         65
+ 32 |            4 | Campana Extractora de Pared 90cm   |  290.00 |         18
+ 34 |            2 | Parrilla Electrica de Mesa         |   55.99 |         90
+ 35 |            3 | Horno de Conveccion Multifuncion   |  680.00 |         11
+ 36 |            4 | Cocina Compacta 2 Placas           |   95.00 |         80
+ 38 |            2 | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ 39 |            3 | Calentador de Agua a Gas 10L       |  210.99 |         25
+ 40 |            4 | Calefactor Ceramico Oscilante      |   65.50 |         50
+ 42 |            2 | Deshumidificador 15L/Dia           |  199.99 |         35
+ 43 |            3 | Ventilador de Pedestal Control     |   40.00 |         90
+ 44 |            4 | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ 46 |            2 | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ 47 |            3 | Ventilador de Techo con Luz LED    |   95.00 |         50
+ 48 |            4 | Aspiradora Robot Inteligente       |  299.99 |         15
+(36 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# SELECT PROVEEDORES.NOMBRES,
+bd20251025_profesor-#        PRODUCTOS.NOMBRE AS PRODUCTO,
+bd20251025_profesor-#        PRODUCTOS.PRECIO,
+bd20251025_profesor-#        PRODUCTOS.EXISTENCIA
+bd20251025_profesor-#        FROM PROVEEDORES, PRODUCTOS
+bd20251025_profesor-#        WHERE PROVEEDORES.ID = PRODUCTOS.PROVEEDOR_ID;
+ERROR:  no existe la columna proveedores.nombres
+LÍNEA 1: SELECT PROVEEDORES.NOMBRES,
+                ^
+SUGERENCIA:  Probablemente quiera hacer referencia a la columna «proveedores.nombre».
+bd20251025_profesor=# SELECT proveedores.nombres,
+bd20251025_profesor-#        productos.nombre AS producto,
+bd20251025_profesor-#        productos.precio,
+bd20251025_profesor-#        productos.existencia
+bd20251025_profesor-#        FROM proveedores, productos
+bd20251025_profesor-#        WHERE proveedores.id = productos.proveedor_id;
+ERROR:  no existe la columna proveedores.nombres
+LÍNEA 1: SELECT proveedores.nombres,
+                ^
+SUGERENCIA:  Probablemente quiera hacer referencia a la columna «proveedores.nombre».
+bd20251025_profesor=# SELECT proveedores.nombre,
+bd20251025_profesor-#        productos.nombre AS producto,
+bd20251025_profesor-#        productos.precio,
+bd20251025_profesor-#        productos.existencia
+bd20251025_profesor-#        FROM proveedores, productos
+bd20251025_profesor-#        WHERE proveedores.id = productos.proveedor_id;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+(36 filas)
+
+
+bd20251025_profesor=# -- VISTA: Es una tabla virtual a partir de tablas físicas
+bd20251025_profesor=# CREATE VIEW vista_proveedores_productos AS
+bd20251025_profesor-# SELECT proveedores.nombre,
+bd20251025_profesor-#        productos.nombre AS producto,
+bd20251025_profesor-#        productos.precio,
+bd20251025_profesor-#        productos.existencia
+bd20251025_profesor-#        FROM proveedores, productos
+bd20251025_profesor-#        WHERE proveedores.id = productos.proveedor_id;
+CREATE VIEW
+bd20251025_profesor=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor=# \dv
+                  Listado de relaciones
+ Esquema |           Nombre            | Tipo  |  Due±o
+---------+-----------------------------+-------+----------
+ public  | vista_proveedores_productos | vista | postgres
+(1 fila)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+(36 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
