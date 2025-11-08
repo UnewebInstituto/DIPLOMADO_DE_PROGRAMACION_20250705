@@ -1,0 +1,15 @@
+-u usuario de la base de datos: postgres
+-h servidor: localhost
+-w corresponde al nombre de la basede datos a respaldar
+lo que se indica despues del mayor que > corresponde al archivo donde se deja la copia de respaldo. puede contener o no la ruta.
+"C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -u postgres -h localhost 
+-w bd20251025_joelys > "./backups/bd20251025_joelys_251108.sql"
+
+pgdump
+psql 
+
+Se crea base de datos para efectuar la recuperacion
+create database bd20251025_joelys1;
+
+Operacion de restore:
+"C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -h localhost -W -d bd20251025_joelys1 < "./backups/bd20251025_joelys_251108.sql"

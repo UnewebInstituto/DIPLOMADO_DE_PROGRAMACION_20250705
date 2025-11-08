@@ -1,0 +1,1 @@
+"C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -U postgres -h localhost -W bd20251025_joelys > "./backups/bd20251025_joelys_251108.sql"

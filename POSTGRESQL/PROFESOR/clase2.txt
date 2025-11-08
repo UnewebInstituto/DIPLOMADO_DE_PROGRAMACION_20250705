@@ -1,0 +1,1087 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# \l bd*;
+                                                                Listado de base de datos
+       Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+---------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_airon    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_barbara  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_daniel   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_joelys   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ytzali   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(7 filas)
+
+
+postgres=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor=#
+
+UBICACIÓN DE PROGRAMAS PARA EFECTUAR RESPALDO:
+
+C:\Program Files\PostgreSQL\15\bin
+
+NOTA: Cuando la ruta o nombre de archivo, contiene espacios en blanco,
+toda la expresión se escribe entre comillas "", para hacer referencia 
+al archivo y su ruta.
+
+"C:\Program Files\PostgreSQL\15\bin\pg_dump.exe"
+
+ES CONVENIENTE TENER UN DIRECTORIO, DONDE SE ALMACENEN LOS ARCHIVOS
+DE RESPALDO.
+
+OPERACIÓN DE BACKUP
+
+-U USUARIO DE LA BASE DE DATOS: postgres
+-h NOMBRE DEL SERVIDOR: localhost
+-W NOMBRE DE LA BASE DE DATOS A RESPALDAR: bd20251025_profesor
+LO QUE SE INDICA DESPUÉS DEL MAYOR QUE ">", CORRESPONDE AL ARCHIVO 
+DONDE SE DEJA LA COPIA DE RESPALDO, PUEDE CONTENER O NO LA RUTA
+
+"C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -U postgres -h localhost -W bd20251025_profesor > "./backups/bd20251025_profesor_20251108.sql"
+
+SE CREA BASE DE DATOS PARA EFECTUAR LA RECUPERACIÓN
+create database bd20251025_profesor1;
+
+OPERACIÓN DE RESTORE
+"C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -h localhost -W -d bd20251025_profesor1 < "./backups/bd20251025_profesor_20251108.sql"
+
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# \l bd*;
+                                                                Listado de base de datos
+       Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+---------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_airon    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_barbara  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_daniel   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_joelys   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ytzali   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(7 filas)
+
+
+postgres=# \c bd20251025_profesor;
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor=# create database bd20251025_profesor1;
+CREATE DATABASE
+bd20251025_profesor=# \l *1
+                                                                      Listado de base de datos
+        Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale |      Privilegios
+----------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-----------------------
+ bd20251025_barbara1  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_joelys1   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor1 | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ricardo1  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_ytzali1   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ template1            | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                | =c/postgres          +
+                      |          |              |                        |                        |                   |                     | postgres=CTc/postgres
+(6 filas)
+
+
+bd20251025_profesor=# \c bd20251025_profesor1
+Ahora está conectado a la base de datos «bd20251025_profesor1» con el usuario «postgres».
+bd20251025_profesor1=# \d
+No se encontró ninguna relación.
+bd20251025_profesor1=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor1=# \c bd20251025_ricardo1
+Ahora está conectado a la base de datos «bd20251025_ricardo1» con el usuario «postgres».
+bd20251025_ricardo1=# \d
+No se encontró ninguna relación.
+bd20251025_ricardo1=# \d
+No se encontró ninguna relación.
+bd20251025_ricardo1=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_ricardo1=# \c bd20251025_profesor
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+(36 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# SELECT SUM(existencia) FROM vista_proveedores_productos;
+ sum
+------
+ 1223
+(1 fila)
+
+
+bd20251025_profesor=# SELECT MIN(precio) FROM vista_proveedores_productos;
+  min
+-------
+ 40.00
+(1 fila)
+
+
+bd20251025_profesor=# SELECT MAX(precio) FROM vista_proveedores_productos;
+   max
+---------
+ 1250.75
+(1 fila)
+
+
+bd20251025_profesor=# SELECT AVG(precio) FROM vista_proveedores_productos;
+         avg
+----------------------
+ 421.3908333333333333
+(1 fila)
+
+
+bd20251025_profesor=# SELECT COUNT(producto) FROM vista_proveedores_productos;
+ count
+-------
+    36
+(1 fila)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+(36 filas)
+
+
+bd20251025_profesor=# SELECT DISTINCT(nombre) from vista_proveedores_productos;
+  nombre
+----------
+ WHIRPOOL
+ ADMIRAL
+ SAMSUNG
+(3 filas)
+
+
+bd20251025_profesor=# SELECT DISTINCT(producto) from vista_proveedores_productos;
+              producto
+------------------------------------
+ Lavadora Portatil 5kg
+ Aire Acondicionado Split 12000 BTU
+ Secadora a Gas Gran Capacidad
+ Ventilador de Techo con Luz LED
+ Lavadora Tecnologia EcoBubble
+ Frigobar Acero Inoxidable
+ Lavadora Carga Superior 15kg
+ Horno Microondas con Grill
+ Cocina Electrica Vitroceramica
+ Refrigerador de Vinos Dual Zone
+ Nevera Ejecutiva 100L Negra
+ Calentador de Agua a Gas 10L
+ Parrilla Electrica de Mesa
+ Secadora por Condensacion 7kg
+ Cocina a Gas 4 Quemadores Acero
+ Secadora Electrica de 8kg
+ Horno de Conveccion Multifuncion
+ Lavasecadora 10/7kg Inverter
+ Refrigerador Side by Side 650L
+ Nevera de 2 Puertas 350L
+ Purificador de Aire Filtro HEPA
+ Microondas Digital 20 Litros
+ Centro de Lavado Compacto
+ Refrigerador French Door 550L
+ Calefactor Ceramico Oscilante
+ Termostato Inteligente Wi-Fi
+ Congelador Horizontal 200L
+ Deshumidificador 15L/Dia
+ Bebedero de Agua Fria
+ Cocina Compacta 2 Placas
+ Campana Extractora de Pared 90cm
+ Lavadora Semi-Automatica 18kg
+ Congelador Vertical 150L
+ Horno Electrico Empotrable 60cm
+ Aspiradora Robot Inteligente
+ Ventilador de Pedestal Control
+(36 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# SELECT nombre from vista_proveedores_productos GROUP BY nombre;
+  nombre
+----------
+ WHIRPOOL
+ ADMIRAL
+ SAMSUNG
+(3 filas)
+
+
+bd20251025_profesor=# SELECT * FROM vista_proveedores_productos ORDER BY existencia;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+(36 filas)
+
+
+bd20251025_profesor=# SELECT * FROM vista_proveedores_productos ORDER BY precio DESC;
+  nombre  |              producto              | precio  | existencia
+----------+------------------------------------+---------+------------
+ ADMIRAL  | Refrigerador Side by Side 650L     | 1250.75 |         12
+ ADMIRAL  | Refrigerador French Door 550L      | 1150.25 |         10
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    |  980.00 |          8
+ ADMIRAL  | Centro de Lavado Compacto          |  950.00 |         14
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       |  899.99 |         15
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      |  780.00 |         18
+ WHIRPOOL | Nevera de 2 Puertas 350L           |  680.00 |         22
+ SAMSUNG  | Horno de Conveccion Multifuncion   |  680.00 |         11
+ WHIRPOOL | Secadora a Gas Gran Capacidad      |  650.00 |         10
+ SAMSUNG  | Secadora por Condensacion 7kg      |  580.00 |         25
+ WHIRPOOL | Lavadora Carga Superior 15kg       |  550.00 |         35
+ SAMSUNG  | Horno Electrico Empotrable 60cm    |  520.50 |         25
+ ADMIRAL  | Congelador Horizontal 200L         |  510.99 |         20
+ SAMSUNG  | Secadora Electrica de 8kg          |  480.90 |         28
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU |  450.00 |         30
+ WHIRPOOL | Congelador Vertical 150L           |  420.50 |         15
+ WHIRPOOL | Cocina Electrica Vitroceramica     |  410.75 |         22
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    |  350.00 |         30
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      |  320.75 |         45
+ ADMIRAL  | Aspiradora Robot Inteligente       |  299.99 |         15
+ ADMIRAL  | Campana Extractora de Pared 90cm   |  290.00 |         18
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        |  280.99 |         40
+ SAMSUNG  | Calentador de Agua a Gas 10L       |  210.99 |         25
+ WHIRPOOL | Deshumidificador 15L/Dia           |  199.99 |         35
+ WHIRPOOL | Lavadora Portatil 5kg              |  190.00 |         60
+ WHIRPOOL | Frigobar Acero Inoxidable          |  185.25 |         30
+ WHIRPOOL | Purificador de Aire Filtro HEPA    |  150.00 |         30
+ SAMSUNG  | Horno Microondas con Grill         |  115.00 |         65
+ SAMSUNG  | Bebedero de Agua Fria              |  110.00 |         35
+ ADMIRAL  | Cocina Compacta 2 Placas           |   95.00 |         80
+ SAMSUNG  | Ventilador de Techo con Luz LED    |   95.00 |         50
+ ADMIRAL  | Microondas Digital 20 Litros       |   85.99 |         70
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |   85.00 |         45
+ ADMIRAL  | Calefactor Ceramico Oscilante      |   65.50 |         50
+ WHIRPOOL | Parrilla Electrica de Mesa         |   55.99 |         90
+ SAMSUNG  | Ventilador de Pedestal Control     |   40.00 |         90
+(36 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# SELECT nombre, min(precio), max(precio), avg(precio) from vista_proveedores_productos;
+ERROR:  la columna «vista_proveedores_productos.nombre» debe aparecer en la cláusula GROUP BY o ser usada en una función de agregación
+LÍNEA 1: SELECT nombre, min(precio), max(precio), avg(precio) from vi...
+                ^
+bd20251025_profesor=# SELECT nombre, min(precio), max(precio), avg(precio) from vista_proveedores_productos group by nombre;
+  nombre  |  min  |   max   |         avg
+----------+-------+---------+----------------------
+ WHIRPOOL | 55.99 |  680.00 | 357.7066666666666667
+ ADMIRAL  | 65.50 | 1250.75 | 538.6216666666666667
+ SAMSUNG  | 40.00 |  980.00 | 367.8441666666666667
+(3 filas)
+
+
+bd20251025_profesor=# SELECT nombre, sum(existencia), min(precio), max(precio), avg(precio) from vista_proveedores_productos group by nombre;
+  nombre  | sum |  min  |   max   |         avg
+----------+-----+-------+---------+----------------------
+ WHIRPOOL | 409 | 55.99 |  680.00 | 357.7066666666666667
+ ADMIRAL  | 367 | 65.50 | 1250.75 | 538.6216666666666667
+ SAMSUNG  | 447 | 40.00 |  980.00 | 367.8441666666666667
+(3 filas)
+
+
+bd20251025_profesor=# SELECT nombre alias "Marca",
+bd20251025_profesor-# sum(existencia) alias "Existencia",
+bd20251025_profesor-# min(precio) alias "Precio mínimo",
+bd20251025_profesor-# max(precio) alias "Precio máximo",
+bd20251025_profesor-# avg(precio) alias "Precio promedio" from vista_proveedores_productos group by nombre;
+ERROR:  error de sintaxis en o cerca de «"Marca"»
+LÍNEA 1: SELECT nombre alias "Marca",
+                             ^
+bd20251025_profesor=# SELECT nombre as "Marca",
+bd20251025_profesor-# sum(existencia) as "Existencia",
+bd20251025_profesor-# min(precio) as "Precio mínimo",
+bd20251025_profesor-# max(precio) as "Precio máximo",
+bd20251025_profesor-# avg(precio) as "Precio promedio" from vista_proveedores_productos group by nombre;
+  Marca   | Existencia | Precio mínimo | Precio máximo |   Precio promedio
+----------+------------+---------------+---------------+----------------------
+ WHIRPOOL |        409 |         55.99 |        680.00 | 357.7066666666666667
+ ADMIRAL  |        367 |         65.50 |       1250.75 | 538.6216666666666667
+ SAMSUNG  |        447 |         40.00 |        980.00 | 367.8441666666666667
+(3 filas)
+
+
+bd20251025_profesor=# SELECT nombre as "Marca",
+bd20251025_profesor-# sum(existencia) as "Existencia",
+bd20251025_profesor-# min(precio) as "Precio mínimo",
+bd20251025_profesor-# max(precio) as "Precio máximo",
+bd20251025_profesor-# round(avg(precio),2) as "Precio promedio" from vista_proveedores_productos group by nombre;
+  Marca   | Existencia | Precio mínimo | Precio máximo | Precio promedio
+----------+------------+---------------+---------------+-----------------
+ WHIRPOOL |        409 |         55.99 |        680.00 |          357.71
+ ADMIRAL  |        367 |         65.50 |       1250.75 |          538.62
+ SAMSUNG  |        447 |         40.00 |        980.00 |          367.84
+(3 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where precio > 800;
+ nombre  |            producto             | precio  | existencia
+---------+---------------------------------+---------+------------
+ SAMSUNG | Refrigerador de Vinos Dual Zone |  980.00 |          8
+ ADMIRAL | Centro de Lavado Compacto       |  950.00 |         14
+ ADMIRAL | Lavasecadora 10/7kg Inverter    |  899.99 |         15
+ ADMIRAL | Refrigerador French Door 550L   | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L  | 1250.75 |         12
+(5 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where precio >= 1000 and  precio <= 1500;
+ nombre  |            producto            | precio  | existencia
+---------+--------------------------------+---------+------------
+ ADMIRAL | Refrigerador French Door 550L  | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L | 1250.75 |         12
+(2 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where precio between 1000 and 1500;
+ nombre  |            producto            | precio  | existencia
+---------+--------------------------------+---------+------------
+ ADMIRAL | Refrigerador French Door 550L  | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L | 1250.75 |         12
+(2 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where producto like '%refrigerador%';
+ nombre | producto | precio | existencia
+--------+----------+--------+------------
+(0 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where producto like '%Refrigerador%';
+ nombre  |            producto             | precio  | existencia
+---------+---------------------------------+---------+------------
+ SAMSUNG | Refrigerador de Vinos Dual Zone |  980.00 |          8
+ ADMIRAL | Refrigerador French Door 550L   | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L  | 1250.75 |         12
+(3 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where nombre = 'ADMIRAL' or nombre = 'SAMSUNG';
+ nombre  |             producto             | precio  | existencia
+---------+----------------------------------+---------+------------
+ SAMSUNG | Nevera Ejecutiva 100L Negra      |  280.99 |         40
+ ADMIRAL | Refrigerador Side by Side 650L   | 1250.75 |         12
+ SAMSUNG | Refrigerador de Vinos Dual Zone  |  980.00 |          8
+ ADMIRAL | Congelador Horizontal 200L       |  510.99 |         20
+ SAMSUNG | Bebedero de Agua Fria            |  110.00 |         35
+ ADMIRAL | Refrigerador French Door 550L    | 1150.25 |         10
+ SAMSUNG | Secadora Electrica de 8kg        |  480.90 |         28
+ ADMIRAL | Lavasecadora 10/7kg Inverter     |  899.99 |         15
+ SAMSUNG | Lavadora Semi-Automatica 18kg    |  320.75 |         45
+ ADMIRAL | Centro de Lavado Compacto        |  950.00 |         14
+ SAMSUNG | Secadora por Condensacion 7kg    |  580.00 |         25
+ ADMIRAL | Lavadora Tecnologia EcoBubble    |  780.00 |         18
+ SAMSUNG | Horno Electrico Empotrable 60cm  |  520.50 |         25
+ ADMIRAL | Microondas Digital 20 Litros     |   85.99 |         70
+ SAMSUNG | Horno Microondas con Grill       |  115.00 |         65
+ ADMIRAL | Campana Extractora de Pared 90cm |  290.00 |         18
+ SAMSUNG | Horno de Conveccion Multifuncion |  680.00 |         11
+ ADMIRAL | Cocina Compacta 2 Placas         |   95.00 |         80
+ SAMSUNG | Calentador de Agua a Gas 10L     |  210.99 |         25
+ ADMIRAL | Calefactor Ceramico Oscilante    |   65.50 |         50
+ SAMSUNG | Ventilador de Pedestal Control   |   40.00 |         90
+ ADMIRAL | Termostato Inteligente Wi-Fi     |   85.00 |         45
+ SAMSUNG | Ventilador de Techo con Luz LED  |   95.00 |         50
+ ADMIRAL | Aspiradora Robot Inteligente     |  299.99 |         15
+(24 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where nombre in ('ADMIRAL', 'SAMSUNG');
+ nombre  |             producto             | precio  | existencia
+---------+----------------------------------+---------+------------
+ SAMSUNG | Nevera Ejecutiva 100L Negra      |  280.99 |         40
+ ADMIRAL | Refrigerador Side by Side 650L   | 1250.75 |         12
+ SAMSUNG | Refrigerador de Vinos Dual Zone  |  980.00 |          8
+ ADMIRAL | Congelador Horizontal 200L       |  510.99 |         20
+ SAMSUNG | Bebedero de Agua Fria            |  110.00 |         35
+ ADMIRAL | Refrigerador French Door 550L    | 1150.25 |         10
+ SAMSUNG | Secadora Electrica de 8kg        |  480.90 |         28
+ ADMIRAL | Lavasecadora 10/7kg Inverter     |  899.99 |         15
+ SAMSUNG | Lavadora Semi-Automatica 18kg    |  320.75 |         45
+ ADMIRAL | Centro de Lavado Compacto        |  950.00 |         14
+ SAMSUNG | Secadora por Condensacion 7kg    |  580.00 |         25
+ ADMIRAL | Lavadora Tecnologia EcoBubble    |  780.00 |         18
+ SAMSUNG | Horno Electrico Empotrable 60cm  |  520.50 |         25
+ ADMIRAL | Microondas Digital 20 Litros     |   85.99 |         70
+ SAMSUNG | Horno Microondas con Grill       |  115.00 |         65
+ ADMIRAL | Campana Extractora de Pared 90cm |  290.00 |         18
+ SAMSUNG | Horno de Conveccion Multifuncion |  680.00 |         11
+ ADMIRAL | Cocina Compacta 2 Placas         |   95.00 |         80
+ SAMSUNG | Calentador de Agua a Gas 10L     |  210.99 |         25
+ ADMIRAL | Calefactor Ceramico Oscilante    |   65.50 |         50
+ SAMSUNG | Ventilador de Pedestal Control   |   40.00 |         90
+ ADMIRAL | Termostato Inteligente Wi-Fi     |   85.00 |         45
+ SAMSUNG | Ventilador de Techo con Luz LED  |   95.00 |         50
+ ADMIRAL | Aspiradora Robot Inteligente     |  299.99 |         15
+(24 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# -- OPERADORES RELACIONALES
+bd20251025_profesor=# select * from vista_proveedores_productos where precio > 800;
+ nombre  |            producto             | precio  | existencia
+---------+---------------------------------+---------+------------
+ SAMSUNG | Refrigerador de Vinos Dual Zone |  980.00 |          8
+ ADMIRAL | Centro de Lavado Compacto       |  950.00 |         14
+ ADMIRAL | Lavasecadora 10/7kg Inverter    |  899.99 |         15
+ ADMIRAL | Refrigerador French Door 550L   | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L  | 1250.75 |         12
+(5 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where precio >= 1000 and  precio <= 1500;
+ nombre  |            producto            | precio  | existencia
+---------+--------------------------------+---------+------------
+ ADMIRAL | Refrigerador French Door 550L  | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L | 1250.75 |         12
+(2 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=# -- Es equivalente a:
+bd20251025_profesor=# select * from vista_proveedores_productos where precio between 1000 and 1500;
+ nombre  |            producto            | precio  | existencia
+---------+--------------------------------+---------+------------
+ ADMIRAL | Refrigerador French Door 550L  | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L | 1250.75 |         12
+(2 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=# -- Búsqueda aproximada del valor
+bd20251025_profesor=# select * from vista_proveedores_productos where producto like '%Refrigerador%';
+ nombre  |            producto             | precio  | existencia
+---------+---------------------------------+---------+------------
+ SAMSUNG | Refrigerador de Vinos Dual Zone |  980.00 |          8
+ ADMIRAL | Refrigerador French Door 550L   | 1150.25 |         10
+ ADMIRAL | Refrigerador Side by Side 650L  | 1250.75 |         12
+(3 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=# -- Búsqueda basada en una lista de valores
+bd20251025_profesor=# -- Condición OR
+bd20251025_profesor=# select * from vista_proveedores_productos where nombre = 'ADMIRAL' or nombre = 'SAMSUNG';
+ nombre  |             producto             | precio  | existencia
+---------+----------------------------------+---------+------------
+ SAMSUNG | Nevera Ejecutiva 100L Negra      |  280.99 |         40
+ ADMIRAL | Refrigerador Side by Side 650L   | 1250.75 |         12
+ SAMSUNG | Refrigerador de Vinos Dual Zone  |  980.00 |          8
+ ADMIRAL | Congelador Horizontal 200L       |  510.99 |         20
+ SAMSUNG | Bebedero de Agua Fria            |  110.00 |         35
+ ADMIRAL | Refrigerador French Door 550L    | 1150.25 |         10
+ SAMSUNG | Secadora Electrica de 8kg        |  480.90 |         28
+ ADMIRAL | Lavasecadora 10/7kg Inverter     |  899.99 |         15
+ SAMSUNG | Lavadora Semi-Automatica 18kg    |  320.75 |         45
+ ADMIRAL | Centro de Lavado Compacto        |  950.00 |         14
+ SAMSUNG | Secadora por Condensacion 7kg    |  580.00 |         25
+ ADMIRAL | Lavadora Tecnologia EcoBubble    |  780.00 |         18
+ SAMSUNG | Horno Electrico Empotrable 60cm  |  520.50 |         25
+ ADMIRAL | Microondas Digital 20 Litros     |   85.99 |         70
+ SAMSUNG | Horno Microondas con Grill       |  115.00 |         65
+ ADMIRAL | Campana Extractora de Pared 90cm |  290.00 |         18
+ SAMSUNG | Horno de Conveccion Multifuncion |  680.00 |         11
+ ADMIRAL | Cocina Compacta 2 Placas         |   95.00 |         80
+ SAMSUNG | Calentador de Agua a Gas 10L     |  210.99 |         25
+ ADMIRAL | Calefactor Ceramico Oscilante    |   65.50 |         50
+ SAMSUNG | Ventilador de Pedestal Control   |   40.00 |         90
+ ADMIRAL | Termostato Inteligente Wi-Fi     |   85.00 |         45
+ SAMSUNG | Ventilador de Techo con Luz LED  |   95.00 |         50
+ ADMIRAL | Aspiradora Robot Inteligente     |  299.99 |         15
+(24 filas)
+
+
+bd20251025_profesor=# recio >= 1000 and  precio <= 1500);
+ERROR:  error de sintaxis en o cerca de «recio»
+LÍNEA 1: recio >= 1000 and  precio <= 1500);
+         ^
+bd20251025_profesor=#
+bd20251025_profesor=# -- Es equivalente a:
+bd20251025_profesor=# select * from vista_proveedores_productos where not (precio between 1000 and 1500);
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    | 980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       | 899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          | 950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(34 filas)
+
+
+bd20251025_profesor=# ombre = 'SAMSUNG');
+ERROR:  error de sintaxis en o cerca de «ombre»
+LÍNEA 1: ombre = 'SAMSUNG');
+         ^
+bd20251025_profesor=#
+bd20251025_profesor=# -- Lista
+bd20251025_profesor=# select * from vista_proveedores_productos where nombre not in ('ADMIRAL', 'SAMSUNG');
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+(12 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where not (producto like '%Refrigerador%');
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       | 899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          | 950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(33 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where not (precio > 800);
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(31 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where not (precio >= 1000 and  precio <= 1500);
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    | 980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       | 899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          | 950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(34 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where not (precio between 1000 and 1500);
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ SAMSUNG  | Refrigerador de Vinos Dual Zone    | 980.00 |          8
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       | 899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          | 950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(34 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where not (producto like '%Refrigerador%');
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ SAMSUNG  | Nevera Ejecutiva 100L Negra        | 280.99 |         40
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ ADMIRAL  | Congelador Horizontal 200L         | 510.99 |         20
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ SAMSUNG  | Bebedero de Agua Fria              | 110.00 |         35
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ SAMSUNG  | Secadora Electrica de 8kg          | 480.90 |         28
+ ADMIRAL  | Lavasecadora 10/7kg Inverter       | 899.99 |         15
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ SAMSUNG  | Lavadora Semi-Automatica 18kg      | 320.75 |         45
+ ADMIRAL  | Centro de Lavado Compacto          | 950.00 |         14
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ SAMSUNG  | Secadora por Condensacion 7kg      | 580.00 |         25
+ ADMIRAL  | Lavadora Tecnologia EcoBubble      | 780.00 |         18
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ SAMSUNG  | Horno Electrico Empotrable 60cm    | 520.50 |         25
+ ADMIRAL  | Microondas Digital 20 Litros       |  85.99 |         70
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ SAMSUNG  | Horno Microondas con Grill         | 115.00 |         65
+ ADMIRAL  | Campana Extractora de Pared 90cm   | 290.00 |         18
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ SAMSUNG  | Horno de Conveccion Multifuncion   | 680.00 |         11
+ ADMIRAL  | Cocina Compacta 2 Placas           |  95.00 |         80
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ SAMSUNG  | Calentador de Agua a Gas 10L       | 210.99 |         25
+ ADMIRAL  | Calefactor Ceramico Oscilante      |  65.50 |         50
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ SAMSUNG  | Ventilador de Pedestal Control     |  40.00 |         90
+ ADMIRAL  | Termostato Inteligente Wi-Fi       |  85.00 |         45
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+ SAMSUNG  | Ventilador de Techo con Luz LED    |  95.00 |         50
+ ADMIRAL  | Aspiradora Robot Inteligente       | 299.99 |         15
+(33 filas)
+
+
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=#
+bd20251025_profesor=# select * from vista_proveedores_productos where not (nombre = 'ADMIRAL' or nombre = 'SAMSUNG');
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+(12 filas)
+
+
+bd20251025_profesor=# select * from vista_proveedores_productos where nombre not in ('ADMIRAL', 'SAMSUNG');
+  nombre  |              producto              | precio | existencia
+----------+------------------------------------+--------+------------
+ WHIRPOOL | Congelador Vertical 150L           | 420.50 |         15
+ WHIRPOOL | Frigobar Acero Inoxidable          | 185.25 |         30
+ WHIRPOOL | Nevera de 2 Puertas 350L           | 680.00 |         22
+ WHIRPOOL | Lavadora Carga Superior 15kg       | 550.00 |         35
+ WHIRPOOL | Secadora a Gas Gran Capacidad      | 650.00 |         10
+ WHIRPOOL | Lavadora Portatil 5kg              | 190.00 |         60
+ WHIRPOOL | Cocina a Gas 4 Quemadores Acero    | 350.00 |         30
+ WHIRPOOL | Cocina Electrica Vitroceramica     | 410.75 |         22
+ WHIRPOOL | Parrilla Electrica de Mesa         |  55.99 |         90
+ WHIRPOOL | Aire Acondicionado Split 12000 BTU | 450.00 |         30
+ WHIRPOOL | Deshumidificador 15L/Dia           | 199.99 |         35
+ WHIRPOOL | Purificador de Aire Filtro HEPA    | 150.00 |         30
+(12 filas)
+
+
+bd20251025_profesor=#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

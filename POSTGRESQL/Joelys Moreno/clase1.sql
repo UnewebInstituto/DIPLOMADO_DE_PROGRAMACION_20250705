@@ -211,3 +211,17 @@ UPDATE proveedores SET id = 10 WHERE id = 1;
 
 DELETE FROM PROVEEDORES WHERE id = 10;
 
+SELECT proveedores.nombre,
+        productos.nombre as producto,
+        productos.precio,
+        productos.existencia
+        from proveedores, productos
+        where proveedores.id=productos.proveedor_id;
+--vista: es una tabla virtual a partir de tablas fisicas
+CREATE view vista_proveedores_productos AS
+SELECT proveedores.nombre,
+        productos.nombre as producto,
+        productos.precio,
+        productos.existencia
+        from proveedores, productos
+        where proveedores.id=productos.proveedor_id; 

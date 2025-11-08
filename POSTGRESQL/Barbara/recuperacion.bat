@@ -1,0 +1,1 @@
+"C:\Program Files\PostgreSQL\15\bin\psql.exe" -U postgres -h localhost -W -d bd20251025_barbara1 < "./backups/bd20251025_barbara_20251108.sql"
