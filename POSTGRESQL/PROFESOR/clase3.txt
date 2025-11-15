@@ -1,0 +1,102 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# \l bd*prof*
+                                                                 Listado de base de datos
+        Nombre        |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+----------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ bd20251025_profesor  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ bd20251025_profesor1 | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(2 filas)
+
+
+postgres=# \c bd20251025_profesor
+Ahora está conectado a la base de datos «bd20251025_profesor» con el usuario «postgres».
+bd20251025_profesor=# \d
+                    Listado de relaciones
+ Esquema |           Nombre            |   Tipo    |  Due±o
+---------+-----------------------------+-----------+----------
+ public  | Contactos                   | tabla     | postgres
+ public  | contactos                   | tabla     | postgres
+ public  | contactos1                  | tabla     | postgres
+ public  | contactos1_id_seq           | secuencia | postgres
+ public  | productos                   | tabla     | postgres
+ public  | productos_id_seq            | secuencia | postgres
+ public  | proveedores                 | tabla     | postgres
+ public  | proveedores_id_seq          | secuencia | postgres
+ public  | vista_proveedores_productos | vista     | postgres
+(9 filas)
+
+
+bd20251025_profesor=#
+
+
+El **OID** (Object Identifier) es un concepto fundamental en PostgreSQL y en el estándar SQL.
+
+-----
+
+## 🔑 Concepto de OID
+
+El OID es un número entero de 4 bytes (**`oid`**) que PostgreSQL utiliza internamente para identificar de forma **única** muchas de sus entidades o "objetos" dentro de una base de datos específica.
+
+  * **Identificador de Objeto:** Piensa en él como un **ID interno** o un número de serie para elementos como:
+      * **Tablas** (almacenado en catálogos como `pg_class`).
+      * **Índices**.
+      * **Funciones**.
+      * **Tipos de datos**.
+      * **Espacios de tablas**.
+      * **Bloques de datos** a nivel de filas (aunque su uso directo en las filas ha disminuido).
+
+-----
+
+## ⬇️ Declive en el Uso a Nivel de Filas
+
+Históricamente, PostgreSQL permitía que cada fila de una tabla tuviera un OID asociado, funcionando como una clave primaria oculta. Sin embargo, su uso a nivel de fila ha sido **desaconsejado y desactivado por defecto** desde versiones más modernas de PostgreSQL (a partir de la versión 12, la columna `oid` no se añade automáticamente a las tablas).
+
+### Razones para su Desuso en Filas:
+
+1.  **Límite de 4 Bytes:** Un entero de 4 bytes tiene un límite de aproximadamente 4.3 mil millones de valores. En tablas muy grandes, este límite podría alcanzarse, lo que causaría problemas de wraparound (reutilización de IDs).
+2.  **Redundancia:** Generalmente, los usuarios definen su propia clave primaria de 8 bytes (como un `BIGINT`), que es más robusta y garantiza la unicidad.
+
+-----
+
+## 💡 Uso Actual
+
+Hoy en día, el OID se utiliza principalmente en los **Catálogos del Sistema** de PostgreSQL.
+
+Por ejemplo, cuando ejecutas una consulta, PostgreSQL busca en la tabla de catálogo del sistema **`pg_class`** para encontrar la información de tu tabla. La identificación de tu tabla dentro de este catálogo se hace a través de su OID.
+
+Puedes ver los OID de las tablas de tu base de datos ejecutando:
+
+```sql
+SELECT oid, relname FROM pg_class WHERE relkind = 'r';
+```
+
+En resumen, el OID es un **identificador interno de 4 bytes** crucial para la gestión de los objetos del sistema (tablas, funciones, etc.), pero **ya no es la forma recomendada** de identificar filas de datos en las tablas de usuario. **Siempre usa una clave primaria explícita** (`SERIAL` o `BIGINT`) para tus datos.
+
+EJERCICIOS
+
+a. Red Social para Profesionales. Se requiere gestionar:
+-	Información de usuario personal, de contacto y para la identificación y acceso a la red social
+-	Habilidades de los profesionales, un usuario puede tener múltiples habilidades
+-	Experiencia laboral: tomar en cuenta nombre de la empresa, cargo desempeñado y fechas de inicio y fin de la relación laboral. El profesional puede tener mucha o ninguna experiencia laboral.
+-	Un usuario puede tener múltiples habilidades y experiencias en diferentes empresas.
+-	Contactos, un usuario puede tener múltiples contactos, los contactos son usuarios de la red social
+
+b.	Sistema de Gestión de Transporte Público. Se requiere gestionar:
+-	Autobuses. Marca, modelo, año, color.
+-	Datos del chofer del autobús: nombre, edad, número de cédula, número de licencia.
+-	Un autobús opera en varias rutas, y una ruta puede ser recorrida por distintos autobuses.
+-	Una parada puede pertenecer a varias rutas.
+-	Un conductor puede manejar distintos autobuses en diferentes turnos.
+-	Un turno tiene un nombre, hora de inicio y hora de finalización

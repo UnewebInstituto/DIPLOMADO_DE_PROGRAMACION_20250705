@@ -1,0 +1,16 @@
+-U USUARIO DE LA BASE DE DATOS: postgres
+-h servidor: localhost
+Lo que se indica después del ">" corresponde al archivo donde se deja la copia
+de respaldo, puede contener o no la ruta
+
+"C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -U postgres -h localhost 
+-W bd20251025_ricardo > "./backups/bd20251025_ricardo_20251108.sql
+
+SE CREA BASE DE DATOS PARA EFECTUAR LA RECUPERACION 
+
+create database bd20251025_ricardo1;
+
+
+OPERACION DE RESTORE
+
+"C:\Program Files\PostgreSQL\15\bin\psql.exe" U-postgres -h localhost -W -d bd20251025_ricardo1 < "./backups/bd20251025_ricardo_20251108.sql"
