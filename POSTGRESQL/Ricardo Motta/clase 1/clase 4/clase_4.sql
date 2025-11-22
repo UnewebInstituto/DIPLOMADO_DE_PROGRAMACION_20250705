@@ -1,0 +1,11 @@
+--Obtener 
+--Nombre y apellido de choferes, autobuses que conduce, rutas que recorre y paradas que realiza
+
+select transporte.choferes.nombre as nombre_chofer,
+        transporte.choferes.apellido as apellido_chofer,
+        transporte.marcas.nombre  as marca_autobus, 
+        transporte.modelos.nombre as modelo_autobus,
+        transporte.rutas.nombre as ruta,
+        transporte.paradas.nombre as parada
+        from transporte.choferes, transporte.autobuses, transporte.marcas, transporte.modelos, transporte.rutas, transporte.paradas, choferes_autobuses
+        where choferes_autobuses.chofer_id = transporte.choferes.id and choferes_autobuses.autobus_id = transporte.autobuses.id and transporte.recorridos.autobus_id = transporte.autobus_id;
