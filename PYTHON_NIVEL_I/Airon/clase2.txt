@@ -1,0 +1,22 @@
+python -m venv .venv
+
+Activacion de idlelib
+Desde el entorno virtual ejecutar el comando: py -m idlelib
+
+ESTRUCTURAS DE DATOS EN PYTHON
+
+LISTAS
+******
+
+
+
+TUPLAS
+******
+Es una estructura de datos inmutable (No se puede cambiar una vez definida)
+#tuplas
+
+DICCIONARIOS 
+************
+
+CONJUNTOS
+*********

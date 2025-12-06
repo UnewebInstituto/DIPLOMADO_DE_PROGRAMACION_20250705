@@ -1,0 +1,194 @@
+python -m venv .venv
+
+ACTIVACION DEL IDLE
+
+py -m idlelib
+
+Estructura de datos en python
+
+
+
+LISTAS
+******
+
+
+TUPLAS
+******
+Es una estructura de datos inmutable una vez definida
+
+DICCIONARIOS 
+************
+Es una estructura de datos, donde los valores se acceden 
+a través de un nombre de índice y a este se asocia un valor.
+Se usan llaves
+
+#diccionario
+              
+encuesta = {'ANA':[25,1.65,56],'LILIANA':[19,1.60,4],'YOLANDA'[23,1.62,63]}
+              
+SyntaxError: ':' expected after dictionary key
+encuesta = {'ANA':[25,1.65,56],'LILIANA':[19,1.60,4],'YOLANDA':[23,1.62,63]}
+              
+encuesta['ANA']
+              
+[25, 1.65, 56]
+for dato in encuesta:
+              dato
+
+              
+'ANA'
+'LILIANA'
+'YOLANDA'
+for dato in encuesta:
+              encuesta[dato][0]
+
+              
+25
+19
+23
+
+for dato in encuesta:
+              encuesta[dato][0],encuesta[dato][1],encuesta[dato][2]
+
+              
+(25, 1.65, 56)
+(19, 1.6, 4)
+(23, 1.62, 63)
+
+#Ejemplo 03.2
+
+# Iterables independientes
+claves = ['Juan', 'Maria', 'Pedro']  # Nombres
+valores = [30, 25, 45]              # Edades
+
+# 1. Emparejar con zip()
+pares_zip = zip(claves, valores)
+# pares_zip produce: ('Juan', 30), ('Maria', 25), ('Pedro', 45)
+
+# 2. Convertir a diccionario
+diccionario_distinto = dict(pares_zip)
+
+print(diccionario_distinto)
+# Salida: {'Juan': 30, 'Maria': 25, 'Pedro': 45}
+
+alumnos =['Barbara', 'Laura', 'Leonardo', 'Mario', 'Mario', 'Pedro', 'Rebecca', 'Ytzali']
+alumnos
+['Barbara', 'Laura', 'Leonardo', 'Mario', 'Mario', 'Pedro', 'Rebecca', 'Ytzali']
+edades=[20,21,23,24,25,26,27,28]
+prueba_dict= contador_letras.fromkeys(alumnos)
+i=0
+for nombre in prueba_dict:
+    prueba_dict[nombre] = edades[i]
+    i+=1
+
+    
+print(prueba_dict)
+{'Barbara': 20, 'Laura': 21, 'Leonardo': 23, 'Mario': 24, 'Pedro': 25, 'Rebecca': 26, 'Ytzali': 27}
+#Conjuntos
+vocales = {'a','a','a','e','e','i','i','o','u','u','u'}
+print(vocales)
+{'o', 'a', 'i', 'e', 'u'}
+for letra in vocales:
+    letra
+
+    
+'o'
+'a'
+'i'
+'e'
+'u'
+mis_vocales = list(vocales)
+mis_vocales
+['o', 'a', 'i', 'e', 'u']
+letras = {'a','e','u','b','c','d'}
+vocales.intersection(letras)
+{'a', 'e', 'u'}
+vocales.union(letras)
+{'b', 'a', 'i', 'd', 'o', 'c', 'e', 'u'}
+letras.difference(vocales)
+{'c', 'd', 'b'}
+vocales.difference(letras)
+{'i', 'o'}
+#caracteres para operaciones de conjuntos
+#La union |, intercepcion &, diferencia -, diferencia simetrica ^
+
+#Prueba de diferencia simetrica
+
+letras - vocales
+{'c', 'd', 'b'}
+vocales - letras
+{'i', 'o'}
+letras |vocales
+{'b', 'a', 'i', 'd', 'o', 'c', 'e', 'u'}
+letras ^ vocales
+{'c', 'o', 'b', 'i', 'd'}
+(letras-vocales) | (vocales-letras)
+{'o', 'b', 'c', 'i', 'd'}
+prueba_list = list(prueba_dict)
+prueba_list
+['Barbara', 'Laura', 'Leonardo', 'Mario', 'Pedro', 'Rebecca', 'Ytzali']
+prueba_dict.items()
+dict_items([('Barbara', 20), ('Laura', 21), ('Leonardo', 23), ('Mario', 24), ('Pedro', 25), ('Rebecca', 26), ('Ytzali', 27)])
+prueba_list = list(prueba_dict.items())
+prueba_list
+[('Barbara', 20), ('Laura', 21), ('Leonardo', 23), ('Mario', 24), ('Pedro', 25), ('Rebecca', 26), ('Ytzali', 27)]
+#archivos planos
+alumnos = open('./alumnos.txt','w')
+alumnos.write('BARBARA\nYTZALI\nJOELYS\nAIRON\nRICARDO\nMOISES\n')
+43
+alumnos.close()
+alumnos.read()
+Traceback (most recent call last):
+  File "<pyshell#161>", line 1, in <module>
+    alumnos.read()
+ValueError: I/O operation on closed file.
+alumnos = open('./alumnos.txt','r')
+alumnos.read
+<built-in method read of _io.TextIOWrapper object at 0x000001CB7ED6B920>
+alumnos.read()
+'BARBARA\nYTZALI\nJOELYS\nAIRON\nRICARDO\nMOISES\n'
+alumnos.close()
+alumnos = open('./alumnos.txt','r')
+alumnos.readline
+<built-in method readline of _io.TextIOWrapper object at 0x000001CB7ED6B680>
+alumnos.readline()
+'BARBARA\n'
+
+
+
+
+alumnos.readline()
+'YTZALI\n'
+alumnos.readline()
+'JOELYS\n'
+alumnos.readline()
+'AIRON\n'
+alumnos.readline()
+'RICARDO\n'
+alumnos.readline()
+'MOISES\n'
+alumnos.readline()
+''
+alumnos.seek(0)
+0
+alumnos.readline()
+'BARBARA\n'
+alumnos.readline()
+'YTZALI\n'
+alumnos.readline()
+'JOELYS\n'
+alumnos.readline()
+'AIRON\n'
+alumnos.readline()
+'RICARDO\n'
+alumnos.readline()
+'MOISES\n'
+alumnos.readline()
+''
+alumnos.read()
+''
+alumnos.close()
+alumnos = open('./alumnos.txt','a')
+alumnos.write('ANA\n')
+4
+alumnos.close()

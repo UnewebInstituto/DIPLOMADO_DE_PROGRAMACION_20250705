@@ -1,0 +1,578 @@
+python -m venv .venv
+
+Activación de idle
+Desde entorno virtual ejecutar el comando: 
+py -m idlelib
+
+ESTRUCTURAS DE DATOS EN PYTHON
+
+LISTAS
+******
+Es una estructura de datos modificable (mutable). Se usan corchetes.[]
+
+Python 3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+#DEFINCIÓN DE LISTAS
+estudiantes = []
+estudiantes.append("BARBARA")
+estudiantes
+['BARBARA']
+estudiantes.append("YTZALI")
+estudiantes.append("JOELYS")
+estudiantes.append("AIRON")
+estudiantes.append("RICARDO")
+estudiantes.append("MOISES")
+estudiantes
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES']
+estudiantes.extend(["NELLY","FRAYNER","DANIEL"])
+estudiantes
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL']
+estudiantes.count("BARBARA")
+1
+estudiantes.append("BARBARA")
+estudiantes.count("BARBARA")
+2
+estudiantes.index('BARBARA')
+0
+estudiantes.index('BARBARA')
+0
+estudiantes.index('BARBARA')
+0
+estudiantes
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+estudiantes.insert(5,'ANA')
+estudiantes
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'ANA', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+estudiantes.sort()
+estudiantes
+['AIRON', 'ANA', 'BARBARA', 'BARBARA', 'DANIEL', 'FRAYNER', 'JOELYS', 'MOISES', 'NELLY', 'RICARDO', 'YTZALI']
+estudiantes.reverse()
+estudiantes
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA', 'BARBARA', 'ANA', 'AIRON']
+estudiantes.pop()
+'AIRON'
+estudiantes
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA', 'BARBARA', 'ANA']
+estudiantes.pop()
+'ANA'
+estudiantes
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA', 'BARBARA']
+estudiantes
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA', 'BARBARA']
+estudiantes.remove('BARBARA')
+estudiantes
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA']
+alumnos = estudiantes.copy()
+alumnos
+['YTZALI', 'RICARDO', 'NELLY', 'MOISES', 'JOELYS', 'FRAYNER', 'DANIEL', 'BARBARA']
+estudiantes.clear()
+estudiantes
+[]
+type(estudiantes)
+<class 'list'>
+profesores = list()
+profesores
+[]
+cursos = [['HENRY',[['BARBARA','YTZALI','JOELYS','AIRON','MOISES','RICARDO'],['SAMANTHA','LUISANA','RUSSEL'],['NINIBE','MARGIORIE','VICENTE']]]]
+cursos
+[['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]]]
+cursos[0]
+['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]]
+cursos[0][0]
+'HENRY'
+cursos[1]
+Traceback (most recent call last):
+  File "<pyshell#49>", line 1, in <module>
+    cursos[1]
+IndexError: list index out of range
+cursos[0]
+['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]]
+cursos[1]
+Traceback (most recent call last):
+  File "<pyshell#51>", line 1, in <module>
+    cursos[1]
+IndexError: list index out of range
+for data in cursos:
+    data
+
+    
+['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]]
+cursos[1][1]
+Traceback (most recent call last):
+  File "<pyshell#55>", line 1, in <module>
+    cursos[1][1]
+IndexError: list index out of range
+cursos[0]
+['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]]
+cursos[0][0]
+'HENRY'
+cursos[0][1]
+[['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]
+cursos[0][0]
+'HENRY'
+cursos[0][1][0]
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO']
+cursos[0][1][1]
+['SAMANTHA', 'LUISANA', 'RUSSEL']
+cursos[0][1][2]
+['NINIBE', 'MARGIORIE', 'VICENTE']
+
+cursos.append(['DOUGLAS',[['A','B','C']]])
+cursos.append(['ANIBAL',[['D','E'],['F','G']]])
+cursos
+[['HENRY', [['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'MOISES', 'RICARDO'], ['SAMANTHA', 'LUISANA', 'RUSSEL'], ['NINIBE', 'MARGIORIE', 'VICENTE']]], ['DOUGLAS', [['A', 'B', 'C']]], ['ANIBAL', [['D', 'E'], ['F', 'G']]]]
+cursos[1][0]
+'DOUGLAS'
+cursos[1][1]
+[['A', 'B', 'C']]
+cursos[1][1][0]
+['A', 'B', 'C']
+cursos[1][1][0][2]
+'C'
+cursos[2][0]
+'ANIBAL'
+cursos[2][0][0]
+'A'
+cursos[2][0][1]
+'N'
+cursos[2][0]
+'ANIBAL'
+cursos[2][1]
+[['D', 'E'], ['F', 'G']]
+cursos[2][1][0]
+['D', 'E']
+cursos[2][1][1]
+['F', 'G']
+cursos[2][1][1][0]
+'F'
+
+cursos = [['HENRY',[['BARBARA','YTZALI','JOELYS','AIRON','MOISES','RICARDO'],['SAMANTHA','LUISANA','RUSSEL'],['NINIBE','MARGIORIE','VICENTE']]]]
+
+cursos.append(['DOUGLAS',[['A','B','C']]])
+
+cursos.append(['ANIBAL',[['D','E'],['F','G']]])
+
+TUPLAS
+******
+Es una estructura de datos inmutable (No se puede cambiar una vez definida). Se usan paréntesis ().
+#tuplas
+asignaturas = ("LÓGICA DE PROGRAMACIÓN","PYTHON")
+asignaturas
+('LÓGICA DE PROGRAMACIÓN', 'PYTHON')
+
+asignaturas[0] = "POSTGRESQL"
+Traceback (most recent call last):
+  File "<pyshell#83>", line 1, in <module>
+    asignaturas[0] = "POSTGRESQL"
+TypeError: 'tuple' object does not support item assignment
+asignaturas.count('PYTHON')
+1
+
+asignaturas.index('PYTHON')
+1
+
+for alumno in alumnos:
+    alumno
+
+    
+'YTZALI'
+'RICARDO'
+'NELLY'
+'MOISES'
+'JOELYS'
+'FRAYNER'
+'DANIEL'
+'BARBARA'
+for asignatura in asignaturas:
+    asignatura
+
+    
+'LÓGICA DE PROGRAMACIÓN'
+'PYTHON'
+
+
+DICCIONARIOS 
+************
+Es una estructura de datos, donde los valores se acceden 
+a través de un nombre de índice y a este se asocia un valor. Se usan llaves.
+
+#DICCIONARIO
+encuesta = {'ANA':[25,1.65,56],'LILIANA':[19,1.60,54],'YOLANDA':[23,1.62,63]}
+encuesta
+{'ANA': [25, 1.65, 56], 'LILIANA': [19, 1.6, 54], 'YOLANDA': [23, 1.62, 63]}
+encuesta['ANA']
+[25, 1.65, 56]
+encuesta['LILIANA']
+[19, 1.6, 54]
+encuesta['YOLANA']
+Traceback (most recent call last):
+  File "<pyshell#99>", line 1, in <module>
+    encuesta['YOLANA']
+KeyError: 'YOLANA'
+encuesta['YOLANDA']
+[23, 1.62, 63]
+for dato in encuesta:
+    dato
+
+    
+'ANA'
+'LILIANA'
+'YOLANDA'
+for dato in encuesta:
+    encuesta[dato][0]
+
+    
+25
+19
+23
+for dato in encuesta:
+    encuesta[dato][0], encuesta[dato][1]
+
+    
+(25, 1.65)
+(19, 1.6)
+(23, 1.62)
+for dato in encuesta:
+    encuesta[dato][0], encuesta[dato][1], encuesta[dato][2]
+
+    
+(25, 1.65, 56)
+(19, 1.6, 54)
+(23, 1.62, 63)
+for dato in encuesta:
+    encuesta[dato][0][1][2]
+
+    
+Traceback (most recent call last):
+  File "<pyshell#115>", line 2, in <module>
+    encuesta[dato][0][1][2]
+TypeError: 'int' object is not subscriptable
+
+#Ejemplo Ricardo
+
+# Iterables independientes
+claves = ['Juan', 'Maria', 'Pedro']  # Nombres
+valores = [30, 25, 45]              # Edades
+
+# 1. Emparejar con zip()
+pares_zip = zip(claves, valores)
+# pares_zip produce: ('Juan', 30), ('Maria', 25), ('Pedro', 45)
+
+# 2. Convertir a diccionario
+diccionario_distinto = dict(pares_zip)
+
+print(diccionario_distinto)
+# Salida: {'Juan': 30, 'Maria': 25, 'Pedro': 45}
+
+#DICCIONARIO
+encuesta = {'ANA':[25,1.65,56],'LILIANA':[19,1.60,54],'YOLANDA':[23,1.62,63]}
+encuesta
+{'ANA': [25, 1.65, 56], 'LILIANA': [19, 1.6, 54], 'YOLANDA': [23, 1.62, 63]}
+encuesta['ANA']
+[25, 1.65, 56]
+encuesta['LILIANA']
+[19, 1.6, 54]
+encuesta['YOLANA']
+Traceback (most recent call last):
+  File "<pyshell#99>", line 1, in <module>
+    encuesta['YOLANA']
+KeyError: 'YOLANA'
+encuesta['YOLANDA']
+[23, 1.62, 63]
+for dato in encuesta:
+    dato
+
+    
+'ANA'
+'LILIANA'
+'YOLANDA'
+for dato in encuesta:
+    encuesta[dato][0]
+
+    
+25
+19
+23
+for dato in encuesta:
+    encuesta[dato][0], encuesta[dato][1]
+
+    
+(25, 1.65)
+(19, 1.6)
+(23, 1.62)
+for dato in encuesta:
+    encuesta[dato][0], encuesta[dato][1], encuesta[dato][2]
+
+    
+(25, 1.65, 56)
+(19, 1.6, 54)
+(23, 1.62, 63)
+for dato in encuesta:
+    encuesta[dato][0][1][2]
+
+    
+Traceback (most recent call last):
+  File "<pyshell#115>", line 2, in <module>
+    encuesta[dato][0][1][2]
+TypeError: 'int' object is not subscriptable
+
+
+
+
+
+palabra = 'ESTERNOCLEIDOMASTOIDEO'
+palabra = 'ESTERNOCLEIDOMASTOIDEO'
+# Recorrido de la palabra
+for letra in palabra:
+    letra
+
+    
+'E'
+'S'
+'T'
+'E'
+'R'
+'N'
+'O'
+'C'
+'L'
+'E'
+'I'
+'D'
+'O'
+'M'
+'A'
+'S'
+'T'
+'O'
+'I'
+'D'
+'E'
+'O'
+palabra.count('E')
+4
+contador_letras = {}
+contador_letras[palabra[0]] = palabra.count('E')
+contador_letras
+{'E': 4}
+palabra.count(palabra[1])
+2
+contador_letras[palabra[1]] = palabra.count(palabra[1])
+contador_letras
+{'E': 4, 'S': 2}
+print(contador_letras)
+{'E': 4, 'S': 2}
+
+
+= RESTART: C:\.Profesores\Henry_Duque\DIPLOMADO_DE_PROGRAMACION_20250705\PYTHON_NIVEL_I\PROFESOR\ejemplo03_contarletras.py
+Ingrese palabra:ESTERNOCLEIDOMASTOIDEO
+Cantidad de letras en la palabra: ESTERNOCLEIDOMASTOIDEO
+{'E': 4, 'S': 2, 'T': 2, 'R': 1, 'N': 1, 'O': 4, 'C': 1, 'L': 1, 'I': 2, 'D': 2, 'M': 1, 'A': 1}
+¿Desea ingresar una nueva palabra (S/N):?S
+Ingrese palabra:AUSTROLOPITECUS
+Cantidad de letras en la palabra: AUSTROLOPITECUS
+{'A': 1, 'U': 2, 'S': 2, 'T': 2, 'R': 1, 'O': 2, 'L': 1, 'P': 1, 'I': 1, 'E': 1, 'C': 1}
+¿Desea ingresar una nueva palabra (S/N):?N
+Fin del programa
+contar_letras
+Traceback (most recent call last):
+  File "<pyshell#136>", line 1, in <module>
+    contar_letras
+NameError: name 'contar_letras' is not defined. Did you mean: 'contador_letras'?
+contador_letras
+{'A': 1, 'U': 2, 'S': 2, 'T': 2, 'R': 1, 'O': 2, 'L': 1, 'P': 1, 'I': 1, 'E': 1, 'C': 1}
+contador_letras.fromkeys()
+Traceback (most recent call last):
+  File "<pyshell#138>", line 1, in <module>
+    contador_letras.fromkeys()
+TypeError: fromkeys expected at least 1 argument, got 0
+contador_letras.fromkeys[0]
+Traceback (most recent call last):
+  File "<pyshell#139>", line 1, in <module>
+    contador_letras.fromkeys[0]
+TypeError: 'builtin_function_or_method' object is not subscriptable
+contador_letras
+{'A': 1, 'U': 2, 'S': 2, 'T': 2, 'R': 1, 'O': 2, 'L': 1, 'P': 1, 'I': 1, 'E': 1, 'C': 1}
+contador_letras.keys()
+dict_keys(['A', 'U', 'S', 'T', 'R', 'O', 'L', 'P', 'I', 'E', 'C'])
+contador_letras.values()
+dict_values([1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1])
+contador_letras.items()
+dict_items([('A', 1), ('U', 2), ('S', 2), ('T', 2), ('R', 1), ('O', 2), ('L', 1), ('P', 1), ('I', 1), ('E', 1), ('C', 1)])
+prueba_dict = contador_letras.fromkeys()
+Traceback (most recent call last):
+  File "<pyshell#144>", line 1, in <module>
+    prueba_dict = contador_letras.fromkeys()
+TypeError: fromkeys expected at least 1 argument, got 0
+prueba = contador_letras.fromkeys(alumnos)
+Traceback (most recent call last):
+  File "<pyshell#145>", line 1, in <module>
+    prueba = contador_letras.fromkeys(alumnos)
+NameError: name 'alumnos' is not defined
+alumnos
+Traceback (most recent call last):
+  File "<pyshell#146>", line 1, in <module>
+    alumnos
+NameError: name 'alumnos' is not defined
+alumnos
+Traceback (most recent call last):
+  File "<pyshell#147>", line 1, in <module>
+    alumnos
+NameError: name 'alumnos' is not defined
+alumnos = ['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+alumnos
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+prueba_dict = contador_letras.fromkeys(alumnos)
+prueba_dict
+{'BARBARA': None, 'YTZALI': None, 'JOELYS': None, 'AIRON': None, 'RICARDO': None, 'MOISES': None, 'NELLY': None, 'FRAYNER': None, 'DANIEL': None}
+prueba_dict['BARBARA')
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '['
+prueba_dict['BARBARA']
+prueba_dict['BARBARA']=21
+prueba_dict
+{'BARBARA': 21, 'YTZALI': None, 'JOELYS': None, 'AIRON': None, 'RICARDO': None, 'MOISES': None, 'NELLY': None, 'FRAYNER': None, 'DANIEL': None}
+edades=[21,21,21,20,19,23,25,22,18]
+prueba_dict = contador_letras.fromkeys(alumnos,edades)
+prueba_dict
+{'BARBARA': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'YTZALI': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'JOELYS': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'AIRON': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'RICARDO': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'MOISES': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'NELLY': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'FRAYNER': [21, 21, 21, 20, 19, 23, 25, 22, 18], 'DANIEL': [21, 21, 21, 20, 19, 23, 25, 22, 18]}
+prueba_dict = contador_letras.fromkeys(alumnos,0)
+prueba_dict = contador_letras.fromkeys(alumnos,edades)
+alumnos
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+prueba_dict = contador_letras.fromkeys(alumnos)
+prueba_dict
+{'BARBARA': None, 'YTZALI': None, 'JOELYS': None, 'AIRON': None, 'RICARDO': None, 'MOISES': None, 'NELLY': None, 'FRAYNER': None, 'DANIEL': None}
+prueba_dict = contador_letras.fromkeys(alumnos)
+prueba_dict = contador_letras.fromkeys(alumnos,[])
+prueba_dict
+{'BARBARA': [], 'YTZALI': [], 'JOELYS': [], 'AIRON': [], 'RICARDO': [], 'MOISES': [], 'NELLY': [], 'FRAYNER': [], 'DANIEL': []}
+prueba_dict = contador_letras.fromkeys(alumnos,0)
+prueba_dict
+{'BARBARA': 0, 'YTZALI': 0, 'JOELYS': 0, 'AIRON': 0, 'RICARDO': 0, 'MOISES': 0, 'NELLY': 0, 'FRAYNER': 0, 'DANIEL': 0}
+prueba_dict
+{'BARBARA': 0, 'YTZALI': 0, 'JOELYS': 0, 'AIRON': 0, 'RICARDO': 0, 'MOISES': 0, 'NELLY': 0, 'FRAYNER': 0, 'DANIEL': 0}
+edades
+[21, 21, 21, 20, 19, 23, 25, 22, 18]
+alumnos = ['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL', 'BARBARA']
+
+prueba_dict = contador_letras.fromkeys(alumnos)
+prueba_dict
+{'BARBARA': None, 'YTZALI': None, 'JOELYS': None, 'AIRON': None, 'RICARDO': None, 'MOISES': None, 'NELLY': None, 'FRAYNER': None, 'DANIEL': None}
+edades=[21,21,21,20,19,23,25,22,18]
+i = 0
+for nombre in prueba_dict:
+    prueba_dict[nombre] = edades[i]
+    i+=1
+
+    
+print(prueba_dict)
+{'BARBARA': 21, 'YTZALI': 21, 'JOELYS': 21, 'AIRON': 20, 'RICARDO': 19, 'MOISES': 23, 'NELLY': 25, 'FRAYNER': 22, 'DANIEL': 18}
+
+
+CONJUNTOS
+*********
+# CONJUNTOS
+vocales = {'a','a','a','e','e','e','i','o','o','u','u','u'}
+vocales
+{'u', 'i', 'e', 'a', 'o'}
+for letra in vocales:
+    letra
+
+    
+'u'
+'i'
+'e'
+'a'
+'o'
+mis_vocales = list(vocales)
+mis_vocales
+['u', 'i', 'e', 'a', 'o']
+letras = {'a','e','u','b','c','d'}
+vocales.intersection(letras)
+{'u', 'e', 'a'}
+letras
+{'d', 'u', 'b', 'e', 'a', 'c'}
+vocales.union(letras)
+{'u', 'd', 'b', 'i', 'e', 'a', 'o', 'c'}
+letras.difference(vocales)
+{'d', 'b', 'c'}
+vocales.difference(letras)
+{'i', 'o'}
+# Carácteres para operaciones de conjuntos
+# unión | , intercepción &, diferencia -, diferencia simétrica
+# ^
+# PRUEBA DE DIFERENCIA SIMÉTRICA
+letras - vocales
+{'d', 'b', 'c'}
+vocales - letras
+{'i', 'o'}
+letras.symmetric_difference(vocales)
+{'d', 'b', 'i', 'o', 'c'}
+(letras-vocales)|(vocales-letras)
+{'d', 'b', 'i', 'o', 'c'}
+
+prueba_dict
+{'BARBARA': 21, 'YTZALI': 21, 'JOELYS': 21, 'AIRON': 20, 'RICARDO': 19, 'MOISES': 23, 'NELLY': 25, 'FRAYNER': 22, 'DANIEL': 18}
+prueba_list = list(prueba_dict)
+prueba_list
+['BARBARA', 'YTZALI', 'JOELYS', 'AIRON', 'RICARDO', 'MOISES', 'NELLY', 'FRAYNER', 'DANIEL']
+prueba_dict.items()
+dict_items([('BARBARA', 21), ('YTZALI', 21), ('JOELYS', 21), ('AIRON', 20), ('RICARDO', 19), ('MOISES', 23), ('NELLY', 25), ('FRAYNER', 22), ('DANIEL', 18)])
+prueba1_list = list(prueba_dict.items())
+prueba1_list
+[('BARBARA', 21), ('YTZALI', 21), ('JOELYS', 21), ('AIRON', 20), ('RICARDO', 19), ('MOISES', 23), ('NELLY', 25), ('FRAYNER', 22), ('DANIEL', 18)]
+
+
+# ARCHIVOS PLANOS
+alumnos = open('./alumnos.txt','w')
+alumnos.write('BARBARA\nYTZALI\n\JOELYS\nAIRON\nRICARDO\nMOISES\n')
+44
+alumnos.close()
+alumnos = open('./alumnos.txt','w')
+alumnos.write('BARBARA\nYTZALI\nJOELYS\nAIRON\nRICARDO\nMOISES\n')
+43
+alumnos.close()
+alumnos = open('./alumnos.txt','r')
+alumnos.read()
+'BARBARA\nYTZALI\nJOELYS\nAIRON\nRICARDO\nMOISES\n'
+alumnos.read()
+''
+alumnos.close()
+alumnos = open('./alumnos.txt','r')
+alumnos.readline()
+'BARBARA\n'
+alumnos.readline()
+'YTZALI\n'
+alumnos.readline()
+'JOELYS\n'
+alumnos.readline()
+'AIRON\n'
+alumnos.readline()
+'RICARDO\n'
+alumnos.readline()
+'MOISES\n'
+alumnos.readline()
+''
+alumnos.seek(0)
+0
+alumnos.readline()
+'BARBARA\n'
+alumnos.read()
+'YTZALI\nJOELYS\nAIRON\nRICARDO\nMOISES\n'
+alumnos.close
+<built-in method close of _io.TextIOWrapper object at 0x0000025FA422AF80>
+alumnos.close()
+alumnos = open('./alumnos.txt','a')
+alumnos.write('ANA\n')
+4
+alumnos.close()
+
+
+Bárbara <bvillasmils27@gmail.com>;
+Ytzali Jimenez <ytzalijimenez@gmail.com>;
+Airon Ortega <airon03ortega@gmail.com>;
+Daniel Antonio Rojas Escalona <rojasdaniel424@gmail.com>;
+liunyenelya@gmail.com;
+"Richard K. Motta" <heinrikken@gmail.com>;
+moisesby2004@gmail.com;
+
