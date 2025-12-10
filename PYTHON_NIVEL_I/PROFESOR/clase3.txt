@@ -1,0 +1,222 @@
+COMANDO PARA CREAR EL ENTORNO VIRTUAL
+ |   |   |     |
+ v   v   v     v
+>py -m venv .venv
+
+COMANDOS PARA MOVERME A TRAVÉS DE LOS DIRECTORIOS
+
+UNEWEB\DIPLOMADO_DE_PROGRAMACION_20250705>cd PYTHON_NIVEL_I [ENTER]
+UNEWEB\DIPLOMADO_DE_PROGRAMACION_20250705\PYTHON_NIVEL_I\cd PROFESOR [ENTER]
+UNEWEB\DIPLOMADO_DE_PROGRAMACION_20250705\PYTHON_NIVEL_I\PROFESOR>py -m venv .venv [ENTER]
+UNEWEB\DIPLOMADO_DE_PROGRAMACION_20250705\PYTHON_NIVEL_I\PROFESOR>.venv\scripts\activate [ENTER]
+UNEWEB\DIPLOMADO_DE_PROGRAMACION_20250705\PYTHON_NIVEL_I\PROFESOR>py -m idlelib [ENTER]
+
+
+ARCHIVOS PLANOS:
+
+nombre_logico = open("ruta/nombre_físico_del_archivo.ext","modo_de_apertura")
+
+MODOS DE APERTURA:
+r : sólo lectura
+w : sólo escritura
+a : escritura para añadir
+
+Python 3.12.2 (tags/v3.12.2:6abddd9, Feb  6 2024, 21:26:36) [MSC v.1937 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+alumnos = open("./alumnos.txt","w")
+alumnos.write("YTZALI\nJOELYS\nBARBARA\nAIRON\nMOISES\nRICARDO\n")
+43
+alumnos.close()
+alumnos.read()
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+    alumnos.read()
+ValueError: I/O operation on closed file.
+alumnos = open("./alumnos.txt","r")
+alumnos.read()
+'YTZALI\nJOELYS\nBARBARA\nAIRON\nMOISES\nRICARDO\n'
+alumnos.read()
+''
+alumnos.close()
+alumnos = open("./alumnos.txt","r")
+alumnos.read()
+'YTZALI\nJOELYS\nBARBARA\nAIRON\nMOISES\nRICARDO\n'
+alumnos.close()
+alumnos = open("./alumnos.txt","r")
+alumnos.seek(7)
+7
+alumnos.read()
+'\nJOELYS\nBARBARA\nAIRON\nMOISES\nRICARDO\n'
+alumnos.seek(1)
+1
+alumnos.readline()
+'TZALI\n'
+alumnos.readline()
+'JOELYS\n'
+alumnos.readline()
+'BARBARA\n'
+alumnos.readline()
+'AIRON\n'
+alumnos.readline()
+'MOISES\n'
+alumnos.readline()
+'RICARDO\n'
+alumnos.readline()
+''
+alumnos.closed
+False
+alumnos.close()
+alumnos.closed
+True
+presentes = ['YTZALI','JOELYS','BARBARA','AIRON','MOISES','RICARDO']
+presentes
+['YTZALI', 'JOELYS', 'BARBARA', 'AIRON', 'MOISES', 'RICARDO']
+for nombre in presentes:
+    nombre
+
+    
+'YTZALI'
+'JOELYS'
+'BARBARA'
+'AIRON'
+'MOISES'
+'RICARDO'
+alumnos = open("./alumnos.txt","w")
+alumnos.writelines(presentes)
+alumnos.close()
+presentes = ['YTZALI\n','JOELYS\n','BARBARA\n','AIRON\n','MOISES\n','RICARDO\n']
+presentes
+['YTZALI\n', 'JOELYS\n', 'BARBARA\n', 'AIRON\n', 'MOISES\n', 'RICARDO\n']
+for nombre in presentes:
+    nombre
+
+    
+'YTZALI\n'
+'JOELYS\n'
+'BARBARA\n'
+'AIRON\n'
+'MOISES\n'
+'RICARDO\n'
+alumnos.close()
+alumnos = open("./alumnos.txt","a")
+alumnos.writelines(presentes)
+alumnos.close()
+
+
+FUNCIONES EN PYTHON:
+
+def nombre_función(arg_1, arg_2, ..., arg_n):
+    acción 1
+    acción 2
+    ...
+    return resultado
+
+MÓDULO: Es un archivo, que contiene funciones, clases, métodos
+
+import nombre_del_módulo
+
+Una vez declarado, todas las funciones. clases y métodos, se hacen
+presente en el programa, donde lo estás declarando.
+
+
+PROGRAMACIÓN ORIENTADA A OBJETOS EN PYTHON
+
+Clase: Es una entidad de prgramación formada por 2 partes:
+1ra. Parte: Atributos o el equivalente a varibles 
+2da. Parte: Métodos o el equivalente a funciones.
+
+
+class Persona:
+    #atributos
+    nombre=''
+    apellido=''
+    edad=0
+    sexo=''
+    #métodos
+    def obtener_datos(self):
+        return f'Nombre:{self.nombre} Apellido:{self.apellido}'
+
+    
+ana = Persona()
+# Creación de objeto a partir de la clase Persona()
+ana.nombre = 'ANA'
+ana.apellido = 'VASQUEZ'
+ana.edad = 50
+ana.sexo = 'F'
+ana.nombre
+'ANA'
+ana.apellido
+'VASQUEZ'
+ana.edad
+50
+ana.sexo
+'F'
+
+ana.obtener_datos()
+'Nombre:ANA Apellido:VASQUEZ'
+
+personas = []
+personas.append(ana)
+personas
+[<__main__.Persona object at 0x000001960B02EA80>]
+personas[0].obtener_datos()
+'Nombre:ANA Apellido:VASQUEZ'
+personas.append(Persona())
+len(personas)
+2
+personas[1].nombre='YOLANDA'
+personas[1].apellido = 'TORTOZA'
+personas[1].edad = 40
+personas[1].sexo = 'F'
+personas.append(Persona())
+len(personas)
+3
+personas[2].nombre='NELLY'
+personas[2].apellido = 'CONTRERAS'
+personas[2].edad = 57
+personas[2].sexo = 'F'
+personas[2].obtener_datos()
+'Nombre:NELLY Apellido:CONTRERAS'
+for persona in personas:
+    persona.obtener_datos()
+
+    
+'Nombre:ANA Apellido:VASQUEZ'
+'Nombre:YOLANDA Apellido:TORTOZA'
+'Nombre:NELLY Apellido:CONTRERAS'
+
+1RA. PARTE
+CARACTERÍSTICAS Y EJEMPLOS EN PYTHON DE PROGRAMACIÓN ORIENTADA A OBJETOS:
+1-) DEFINICIÓN DE HERENCIA Y EJEMPLO.
+2-) DEFINICIÓN DE POLIMORFISMO Y EJEMPLO.
+3-) DEFINICION DE ENCAPSULAMIENTO Y EJEMPLO.
+4-) DEFINICIÓN DE ABSTRACCIÓN Y EJEMPLO.
+
+
+2DA. PARTE
+DESARROLLAR UN PROGRAMA EN PYTHON QUE CAPTURE: NOMBRE, APELLIDO, EDAD Y SEXO Y LO 
+ALMACENE EN ARCHIVO PLANO.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
