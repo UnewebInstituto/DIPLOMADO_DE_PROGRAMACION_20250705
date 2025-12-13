@@ -1,0 +1,356 @@
+Python 3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+#herencia
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def comer()
+    
+SyntaxError: expected ':'
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre}come...'
+    def dormir(self):
+        return f'{self.nombre}duerme...'
+    def darNombre(self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+
+    
+
+#Crear un objeto
+    
+fido = Mascota()
+type(fido)
+<class '__main__.Mascota'>
+fido.darNombre('FIDO')
+'Tu mascota se llama FIDO'
+fido.comer()
+'FIDOcome...'
+fido.dormir
+<bound method Mascota.dormir of <__main__.Mascota object at 0x0000025127057B60>>
+fido.dormir()
+'FIDOduerme...'
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre}come...'
+    def dormir(self):
+        return f'{self.nombre}duerme...'
+
+    
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre}come...'
+    def dormir(self):
+        return f'{self.nombre}duerme...'
+
+    
+mascotadeRicardo = Mascota('Leah')
+mascotadeAiron = Mascota('Cloi')
+
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre}come...'
+    def dormir(self):
+        return f'{self.nombre}duerme...'
+    def getNombre(self):
+        return f'La mascota se llama {self.nombre}'
+
+    
+mascotadeRicardo = Mascota('Leah')
+mascotadeAiron = Mascota('Cloi')
+mascotadeRicardo.getNombre()
+'La mascota se llama Leah'
+mascotadeRicardo.comer()
+'Leahcome...'
+class Mascota:
+    #atributos
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La mascota se llama {self.nombre}'
+    def sonido(self):
+        return f'{self.nombre} sonido'
+
+    
+#herencia: todos los atributos y metodos de la clase padre (superclase) pasan a las subsclases
+    
+class Canino(Mascota):
+    #atributo de la subclase Canino
+    raza = ''
+    #metodos de la subclase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+
+    
+mascotadeRicardo = Canino('LEAH')
+mascotadeRicardo.setRaza('MESTIZA')
+'La raza asignada a LEAH es MESTIZA'
+mascotadeRicardo.comer()
+'LEAH come...'
+mascotadeRicardo.dormir()
+'LEAH duerme...'
+mascotadeRicardo.pasear()
+'LEAH pasea...'
+mascotadeRicardo.getRaza()
+'La raza de LEAH es MESTIZA'
+mascotadeRicardo.sonido()
+'LEAH sonido'
+class Canino(Mascota):
+    #atributo de la subclase Canino
+    raza = ''
+    #metodos de la subclase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} ladra...'
+
+    
+
+class Felino(Mascota):
+    #atributo de la subclase Felino
+    raza = ''
+    #metodos de la subclase Felino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} maulla...'
+
+    
+
+class Pez(Mascota):
+    #atributo de la subclase Canino
+    raza = ''
+    #metodos de la subclase Pez
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} no emite sonido...'
+
+    
+mascotadeRicardo = Canino('Leah')
+mascotadeAiron = Pez('Cloi')
+mascotadeAaron = Felino('Flofly')
+mascotadeRicardo.sonido()
+'Leah ladra...'
+mascotadeAiron.sonido()
+'Cloi no emite sonido...'
+mascotadeAaron.sonido()
+'Flofly maulla...'
+#Encapsulamiento
+class CuentaBancaria:
+    #atributos publico
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Metodos
+    #Constructor
+    def __init__(self,TipoCta,argCrea,argDepo,argTit):
+        self.tipoCta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+
+miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+Traceback (most recent call last):
+  File "<pyshell#93>", line 1, in <module>
+    miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+  File "<pyshell#91>", line 11, in __init__
+    self.tipoCta = argTipoCta
+NameError: name 'argTipoCta' is not defined. Did you mean: 'TipoCta'?
+class CuentaBancaria:
+    #atributos publico
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Metodos
+    #Constructor
+    def __init__(self,TipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+Traceback (most recent call last):
+  File "<pyshell#96>", line 1, in <module>
+    miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+  File "<pyshell#95>", line 11, in __init__
+    self.tipoCuenta = argTipoCta
+NameError: name 'argTipoCta' is not defined. Did you mean: 'TipoCta'?
+class CuentaBancaria:
+    #atributos publico
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Metodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+
+miCuenta.tipoCuenta()
+Traceback (most recent call last):
+  File "<pyshell#101>", line 1, in <module>
+    miCuenta.tipoCuenta()
+TypeError: 'str' object is not callable
+miCuenta.fechaCreacion()
+Traceback (most recent call last):
+  File "<pyshell#102>", line 1, in <module>
+    miCuenta.fechaCreacion()
+TypeError: 'str' object is not callable
+miCuenta.fechaCreacion
+'2025-12-13'
+miCuenta.tipoCuenta
+'AHO'
+class CuentaBancaria:
+    #atributos publico
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Metodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta es {self.saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self.nombre}'
+
+    
+miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+miCuenta.fechaCreacion
+'2025-12-13'
+miCuenta.tipoCuenta
+'AHO'
+miCuenta.getTitular()
+Traceback (most recent call last):
+  File "<pyshell#118>", line 1, in <module>
+    miCuenta.getTitular()
+  File "<pyshell#114>", line 22, in getTitular
+    return f'El nombre del titular de la cuenta es {self.nombre}'
+AttributeError: 'CuentaBancaria' object has no attribute 'nombre'
+class CuentaBancaria:
+    #atributos publico
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Metodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta es {self._saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self._titular}'
+
+    
+miCuenta = CuentaBancaria('AHO','2025-12-13','100','HENRY')
+miCuenta.getTitular
+<bound method CuentaBancaria.getTitular of <__main__.CuentaBancaria object at 0x00000251270701A0>>
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es HENRY'
+miCuenta.getSaldo
+<bound method CuentaBancaria.getSaldo of <__main__.CuentaBancaria object at 0x00000251270701A0>>
+miCuenta.getSaldo()
+'El saldo de la cuenta es 100'
+miCuenta.setDeposito(255)
+Traceback (most recent call last):
+  File "<pyshell#126>", line 1, in <module>
+    miCuenta.setDeposito(255)
+  File "<pyshell#120>", line 16, in setDeposito
+    self._saldo += argDepo
+TypeError: can only concatenate str (not "int") to str
+miCuenta.setDeposito(255)
+Traceback (most recent call last):
+  File "<pyshell#127>", line 1, in <module>
+    miCuenta.setDeposito(255)
+  File "<pyshell#120>", line 16, in setDeposito
+    self._saldo += argDepo
+TypeError: can only concatenate str (not "int") to str
+miCuenta = CuentaBancaria('AHO','2025-12-13',100,'HENRY')
+miCuenta.setDeposito(255)
+miCuenta.getSaldo()
+'El saldo de la cuenta es 355'
+miCuenta.setTitular('HENRY DUQUE')
+miCuenta.getTitular
+<bound method CuentaBancaria.getTitular of <__main__.CuentaBancaria object at 0x00000251270C9450>>
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es HENRY DUQUE'

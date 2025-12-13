@@ -1,0 +1,9 @@
+estructuras de datos en python
+
+listas 
+
+tuplas
+
+diccionarios
+
+conjuntos

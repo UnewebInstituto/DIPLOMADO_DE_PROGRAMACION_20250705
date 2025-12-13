@@ -1,0 +1,619 @@
+¡Claro\! La secuencia de comandos para activar un entorno virtual de Python depende de cómo se haya creado, pero la forma más común, y la que funciona bien en Git Bash, es ejecutar el *script* de activación ubicado dentro del directorio del entorno virtual.
+
+Aquí tienes los pasos, asumiendo que el entorno virtual se llama `venv`:
+
+### 🐍 Activación del Entorno Virtual en Git Bash
+
+1.  **Navega** hasta el directorio raíz de tu proyecto (donde se encuentra la carpeta de tu entorno virtual, ej. `venv`).
+
+2.  **Ejecuta el script de activación** usando el siguiente comando:
+
+    ```bash
+    source venv/Scripts/activate
+    ```
+
+      * **`source`**: Este comando es esencial en sistemas tipo Unix (como el entorno de Git Bash) para ejecutar el *script* en el *shell* actual y modificar la configuración de la sesión (como la variable de entorno `PATH`).
+      * **`venv/Scripts/activate`**: Esta es la ruta al *script* de activación dentro de la carpeta de tu entorno virtual (`venv`). En Windows, cuando se usa Python, el *script* ejecutable está en el subdirectorio `Scripts`.
+
+### ✨ Verificación
+
+Una vez que el entorno virtual se ha activado con éxito, verás el nombre de tu entorno (generalmente entre paréntesis) prefijando tu *prompt* de Git Bash.
+
+**Ejemplo:**
+
+```bash
+(venv) user@host MINGW64 /c/ruta/a/mi/proyecto
+```
+
+Ahora, cualquier comando de Python que ejecutes (como `pip install`, `python script.py`) se referirá a la versión de Python y los paquetes instalados **dentro** de ese entorno virtual, y no a la instalación global de tu sistema.
+
+### 🛑 Desactivación (Opcional)
+
+Cuando termines de trabajar en el proyecto, puedes desactivar el entorno virtual simplemente ejecutando:
+
+```bash
+deactivate
+```
+
+-----
+
+¿Te gustaría que te recuerde cómo **crear** un entorno virtual si aún no lo has hecho?
+
+
+¡Excelente pregunta\! En Python, la declaración de un método constructor es fundamental para **inicializar** los objetos (instancias) de una clase.
+
+Este método especial se llama **`__init__`**.
+
+A continuación, describo su declaración, propósito y cómo funciona:
+
+-----
+
+## 🏗️ La Declaración del Constructor (`__init__`)
+
+El constructor en Python se declara como un método regular dentro de la definición de una clase, pero siempre debe llevar el nombre `__init__` (doble guion bajo antes y después).
+
+### 1\. Sintaxis Básica
+
+```python
+class NombreClase:
+    def __init__(self, parametro1, parametro2, ...):
+        # Cuerpo del constructor:
+        # Aquí se inicializan los atributos del objeto.
+        self.atributo1 = parametro1
+        self.atributo2 = parametro2
+        # ...
+```
+
+### 2\. El Parámetro `self` (Obligatorio)
+
+El primer parámetro de `__init__` **siempre** debe ser `self` (por convención, aunque puedes usar otro nombre).
+
+  * **Propósito de `self`:** Cuando se crea una nueva instancia de la clase (ej: `mi_objeto = NombreClase(...)`), Python llama automáticamente a `__init__` y le pasa la **instancia recién creada** como argumento para el parámetro `self`. Es la referencia al objeto mismo.
+  * **Inicialización de Atributos:** Usamos `self` dentro del constructor para crear y asignar valores a los atributos específicos de ese objeto: `self.nombre_atributo = valor`.
+
+### 3\. Otros Parámetros
+
+Aparte de `self`, puedes incluir cualquier otro parámetro que necesites para inicializar los atributos del objeto. Estos son los valores que el usuario de la clase proporcionará al momento de crear la instancia.
+
+**Ejemplo:**
+
+```python
+class Perro:
+    # Declaración del constructor
+    def __init__(self, nombre, edad):
+        # 1. 'self' es la instancia de Perro que se está creando.
+        # 2. Inicializamos los atributos 'nombre' y 'edad'
+        #    de esta instancia usando los valores pasados.
+        self.nombre = nombre
+        self.edad = edad
+        self.especie = "Canis familiaris" # Atributo con valor fijo
+        
+# Uso (Creación del Objeto):
+# Al llamar a Perro("Fido", 3), Python llama a __init__
+# donde self es el nuevo objeto, nombre es "Fido" y edad es 3.
+mi_perro = Perro("Fido", 3)
+
+print(mi_perro.nombre) # Salida: Fido
+print(mi_perro.edad)   # Salida: 3
+```
+
+-----
+
+## 📌 Puntos Clave sobre `__init__`
+
+| Característica | Descripción |
+| :--- | :--- |
+| **Nombre** | **`__init__`** (siempre con doble guion bajo). |
+| **Cuándo se Llama** | Automáticamente cuando se crea una nueva instancia de la clase (ej: `objeto = Clase()`). |
+| **Propósito** | Asignar valores iniciales a los atributos del objeto. **No** es el método que crea el objeto (eso lo hace `__new__`), sino el que lo inicializa. |
+| **Retorno** | No puede tener una declaración de retorno (`return`); siempre debe retornar `None` implícitamente. |
+
+-----
+
+¿Te gustaría ver un ejemplo más avanzado que use argumentos predeterminados (`default arguments`) en el constructor?
+
+Las declaraciones en Python que usan doble guion bajo al inicio y al final (por ejemplo, `__init__`, `__str__`, `__add__`) se conocen como **métodos mágicos** o **métodos dunder** (del inglés "Double Under").
+
+Estos métodos son fundamentales porque permiten que las clases de Python interactúen con las características del lenguaje (como operadores, funciones integradas, o sintaxis) de una manera definida.
+
+### 🧙‍♂️ Métodos Mágicos o Dunder
+
+El término más formal es **Métodos Mágicos** (Magic Methods), pero "dunder" es el término de jerga más utilizado en la comunidad de Python.
+
+#### 📝 Lista de Métodos Dunder Comunes
+
+Aquí tienes una lista de los métodos dunder más importantes y las operaciones que permiten en una clase:
+
+| Categoría | Método Dunder | Propósito y Uso |
+| :--- | :--- | :--- |
+| **Inicialización y Creación** | `__init__(self, ...)` | **Constructor**. Inicializa una instancia después de que ha sido creada. |
+| | `__new__(cls, ...)` | Se llama para **crear** la instancia. (Menos común de sobrescribir). |
+| | `__del__(self)` | Destructor. Se llama cuando el objeto es recolectado por el *garbage collector*. |
+| **Representación** | `__str__(self)` | Define la representación en **cadena legible** para los humanos (usado por `print()` o `str()`). |
+| | `__repr__(self)` | Define la representación **formal** de la cadena (útil para depuración). |
+| **Comparación de Objetos** | `__eq__(self, other)` | Define el comportamiento del operador de igualdad (`==`). |
+| | `__lt__(self, other)` | Define el comportamiento del operador "menor que" (`<`). |
+| | `__gt__(self, other)` | Define el comportamiento del operador "mayor que" (`>`). |
+| **Operaciones Aritméticas** | `__add__(self, other)` | Define el comportamiento del operador de suma (`+`). |
+| | `__sub__(self, other)` | Define el comportamiento del operador de resta (`-`). |
+| | `__mul__(self, other)` | Define el comportamiento del operador de multiplicación (`*`). |
+| **Contenedores y Colecciones**| `__len__(self)` | Define el comportamiento de la función `len()`. |
+| | `__getitem__(self, key)` | Permite acceder a elementos usando corchetes (ej: `objeto[clave]`). |
+| | `__setitem__(self, key, value)`| Permite asignar valores usando corchetes (ej: `objeto[clave] = valor`). |
+| **Context Managers** | `__enter__(self)` | Se llama al entrar en el bloque `with`. |
+| | `__exit__(self, exc_type, ...)` | Se llama al salir del bloque `with`. |
+
+
+
+Estos métodos son el corazón de la **programación orientada a objetos (POO)** en Python, ya que permiten que tus objetos personalizados se comporten como tipos de datos nativos del lenguaje.
+
+¿Te gustaría que te muestre un ejemplo de cómo usar uno de estos métodos, como `__str__` o `__add__`?
+
+¡Es una excelente pregunta que toca un tema crucial en la Programación Orientada a Objetos (POO) en Python\!
+
+La respuesta directa es que **Python no tiene una implementación estricta de "privado" o "protegido" como otros lenguajes (como Java o C++)**. En su lugar, utiliza **convenciones de nomenclatura** para indicar la intención de acceso restringido, que se logra mediante el uso de guiones bajos (`_`).
+
+Aquí te explico cómo se declaran los atributos y métodos protegidos y su relación con el concepto de acceso restringido.
+
+-----
+
+## 🔒 1. Atributos y Métodos "Protegidos"
+
+El concepto de acceso **"Protegido"** en Python se implementa usando un solo guion bajo al inicio del nombre.
+
+### A. Declaración (Convención Protegida)
+
+  * **Sintaxis:** Se antepone un solo guion bajo (`_`) al nombre del atributo o método.
+  * **Intención:** Indica a otros desarrolladores que este elemento está destinado a ser utilizado **solo dentro de la clase** y sus **subclases** (herencia), y **no debe ser accedido o modificado directamente** desde fuera de la clase.
+
+| Tipo | Sintaxis | Ejemplo |
+| :--- | :--- | :--- |
+| **Atributo Protegido** | `self._nombre_atributo` | `self._saldo = 0` |
+| **Método Protegido** | `def _nombre_metodo(self):` | `def _calcular_interes(self):` |
+
+### B. Relación con Acceso Restringido
+
+  * **¿Es forzado? No.** A pesar de la convención, Python **permite** acceder y modificar `_saldo` o llamar `_calcular_interes()` desde fuera de la clase.
+  * **¿Entonces para qué sirve?** El guion bajo actúa como una **advertencia moral y documental**. Es una forma de decir: "Si accedes a esto, lo haces bajo tu propio riesgo; podría cambiar sin previo aviso en futuras versiones, o podrías romper la lógica interna de la clase".
+
+**Ejemplo de Código Protegido:**
+
+```python
+class CuentaBancaria:
+    def __init__(self, saldo_inicial):
+        # Atributo "protegido"
+        self._saldo = saldo_inicial 
+    
+    # Método "protegido"
+    def _actualizar_registro(self, monto):
+        print(f"Registro actualizado: Movimiento de ${monto}")
+
+# Uso (Acceso Externo)
+mi_cuenta = CuentaBancaria(100)
+
+# ⚠️ Acceso (permitido, pero desaconsejado)
+print(mi_cuenta._saldo)  # 100
+mi_cuenta._saldo = 500  # Modificación directa (desaconsejada)
+mi_cuenta._actualizar_registro(400) # Llamada al método (desaconsejada)
+```
+
+-----
+
+## 🚫 2. El "Truco" para Acceso Más Restringido (Privado)
+
+Para crear un nivel de restricción aún mayor (que se asemeja al concepto de **"Privado"**), Python utiliza una técnica llamada **"Name Mangling"** (manipulación de nombres), que se activa con **doble guion bajo** al inicio.
+
+### A. Declaración (Convención Privada)
+
+  * **Sintaxis:** Se anteponen **dos** guiones bajos (`__`) al nombre del atributo o método.
+  * **Intención:** Indica que este elemento es **estrictamente interno** y está diseñado para evitar colisiones de nombres al heredar de otras clases.
+
+### B. Relación con Acceso Restringido (Name Mangling)
+
+  * **¿Es forzado? Sí, en cierta medida.** Cuando Python ve `__atributo`, lo renombra internamente a `_NombreClase__atributo` durante la compilación.
+  * **Resultado:** Esto hace que el acceso directo al nombre original (`mi_objeto.__atributo`) falle, forzando al desarrollador a acceder a través del nombre manipulado (`mi_objeto._CuentaBancaria__saldo`). Aunque no es una restricción absoluta, lo hace significativamente más difícil de acceder por accidente.
+
+**Ejemplo de Código Privado (Name Mangling):**
+
+```python
+class CuentaBancaria:
+    def __init__(self, saldo_inicial):
+        # Atributo "privado"
+        self.__numero_secreto = "12345" 
+
+mi_cuenta = CuentaBancaria(100)
+
+# Acceso fallido:
+# print(mi_cuenta.__numero_secreto)  # 🚨 Arrojaría un error: AttributeError
+
+# Acceso "hackeado" (usando el nombre mangled, desaconsejado):
+print(mi_cuenta._CuentaBancaria__numero_secreto) # "12345" (funciona, pero revela la técnica)
+```
+
+-----
+
+## 📝 Conclusión
+
+| Concepto Estricto | Convención Python | Nomenclatura | Restricción (Relación) |
+| :--- | :--- | :--- | :--- |
+| **Público** | Público por defecto | `nombre_atributo` | Acceso totalmente libre. |
+| **Protegido** | **Convención** | `_nombre_atributo` (Un guion bajo) | **Advertencia moral**; el acceso está permitido pero desaconsejado fuera de la clase y subclases. |
+| **Privado** | **Name Mangling** | `__nombre_atributo` (Doble guion bajo) | El acceso directo falla; se requiere un **"hack"** para acceder (es lo más cercano a restringido). |
+
+En resumen, Python se basa en la **confianza y la convención** para la restricción de acceso, priorizando la flexibilidad sobre la rigidez.
+
+
+Python 3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def darNombre(self, argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+
+    
+
+# Crear un objeto
+fido = Mascota()
+type(fido)
+<class '__main__.Mascota'>
+fido.darNombre('FIDO')
+'Tu mascota se llama FIDO'
+fido.comer()
+'FIDO come...'
+fido.dormir()
+'FIDO duerme...'
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    # constructor
+    __init__(self, argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    
+SyntaxError: invalid syntax
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    # constructor
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+
+    
+mascotaDeRicardo = Mascota('LIA')
+Traceback (most recent call last):
+  File "<pyshell#21>", line 1, in <module>
+    mascotaDeRicardo = Mascota('LIA')
+TypeError: __init__() should return None, not 'str'
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    # constructor
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+
+    
+mascotaDeRicardo = Mascota('LIA')
+mascotaDeAiron = Mascota('CLOI')
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    # constructor
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La mascota se llama {self.nombre}'
+
+    
+mascotaDeRicardo = Mascota('LIA')
+mascotaDeAiron = Mascota('CLOI')
+mascotaDeRicardo.comer()
+'LIA come...'
+mascotaDeAiron.comer()
+'CLOI come...'
+mascotaDeAiron.getNombre()
+'La mascota se llama CLOI'
+mascotaDeRicardo.getNombre()
+'La mascota se llama LIA'
+class Mascota:
+    # atributos
+    nombre=''
+    # métodos
+    # constructor
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La mascota se llama {self.nombre}'
+    def sonido(self):
+        return f'{self.nombre} sonido'
+
+    
+#HERENCIA: Todos los atributos y métodos de la clase Padre (Superclase)
+    
+#pasan a las subclases
+    
+
+class Canino(Mascota)
+SyntaxError: expected ':'
+class Canino(Mascota)
+SyntaxError: expected ':'
+class Canino(Mascota):
+    #atributo de la sub clase Canino
+    raza = ''
+    #métodos de la sub clase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+
+    
+mascotaDeRicardo = Canino('LIA')
+mascotaDeRicardo.setRaza('MESTIZA')
+'La raza asignada a LIA es MESTIZA'
+mascotaDeRicardo.comer()
+'LIA come...'
+mascotaDeRicardo.dormir()
+'LIA duerme...'
+mascotaDeRicardo.getRaza()
+'La raza de LIA es MESTIZA'
+mascotaDeRicardo.pasear()
+'LIA pasea...'
+mascotaDeRicardo.sonido()
+'LIA sonido'
+class Canino(Mascota):
+    #atributo de la sub clase Canino
+    raza = ''
+    #métodos de la sub clase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self)
+    
+SyntaxError: expected ':'
+class Canino(Mascota):
+    #atributo de la sub clase Canino
+    raza = ''
+    #métodos de la sub clase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} ladra...'
+
+    
+class Felino(Mascota):
+    #atributo de la sub clase Felino
+    raza = ''
+    #métodos de la sub clase Canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} maulla...'
+
+    
+class Felino(Mascota):
+    #atributo de la sub clase Felino
+    raza = ''
+    #métodos de la sub clase Felino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} maulla...'
+
+    
+class Pez(Mascota):
+    #atributo de la sub clase Pez
+    raza = ''
+    #métodos de la sub clase Pez
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza asignada a {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea...'
+    def sonido(self):
+        return f'{self.nombre} no emite sonido...'
+
+    
+mascotaDeRicardo = Canino('LIA')
+mascotaDeAiron = Pez('CLOI')
+mascotaDeAaron = Felino('FLOFLY')
+mascotaDeRicardo.sonido()
+'LIA ladra...'
+mascotaDeAiron.sonido()
+'CLOI no emite sonido...'
+mascotaDeAaron.sonido()
+'FLOFLY maulla...'
+#ENCAPSULAMIENTO
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Métodos
+    #Constructor
+    def __init__ abrirCuenta(self,argTipoCta,argCrea,argDepo,argTit):
+        
+SyntaxError: expected '('
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Métodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+
+miCuenta = CuentaBancaria('AHO','2025-12-13',100,'HENRY')
+miCuenta.fechaCreacion
+'2025-12-13'
+miCuenta.tipoCuenta
+'AHO'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Métodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta es {self.saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self.nombre}'
+
+    
+miCuenta = CuentaBancaria('AHO','2025-12-13',100,'HENRY')
+miCuenta.fechaCreacion
+'2025-12-13'
+}
+miCuenta.tipoCuenta
+'AHO'
+miCuenta.getTitular()
+Traceback (most recent call last):
+  File "<pyshell#117>", line 1, in <module>
+    miCuenta.getTitular()
+  File "<pyshell#113>", line 22, in getTitular
+    return f'El nombre del titular de la cuenta es {self.nombre}'
+AttributeError: 'CuentaBancaria' object has no attribute 'nombre'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #Métodos
+    #Constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta es {self._saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self._titular}'
+
+    
+miCuenta = CuentaBancaria('AHO','2025-12-13',100,'HENRY')
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es HENRY'
+miCuenta.getSaldo()
+'El saldo de la cuenta es 100'
+miCuenta.setDeposito(255)
+miCuenta.getSaldo()
+'El saldo de la cuenta es 355'
+miCuenta.setTitular('HENRY DUQUE')
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es HENRY DUQUE'
+
+
+INSTALACIÓN DE DEPENDENCIA PARA POSTGRESQL EN EL Entorno
+VIRTUAL PARA PYTHON.
+pip install psycopg2 
+
+
+Python 3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+import psycopg2
+conn = psycopg2.connect("database=bd20251025_profesor user=postgres password=123456 host=localhost port=5432")
+Traceback (most recent call last):
+  File "<pyshell#1>", line 1, in <module>
+    conn = psycopg2.connect("database=bd20251025_profesor user=postgres password=123456 host=localhost port=5432")
+  File "C:\Users\INSTRUCTOR\AppData\Roaming\Python\Python313\site-packages\psycopg2\__init__.py", line 134, in connect
+    dsn = _ext.make_dsn(dsn, **kwargs)
+  File "C:\Users\INSTRUCTOR\AppData\Roaming\Python\Python313\site-packages\psycopg2\extensions.py", line 145, in make_dsn
+    parse_dsn(dsn)
+psycopg2.ProgrammingError: invalid dsn: invalid connection option "database"
+
+conn = psycopg2.connect(database="bd20251025_profesor",user="postgres",password="123456", host="localhost", port="5432")
+cursor = conn.cursor()
+sql = "select * from proveedores"
+cursor.execute(sql)
+resultado = cursor.fetchall()
+for data in resultado:
+    data
+
+    
+(2, 'WHIRPOOL', 'AV. BARALT', '+58 212 4876543', 'info@whirpool.com')
+(3, 'SAMSUNG', 'AV. SAN MARTIN', '+58 212 7876543', 'info@samsung.com')
+(4, 'ADMIRAL', 'AV. ROMULO GALLEGOS', '+58 212 2876543', 'info@admiral.com')
+
+

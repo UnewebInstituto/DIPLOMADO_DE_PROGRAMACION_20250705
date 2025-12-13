@@ -1,0 +1,89 @@
+1) Herencia 
+
+Definición:
+La herencia permite crear una clase nueva (hija/subclase) basada en otra (padre/superclase), reutilizando atributos y métodos, y pudiendo extender o modificar su comportamiento.
+
+Ejemplo en Python:
+
+class Animal:
+    def hablar(self):
+        return "Soy un animal"
+
+class Perro(Animal):  # Perro hereda de Animal
+    def hablar(self):
+        return "Guau!"
+
+a = Animal()
+p = Perro()
+
+print(a.hablar())  # Soy un animal
+print(p.hablar())  # Guau!
+
+2) Polimorfismo 
+
+Definición:
+El polimorfismo permite que diferentes clases tengan métodos con el mismo nombre, pero cada una se comporte de forma distinta. El mismo “mensaje” (método) produce diferentes resultados según el objeto.
+
+Ejemplo en Python:
+
+class Gato:
+    def hablar(self):
+        return "Miau"
+
+class Vaca:
+    def hablar(self):
+        return "Muuu"
+
+def hacer_hablar(animal):
+    print(animal.hablar())
+
+hacer_hablar(Gato())  # Miau
+hacer_hablar(Vaca())  # Muuu
+
+3) Encapsulamiento 
+
+Definición:
+El encapsulamiento consiste en proteger/ocultar datos internos de un objeto y controlar el acceso mediante métodos (por ejemplo, getters/setters). En Python se usa mucho con atributos “privados” por convención (con _ o __).
+
+Ejemplo en Python:
+
+class CuentaBancaria:
+    def __init__(self, saldo_inicial):
+        self.__saldo = saldo_inicial  # atributo "privado"
+
+    def depositar(self, monto):
+        if monto > 0:
+            self.__saldo += monto
+
+    def obtener_saldo(self):
+        return self.__saldo
+
+cuenta = CuentaBancaria(100)
+cuenta.depositar(50)
+
+print(cuenta.obtener_saldo())  # 150
+# print(cuenta.__saldo)  # Error: no se accede directamente
+
+4) Abstracción 
+
+Definición:
+La abstracción consiste en mostrar solo lo esencial y ocultar los detalles de implementación. Se logra con clases abstractas (interfaces) donde defines métodos que las clases hijas deben implementar.
+
+Ejemplo en Python (con abc):
+
+from abc import ABC, abstractmethod
+
+class Figura(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Cuadrado(Figura):
+    def __init__(self, lado):
+        self.lado = lado
+
+    def area(self):
+        return self.lado * self.lado
+
+c = Cuadrado(4)
+print(c.area())  # 16

@@ -1,0 +1,83 @@
+🐍 Programación Orientada a Objetos (POO) en Python
+La POO se basa en el concepto de "objetos", que son instancias de "clases". Los objetos contienen datos (atributos) y código para manipular esos datos (métodos).
+
+💡 Características Fundamentales de la POO
+Las cuatro características principales (pilares) que definen la POO son:
+
+1. Abstracción
+Concepto: Se enfoca en mostrar solo la información necesaria y esencial, ocultando los detalles de implementación complejos. Permite definir la interfaz de un objeto sin detallar cómo se implementan las funcionalidades.
+
+Ejemplo en Python: Una clase Coche solo expone métodos como arrancar() o frenar(), sin que el usuario necesite saber los procesos internos del motor o los frenos.
+
+2. Encapsulamiento
+Concepto: Restringe el acceso directo a los datos internos de un objeto. Los datos (atributos) y el código que opera sobre ellos (métodos) se agrupan en una unidad (la clase). Esto protege la integridad de los datos.
+
+Ejemplo en Python: Se suelen usar convenciones de nombres (como prefijos con guiones bajos) para indicar que ciertos atributos son de uso interno y deben ser accedidos o modificados solo a través de métodos públicos (como getters y setters).
+
+3. Herencia
+Concepto: Permite que una clase (clase hija o subclase) herede atributos y métodos de otra clase (clase padre o superclase). Esto promueve la reutilización de código.
+
+Ejemplo en Python: Una clase Perro y una clase Gato pueden heredar de una clase padre común llamada Animal, obteniendo de ella métodos como comer() y dormir().
+
+4. Polimorfismo
+Concepto: Significa "muchas formas". Permite que objetos de diferentes clases respondan al mismo mensaje (nombre de método) de manera distinta, según su propia implementación.
+
+Ejemplo en Python: Si las clases Perro y Gato (que heredan de Animal) tienen cada una su propia versión del método hacer_sonido(), al llamar a ese método en un objeto Perro sonará "Guau", y en un objeto Gato sonará "Miau".
+
+💻 Ejemplo Práctico en Python
+El siguiente ejemplo implementa una clase base Animal y una subclase Perro, ilustrando Herencia, Encapsulamiento y Polimorfismo.
+
+Python
+
+# Definición de la Superclase (Clase Padre)
+class Animal:
+    """Clase base para todos los animales."""
+    def __init__(self, nombre, edad):
+        # Encapsulamiento: El guion bajo simple _indica que la variable es
+        # para uso interno (convención, no estricta como en otros lenguajes)
+        self._nombre = nombre
+        self._edad = edad
+
+    def comer(self):
+        """Método común para todos los animales."""
+        print(f"{self._nombre} está comiendo.")
+
+    def hacer_sonido(self):
+        """Método abstracto que será sobrescrito (Polimorfismo)."""
+        raise NotImplementedError("Las subclases deben implementar este método.")
+
+    def get_nombre(self):
+        """Método 'getter' para acceder al nombre (Encapsulamiento)."""
+        return self._nombre
+
+# Definición de la Subclase (Clase Hija)
+class Perro(Animal):
+    """Clase que hereda de Animal."""
+    def __init__(self, nombre, edad, raza):
+        # Herencia: Llama al constructor de la clase padre
+        super().__init__(nombre, edad)
+        self.raza = raza
+
+    # Polimorfismo: Sobrescribe el método de la clase padre
+    def hacer_sonido(self):
+        print(f"{self._nombre} dice: ¡Guau guau!")
+
+    def info_perro(self):
+        print(f"Soy un {self.raza} llamado {self._nombre} y tengo {self._edad} años.")
+
+# --- Uso de los objetos ---
+
+# 1. Crear una instancia de Perro
+mi_perro = Perro("Fido", 5, "Labrador")
+
+# 2. Uso de métodos heredados y propios
+print(f"El perro se llama: {mi_perro.get_nombre()}")  # Uso de getter (Encapsulamiento)
+mi_perro.comer()                                     # Método heredado de Animal
+mi_perro.info_perro()                                # Método propio de Perro
+mi_perro.hacer_sonido()                              # Polimorfismo (llama a la versión de Perro)
+Resumen del Ejemplo
+Herencia: Perro hereda de Animal y obtiene automáticamente el método comer() y el __init__ (parcialmente).
+
+Encapsulamiento: Se usa _nombre para indicar que el acceso debe ser a través de get_nombre().
+
+Polimorfismo: El método hacer_sonido() en Perro se comporta de forma diferente a cómo lo haría en otra subclase de Animal (como un Gato).

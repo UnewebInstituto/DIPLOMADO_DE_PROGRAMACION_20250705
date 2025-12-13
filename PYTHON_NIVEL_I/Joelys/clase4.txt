@@ -1,0 +1,647 @@
+Python 3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)] on win32
+Enter "help" below or click "Help" above for more information.
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'(self.nombre) duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return 'Tu mascota se llama {self.nombre)'
+
+    
+#crear un objecto
+    
+fido = Mascota()
+type(fido)
+<class '__main__.Mascota'>
+fido.darNombre('Fido')
+'Tu mascota se llama {self.nombre)'
+fido.comer()
+'Fido come...'
+fido.dormir()
+'(self.nombre) duerme...'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombr} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return 'Tu mascota se llama {self.nombre)'
+
+    
+
+fido.dormir()
+'(self.nombre) duerme...'
+'(self.nombre) duerme...'
+'(self.nombre) duerme...'
+fido = Mascota()
+fido.darNombre()
+Traceback (most recent call last):
+  File "<pyshell#23>", line 1, in <module>
+    fido.darNombre()
+TypeError: Mascota.darNombre() missing 1 required positional argument: 'argNombre'
+fido.darNombre('fido')
+'Tu mascota se llama {self.nombre)'
+fido.dormirclass Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombr} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre)'
+    
+SyntaxError: invalid syntax
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombr} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre)'
+    
+SyntaxError: f-string: unmatched ')'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombr} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+
+    
+fido = Mascota()
+fido.darNombre('Fido')
+'Tu mascota se llama Fido'
+fido.dormir()
+Traceback (most recent call last):
+  File "<pyshell#31>", line 1, in <module>
+    fido.dormir()
+  File "<pyshell#28>", line 8, in dormir
+    return f'{self.nombr} duerme...'
+AttributeError: 'Mascota' object has no attribute 'nombr'. Did you mean: 'nombre'?
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre)'
+    
+SyntaxError: f-string: unmatched ')'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def darNombre (self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+
+    
+fido = Mascota()
+fido.darNombre('Fido')
+'Tu mascota se llama Fido'
+fido.dormir()
+'Fido duerme...'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self,argNombre):
+        self.nombre = argNombre
+        return f'Tu mascota se llama {self.nombre}'
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+
+    
+mascotaRicardo = Mascota('Lia')
+
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self,argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    
+SyntaxError: multiple statements found while compiling a single statement
+mascotaRicardo = Mascota('Lia')
+
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self,argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    
+SyntaxError: multiple statements found while compiling a single statement
+mascotaRicardo = Mascota('Lia')
+
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self,argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    
+SyntaxError: multiple statements found while compiling a single statement
+mascotaRicardo = Mascota('Lia')
+
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    
+SyntaxError: multiple statements found while compiling a single statement
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+
+    
+mascotaRicardo = Mascota('Lia')
+mascoAiron = Mascota('Cloi')
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self)
+    
+SyntaxError: expected ':'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La Mascota se llama (self.nombre)
+    
+SyntaxError: unterminated f-string literal (detected at line 12)
+
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La Mascota se llama (self.nombre)'
+
+    
+mascotaRicardo = Mascota('Lia')
+mascoAiron = Mascota('Cloi')
+mascotaRicardo.comer()
+'Lia come...'
+mascotaAiron.getNombre()
+Traceback (most recent call last):
+  File "<pyshell#58>", line 1, in <module>
+    mascotaAiron.getNombre()
+NameError: name 'mascotaAiron' is not defined. Did you mean: 'mascoAiron'?
+mascotaAiron = Mascota('Cloi')
+mascotaAiron.getNombre()
+'La Mascota se llama (self.nombre)'
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La Mascota se llama {self.nombre}'
+
+    
+mascotaRicardo = Mascota('Lia')
+mascotaAiron = Mascota('Cloi')
+class Mascota:
+    #atributos de la clase
+    nombre=''
+    #metodos
+    def __init__(self, argNombre):
+        self.nombre = argNombre
+    def comer(self):
+        return f'{self.nombre} come...'
+    def dormir(self):
+        return f'{self.nombre} duerme...'
+    def getNombre(self):
+        return f'La Mascota se llama {self.nombre}'
+    def sonido(self):
+        return f'{self.nombre} el sonido'
+
+    
+#herencia
+    
+#Herencia: Todos los atributos y metodos de la clase padre (superclase)
+    
+#Pasan a las subclases
+    
+class Canino(Mascota):
+    #atributo de la subclase canina
+    raza = ''
+    #metodos de la subclase canino
+    def setRaza(self, argRaza):
+        sef.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza)'
+    
+SyntaxError: f-string: unmatched ')'
+class Canino(Mascota):
+    #atributo de la subclase canina
+    raza = ''
+    #metodos de la subclase canino
+    def setRaza(self, argRaza):
+        sef.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+
+    
+class Canino(Mascota):
+    #atributo de la subclase canina
+    raza = ''
+    #metodos de la subclase canino
+    def setRaza(self, argRaza):
+        sef.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea'
+
+    
+mascotaRicardo = Canino('Lia')
+mascotaRicardo.setRaza('mestiza')
+Traceback (most recent call last):
+  File "<pyshell#89>", line 1, in <module>
+    mascotaRicardo.setRaza('mestiza')
+  File "<pyshell#87>", line 6, in setRaza
+    sef.raza = argRaza
+NameError: name 'sef' is not defined. Did you mean: 'self'?
+class Canino(Mascota):
+    #atributo de la subclase canina
+    raza = ''
+    #metodos de la subclase canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea'
+
+    
+mascotaRicardo = Canino('Lia')
+mascotaRicardo.setRaza('mestiza')
+'La raza de Lia es mestiza'
+mascotaRicardo.getRaza()
+'La raza de Lia es mestiza'
+mascotaRicardo.pasear()
+'Lia pasea'
+mascotaRicardo.sonido()
+'Lia el sonido'
+class Canino(Mascota):
+    #atributo de la subclase canina
+    raza = ''
+    #metodos de la subclase canino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea'
+    def sonido(self):
+        return f'{self.nombre} ladra'
+
+    
+class Felino(Mascota):
+    #atributo de la subclase felino
+    raza = ''
+    #metodos de la subclase felino
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea'
+    def sonido(self):
+        return f'{self.nombre} maulla'
+
+    
+class Pez(Mascota):
+    #atributo de la subclase pez
+    raza = ''
+    #metodos de la subclase pez
+    def setRaza(self, argRaza):
+        self.raza = argRaza
+        return f'La raza de {self.nombre} es {self.raza}'
+    def getRaza(self):
+        return f'La raza de {self.nombre} es {self.raza}'
+    def pasear(self):
+        return f'{self.nombre} pasea'
+    def sonido(self):
+        return f'{self.nombre} no emite sonido'
+
+    
+mascotaRicardo = Canino('Lia')
+mascotaAiron = Pez('Cloi')
+mascoAaron = Felino('Flofy')
+mascotaRicardo.sonido()
+'Lia ladra'
+mascotaAiron.sonido()
+'Cloi no emite sonido'
+mascoAaron.sonido()
+'Flofy maulla'
+#Encapsulamiento
+class CuentaBancaria
+SyntaxError: expected ':'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__ abrirCuenta(self,argTipoCta,argCrea,argSaldo,argDeposito,argTitular)
+    
+SyntaxError: expected '('
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__ (abrirCuenta(self,argTipoCta,argCrea,argSaldo,argDepo,argTit):
+                  
+SyntaxError: invalid syntax
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__ abrirCuenta(self,argTipoCta,argCrea,argSaldo,argDepo,argTit):
+        
+SyntaxError: expected '('
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argSaldo,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+Traceback (most recent call last):
+  File "<pyshell#127>", line 1, in <module>
+    miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+TypeError: CuentaBancaria.__init__() missing 1 required positional argument: 'argTit'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+
+        
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+miCuenta.fechaCreacion()
+Traceback (most recent call last):
+  File "<pyshell#134>", line 1, in <module>
+    miCuenta.fechaCreacion()
+TypeError: 'str' object is not callable
+miCuenta.fechaCreacion
+'2025-12-13'
+miCuenta.tipoCuenta
+'Aho'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+
+        
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta {self.saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self.nombre}'
+
+    
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+miCuenta.fechaCreacion
+'2025-12-13'
+miCuenta.tipoCuenta
+'Aho'
+miCuenta.getTitular()
+Traceback (most recent call last):
+  File "<pyshell#153>", line 1, in <module>
+    miCuenta.getTitular()
+  File "<pyshell#149>", line 22, in getTitular
+    return f'El nombre del titular de la cuenta es {self.nombre}'
+AttributeError: 'CuentaBancaria' object has no attribute 'nombre'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta {self._saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self._nombre}'
+
+    
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+miCuenta.getTitular()
+Traceback (most recent call last):
+  File "<pyshell#157>", line 1, in <module>
+    miCuenta.getTitular()
+  File "<pyshell#155>", line 22, in getTitular
+    return f'El nombre del titular de la cuenta es {self._nombre}'
+AttributeError: 'CuentaBancaria' object has no attribute '_nombre'
+class CuentaBancaria:
+    #atributos publicos
+    tipoCuenta = ''
+    fechaCreacion = ''
+    #atributos privados
+    _saldo = 0
+    _titular = ''
+    #metodos
+    #constructor
+    def __init__(self,argTipoCta,argCrea,argDepo,argTit):
+        self.tipoCuenta = argTipoCta
+        self.fechaCreacion = argCrea
+        self._saldo = argDepo
+        self._titular = argTit
+    def setDeposito(self,argDepo):
+        self._saldo += argDepo
+    def getSaldo(self):
+        return f'El saldo de la cuenta {self._saldo}'
+    def setTitular(self,argTit):
+        self._titular = argTit
+    def getTitular(self):
+        return f'El nombre del titular de la cuenta es {self._titular}'
+
+    
+miCuenta = CuentaBancaria('Aho','2025-12-13',100,'Henry')
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es Henry'
+miCuenta.getSaldo()
+'El saldo de la cuenta 100'
+miCuenta.setDeposito(255)
+
+miCuenta.getSaldo()
+'El saldo de la cuenta 355'
+miCuenta.setTitular('Henry Duque')
+miCuenta.getTitular()
+'El nombre del titular de la cuenta es Henry Duque'

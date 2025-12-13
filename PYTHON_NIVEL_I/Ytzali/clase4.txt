@@ -1,0 +1,46 @@
+¡Claro\! La secuencia de comandos para activar un entorno virtual de Python depende de cómo se haya creado, pero la forma más común, y la que funciona bien en Git Bash, es ejecutar el *script* de activación ubicado dentro del directorio del entorno virtual.
+
+Aquí tienes los pasos, asumiendo que el entorno virtual se llama `venv`:
+
+### 🐍 Activación del Entorno Virtual en Git Bash
+
+1.  **Navega** hasta el directorio raíz de tu proyecto (donde se encuentra la carpeta de tu entorno virtual, ej. `venv`).
+
+2.  **Ejecuta el script de activación** usando el siguiente comando:
+
+    ```bash
+    source venv/Scripts/activate
+    ```
+
+      * **`source`**: Este comando es esencial en sistemas tipo Unix (como el entorno de Git Bash) para ejecutar el *script* en el *shell* actual y modificar la configuración de la sesión (como la variable de entorno `PATH`).
+      * **`venv/Scripts/activate`**: Esta es la ruta al *script* de activación dentro de la carpeta de tu entorno virtual (`venv`). En Windows, cuando se usa Python, el *script* ejecutable está en el subdirectorio `Scripts`.
+
+### ✨ Verificación
+
+Una vez que el entorno virtual se ha activado con éxito, verás el nombre de tu entorno (generalmente entre paréntesis) prefijando tu *prompt* de Git Bash.
+
+**Ejemplo:**
+
+```bash
+(venv) user@host MINGW64 /c/ruta/a/mi/proyecto
+```
+
+Ahora, cualquier comando de Python que ejecutes (como `pip install`, `python script.py`) se referirá a la versión de Python y los paquetes instalados **dentro** de ese entorno virtual, y no a la instalación global de tu sistema.
+
+### 🛑 Desactivación (Opcional)
+
+Cuando termines de trabajar en el proyecto, puedes desactivar el entorno virtual simplemente ejecutando:
+
+```bash
+deactivate
+```
+
+-----
+
+¿Te gustaría que te recuerde cómo **crear** un entorno virtual si aún no lo has hecho?
+
+
+
+Polimorfismo
+ENCAPSULAMIENTO
+Abstracción
