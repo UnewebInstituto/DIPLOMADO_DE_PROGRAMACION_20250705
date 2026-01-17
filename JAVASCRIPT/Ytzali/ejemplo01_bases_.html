@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Ejemplo 01 - Bases</h1>
+  <!-- Forma 1 -->
+  <p onmouseenter="this.style.color='blue';this.style.fontSize='24px';" onmouseleave="this.style.color='bLack';this.style.fontSize=''";> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores cumque esse voluptatibus saepe sapiente explicabo tenetur, magnam quo est incidunt a, inventore nostrum amet, tempore molestiae dolor doloremque neque? Earum.</p>
+
+<hr>
+
+<!-- Forma 2 -->
+<p onclick="apagador(this);">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias consequuntur, magni repudiandae velit nostrum quaerat architecto eius! Consequatur earum possimus harum modi est necessitatibus officiis delectus tempora. Fugit, eum eius?</p>
+
+<hr>
+
+<!-- Forma 3 -->
+<p ondblclick="encendedor(this)">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa aliquid iure mollitia at, vel quis amet consequuntur non dolorum voluptas et consectetur? Similique optio animi consectetur incidunt beatae, dolore ratione?</p>
+
+  <script>
+    //Declaracion de fuciones
+    function apagador(arg_parrafo){
+      if (suiche == true){
+        arg_parrafo.style.backgroundColor = 'black';
+        arg_parrafo.style.color = 'yellow';
+        suiche = false;
+      }else{
+        arg_parrafo.style.backgroundColor = '';
+        arg_parrafo.style.color = '';
+        suiche = true;
+      }
+
+    }
+    //Declaracion de variables
+    var suiche, suiche_1;
+    //Inicializacion de variables
+    suiche = true;
+    suiche_1 = true;
+  </script>
+
+  <script src="./script/ejemplo01_base.js"></script>
+
+</body>
+</html>

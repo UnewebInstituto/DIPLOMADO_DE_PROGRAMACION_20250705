@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript-Clase1</title>
+</head>
+<body>
+    <h1>Ejemplo - Bases</h1>
+    <p onmouseenter="this.style.color='red'" onmouseleave="this.style.color='black'">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus possimus maxime asperiores consectetur recusandae error blanditiis, reprehenderit nostrum ex ipsam hic ad qui atque molestiae nihil odio unde necessitatibus dolor. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus et officiis quisquam consequatur eaque debitis non, quam ipsa dolor, autem id quaerat repellat earum consectetur! Dolor, quis aliquid! Officiis, perferendis!</p>
+    <br><br><br> 
+    <p onclick="apagador(this);">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus eum itaque distinctio, similique accusantium iusto quasi optio nemo porro maxime repudiandae cupiditate necessitatibus impedit tenetur, unde facilis repellendus recusandae vero? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor neque odit ducimus. Delectus, illo. Magni totam error nam optio porro. Molestias, magnam quae! Consequatur officia deserunt obcaecati id nemo voluptatum.</p>
+    <br><br> <br>
+
+ 
+    <p ondblclick="encendedor(this);">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati incidunt repudiandae quis nemo reiciendis sunt totam cum? Laudantium molestias voluptates voluptas quibusdam illo quia ea cupiditate, iste odit dolorem obcaecati?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea recusandae illum quibusdam eaque adipisci, sapiente non aliquam repellat distinctio voluptates corporis, sequi eveniet quisquam molestias? Corrupti, velit deserunt? Nulla, vitae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro eius, assumenda ab, officiis quibusdam dolore aliquam sed doloribus non eaque quidem quo enim saepe, pariatur quas voluptas! Fugit, corporis possimus!</p>
+    <script>
+        //Declaracion de funciones
+        function apagador(arg_parrafo){
+            if (swiche == true) {
+                arg_parrafo.style.backgroundColor="black";
+                arg_parrafo.style.color="yellow";
+                swiche= false;
+            }
+            else{
+                arg_parrafo.style.backgroundColor="";
+                arg_parrafo.style.color="";
+                swiche= true;
+            }
+            
+        }
+        // Declaracion de Variables
+        var swiche, swiche1;
+        // Inicializacion de variables
+        swiche = true;
+        swiche1 = true;
+
+    </script>
+    <script src="../script/script.js"></script>
+</body>
+</html>

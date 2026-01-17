@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejemplo01 - Bases</h1>
+    <!-- Forma 1 -->
+     <p onmouseenter="this.style.color='red';this.style.fontSize='24px';" onmouseleave="this.style.color='black';this.style.fontSize='';">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus quos, vitae numquam natus nostrum amet error cupiditate. Eaque, quia commodi. Incidunt fuga quod id culpa delectus omnis excepturi sint officia ipsa vitae suscipit eligendi nobis provident laborum rerum, deserunt fugit eum, ab, aut quaerat distinctio? Nisi repudiandae asperiores quia excepturi?</p>
+     <hr>
+     <!-- Forma 2 -->
+     <p onclick="apagador(this);">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis maxime facilis sint vero temporibus officiis, dolores, unde explicabo ipsum eaque aliquam, voluptatum ex aut dolore sapiente ratione beatae deserunt. Hic debitis odio eligendi dicta, enim veritatis totam perspiciatis non corrupti voluptatem facere voluptas distinctio, quod, eius veniam tenetur et ad.</p>
+     <hr>
+     <!-- Forma 3 -->
+     <p ondblclick="encendedor(this)">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae eum illum maxime unde at. Numquam quibusdam doloribus nostrum laboriosam molestiae quisquam iure. Pariatur temporibus ut consequatur sequi id nisi, expedita in autem fugiat animi harum aliquid, deserunt incidunt est quae corrupti, fugit odio maiores delectus exercitationem. Porro pariatur autem corrupti!</p>
+
+    <script>
+        // Declaración de  funciones
+        function apagador(arg_parrafo){
+            if (suiche ==  true){
+                arg_parrafo.style.backgroundColor = 'black';
+                arg_parrafo.style.color = 'yellow';
+                suiche = false;
+            }else{
+                arg_parrafo.style.backgroundColor = '';
+                arg_parrafo.style.color = '';
+                suiche = true;
+            }
+        }
+        // Declaración de variables
+        var suiche, suiche_1;
+        // Inicialización de variables
+        suiche = true;
+        suiche_1 = true;
+    </script>
+    <script src="./script/ejemplo01_base.js"></script>
+</body>
+</html>

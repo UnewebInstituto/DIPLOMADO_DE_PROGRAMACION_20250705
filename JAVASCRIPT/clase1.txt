@@ -1,0 +1,349 @@
+liunyenelya@gmail.com;
+bvillasmils27@gmail.com;
+ytzalijimenez@gmail.com;
+kaira0779@gmail.com;
+gabcoffeelive@gmail.com;
+sebastian180408@gmail.com;
+
+https://www.genbeta.com/desarrollo/hace-30-anos-programador-netscape-creo-10-dias-primera-version-uno-lenguajes-usados-hoy-internet
+
+
+https://developer.mozilla.org/es/docs/Web/JavaScript
+
+consola del navegador
+// Declaración de variables
+undefined
+var texto;
+undefined
+type
+VM581:1 Uncaught ReferenceError: type is not defined
+    at <anonymous>:1:1
+(anonymous) @ VM581:1Understand this error
+typeof(texto)
+'undefined'
+texto = "Curso de Javascript"
+'Curso de Javascript'
+texto
+'Curso de Javascript'
+typeof(texto)
+'string'
+var numero 
+undefined
+typeof(numero)
+'undefined'
+numero = 1234
+1234
+typeof(numero)
+'number'
+var fraccion = 1234.56
+undefined
+typeof(fraccion)
+'number'
+var estudiante = true
+undefined
+typeof(estudiante)
+'boolean'
+var curso = {}
+undefined
+typeof(curso)
+'object'
+curso = {'Ytzali':21, 'Barbara':20,'Joelys':22,'Kaira':24,'Gabriel':19,'Sebastian':18}
+{Ytzali: 21, Barbara: 20, Joelys: 22, Kaira: 24, Gabriel: 19, …}Barbara: 20Gabriel: 19Joelys: 22Kaira: 24Sebastian: 18Ytzali: 21[[Prototype]]: Object
+curso['Kaira']
+24
+curso['Ytzali']
+21
+var listado = []
+undefined
+typeof(listado)
+'object'
+listado.push('KAIRA')
+1
+listado.push('YTZALI')
+2
+listado.push('BARBARA')
+3
+listado.push('JOELYS')
+4
+listado.push('GABRIEL')
+5
+listado.push('SEBASTIAM')
+6
+listado
+(6) ['KAIRA', 'YTZALI', 'BARBARA', 'JOELYS', 'GABRIEL', 'SEBASTIAM']
+alert('ESTO ES UN MENSAJE EMERGENTE')
+undefined
+var respuesta
+undefined
+respuesta = confirm('¿ESTÁ SEGURO?')
+true
+respuesta
+true
+respuesta = confirm('¿ESTÁ SEGURO?')
+false
+respuesta
+false
+var entrada
+undefined
+entrada = prompt('POR FAVOR ESCRIBA SU NOMBRE:')
+'HENRY ALBERTO DUQUE ANDRADE'
+entrada
+'HENRY ALBERTO DUQUE ANDRADE'
+var mensaje = 'ESTE ES UN MENSAJE DE PRUEBA'
+undefined
+console.log(mensaje)
+VM2772:1 ESTE ES UN MENSAJE DE PRUEBA
+undefined
+console.warn(mensaje)
+VM2875:1 ESTE ES UN MENSAJE DE PRUEBA
+(anonymous) @ VM2875:1
+undefined
+console.err(mensaje)
+VM3002:1 Uncaught TypeError: console.err is not a function
+    at <anonymous>:1:9
+(anonymous) @ VM3002:1Understand this error
+console.error(mensaje)
+VM3012:1 ESTE ES UN MENSAJE DE PRUEBA
+(anonymous) @ VM3012:1
+undefined
+console.debug(mensaje)
+undefined
+if (estudiante == true){ 
+VM3288:1 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+estudiante
+true
+if (estudiante == true){console.log('ES ESTUDIANTE');
+                        
+VM3499:2 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+if (estudiante == true){console.log('ES ESTUDIANTE');
+                        
+VM3501:2 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+if (estudiante == true){console.log('ES ESTUDIANTE');}else{console.log('NO ES ESTUDIANTE');}
+                        
+VM3559:1 ES ESTUDIANTE
+undefined
+estudiante = false;
+false
+if (estudiante == true){console.log('ES ESTUDIANTE');}else{console.log('NO ES ESTUDIANTE');}
+                        
+VM3624:1 NO ES ESTUDIANTE
+undefined
+
+var listado = ['KAIRA', 'YTZALI', 'BARBARA', 'JOELYS', 'GABRIEL', 'SEBASTIAM'];
+
+var i;
+i = 0;
+while (i < listado.length){console.warn(listado[i]);i=i+1;}
+
+i = 0;
+do {console.warn(listado[i]);i=i+1;} while (i < listado.length)
+
+for (i=0; i<listado.length; i++){
+    console.warn(listado[i]);
+}
+
+entrada = prompt('POR FAVOR ESCRIBA SU NOMBRE:')
+'HENRY ALBERTO DUQUE ANDRADE'
+entrada
+'HENRY ALBERTO DUQUE ANDRADE'
+var mensaje = 'ESTE ES UN MENSAJE DE PRUEBA'
+undefined
+console.log(mensaje)
+VM2772:1 ESTE ES UN MENSAJE DE PRUEBA
+undefined
+console.warn(mensaje)
+VM2875:1 ESTE ES UN MENSAJE DE PRUEBA
+(anonymous) @ VM2875:1
+undefined
+console.err(mensaje)
+VM3002:1 Uncaught TypeError: console.err is not a function
+    at <anonymous>:1:9
+(anonymous) @ VM3002:1Understand this error
+console.error(mensaje)
+VM3012:1 ESTE ES UN MENSAJE DE PRUEBA
+(anonymous) @ VM3012:1
+undefined
+console.debug(mensaje)
+undefined
+if (estudiante == true){ 
+VM3288:1 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+estudiante
+true
+if (estudiante == true){console.log('ES ESTUDIANTE');
+                        
+VM3499:2 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+if (estudiante == true){console.log('ES ESTUDIANTE');
+                        
+VM3501:2 Uncaught SyntaxError: Unexpected end of inputUnderstand this error
+if (estudiante == true){console.log('ES ESTUDIANTE');}else{console.log('NO ES ESTUDIANTE');}
+                        
+VM3559:1 ES ESTUDIANTE
+undefined
+estudiante = false;
+false
+if (estudiante == true){console.log('ES ESTUDIANTE');}else{console.log('NO ES ESTUDIANTE');}
+                        
+VM3624:1 NO ES ESTUDIANTE
+undefined
+/*
+VM3632:1 Uncaught SyntaxError: Invalid or unexpected tokenUnderstand this error
+/*  */
+undefined
+// while, do, for
+undefined
+var i = 0;
+undefined
+while (i < 5){
+    console.warn(i);
+    i = i + 1;
+}
+VM3860:2 0
+(anonymous) @ VM3860:2
+VM3860:2 1
+(anonymous) @ VM3860:2
+VM3860:2 2
+(anonymous) @ VM3860:2
+VM3860:2 3
+(anonymous) @ VM3860:2
+VM3860:2 4
+(anonymous) @ VM3860:2
+5
+i = 0
+0
+while (i<5){
+    console.warn(i);
+    i = i + 1;
+}
+VM4019:2 0
+(anonymous) @ VM4019:2
+VM4019:2 1
+(anonymous) @ VM4019:2
+VM4019:2 2
+(anonymous) @ VM4019:2
+VM4019:2 3
+(anonymous) @ VM4019:2
+VM4019:2 4
+(anonymous) @ VM4019:2
+5
+i = 0; while (i<5){console.warn(i);i=i+1;}
+VM4170:1 0
+(anonymous) @ VM4170:1
+VM4170:1 1
+(anonymous) @ VM4170:1
+VM4170:1 2
+(anonymous) @ VM4170:1
+VM4170:1 3
+(anonymous) @ VM4170:1
+VM4170:1 4
+(anonymous) @ VM4170:1
+5
+i = 0;
+0
+do{console.warn(i);i=i+1;}(i<5)
+VM4319:1 Uncaught SyntaxError: Unexpected token '('Understand this error
+do{console.warn(i);i=i+1;} while (i<5)
+VM4345:1 0
+(anonymous) @ VM4345:1
+VM4345:1 1
+(anonymous) @ VM4345:1
+VM4345:1 2
+(anonymous) @ VM4345:1
+VM4345:1 3
+(anonymous) @ VM4345:1
+VM4345:1 4
+(anonymous) @ VM4345:1
+5
+for (i=0; i<5; i++){
+    console.warn(i);
+}
+VM4484:2 0
+(anonymous) @ VM4484:2
+VM4484:2 1
+(anonymous) @ VM4484:2
+VM4484:2 2
+(anonymous) @ VM4484:2
+VM4484:2 3
+(anonymous) @ VM4484:2
+VM4484:2 4
+(anonymous) @ VM4484:2
+undefined
+es
+VM4494:1 Uncaught ReferenceError: es is not defined
+    at <anonymous>:1:1
+(anonymous) @ VM4494:1Understand this error
+curso
+{Ytzali: 21, Barbara: 20, Joelys: 22, Kaira: 24, Gabriel: 19, …}
+lis
+VM4570:1 Uncaught ReferenceError: lis is not defined
+    at <anonymous>:1:1
+(anonymous) @ VM4570:1Understand this error
+listado
+(6) ['KAIRA', 'YTZALI', 'BARBARA', 'JOELYS', 'GABRIEL', 'SEBASTIAM']
+i = 0
+0
+while (i < listado.length){console.warn(listado[i]);i=i+1;}
+VM4790:1 KAIRA
+(anonymous) @ VM4790:1
+VM4790:1 YTZALI
+(anonymous) @ VM4790:1
+VM4790:1 BARBARA
+(anonymous) @ VM4790:1
+VM4790:1 JOELYS
+(anonymous) @ VM4790:1
+VM4790:1 GABRIEL
+(anonymous) @ VM4790:1
+VM4790:1 SEBASTIAM
+(anonymous) @ VM4790:1
+6
+var listado = ['KAIRA', 'YTZALI', 'BARBARA', 'JOELYS', 'GABRIEL', 'SEBASTIAM'];
+undefined
+var i
+undefined
+i = 0
+0
+do {console.warn(listado[i]);i=i+1;} while (i < listado.length)
+VM4971:1 KAIRA
+(anonymous) @ VM4971:1
+VM4971:1 YTZALI
+(anonymous) @ VM4971:1
+VM4971:1 BARBARA
+(anonymous) @ VM4971:1
+VM4971:1 JOELYS
+(anonymous) @ VM4971:1
+VM4971:1 GABRIEL
+(anonymous) @ VM4971:1
+VM4971:1 SEBASTIAM
+(anonymous) @ VM4971:1
+6
+for (i=0; i<5; i++){
+    console.warn(listado[i]);
+}
+VM4975:2 KAIRA
+(anonymous) @ VM4975:2
+VM4975:2 YTZALI
+(anonymous) @ VM4975:2
+VM4975:2 BARBARA
+(anonymous) @ VM4975:2
+VM4975:2 JOELYS
+(anonymous) @ VM4975:2
+VM4975:2 GABRIEL
+(anonymous) @ VM4975:2
+undefined
+for (i=0; i<listado.length; i++){
+    console.warn(listado[i]);
+}
+
+VM4979:2 KAIRA
+(anonymous) @ VM4979:2
+VM4979:2 YTZALI
+(anonymous) @ VM4979:2
+VM4979:2 BARBARA
+(anonymous) @ VM4979:2
+VM4979:2 JOELYS
+(anonymous) @ VM4979:2
+VM4979:2 GABRIEL
+(anonymous) @ VM4979:2
+VM4979:2 SEBASTIAM
+(anonymous) @ VM4979:2
+undefined
+
