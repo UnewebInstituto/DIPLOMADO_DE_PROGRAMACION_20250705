@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejemplo 03 Manejo DOM</h1>
+
+    <p id="uno" class="impar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum non tempora aliquam, accusantium nostrum perspiciatis soluta! Consequatur suscipit eum officiis tenetur adipisci eos at, natus vel ducimus nesciunt porro sunt.</p>
+
+<hr>
+
+    <p id="dos" class="par">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit explicabo velit, expedita reprehenderit ipsa accusamus saepe dolores perferendis voluptatum esse illum voluptas quae dicta odit deleniti? Cupiditate dolores dolor autem.</p>
+
+<hr>
+
+    <p id="tres" class="impar">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime officia obcaecati odit, eius deserunt in libero corrupti deleniti consectetur quis minima adipisci, hic velit sit amet possimus excepturi porro recusandae.</p>
+
+<hr>
+
+    <p id="cuatro" class="par">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque ea velit dolorem? Soluta adipisci, consequuntur commodi nihil numquam doloremque architecto facere repellendus eius dolorum eaque debitis itaque illo aspernatur. Ipsam.</p>
+
+    <button onclick="mostrar()">Mostrar longitud parrafo</button>
+
+    <button id="btnColorImpar">Cambiar color parrafos posicion impar</button>
+
+    <button id="btnColorPar">Cambiar color parrafos posicion par</button>
+
+    <script>
+        function mostrar(){
+            mensaje = 'longitud de los parrafos:\n';
+            parrafos = document.getElementsByTagName('p');
+            for (let i = 0; i < parrafos.length; i++){
+                mensaje = mensaje + parrafos[i].id + ':' + parrafos[i].innerHTML.length + '\n';    
+            }
+            alert(mensaje);
+        }
+
+        function cambiarcolorimpar(){
+            let parrafosImpares = document.getElementsByClassName('impar');
+            if (swColorImpar == true){
+                for (let i=0; i<parrafosImpares.length; i++){
+                    parrafosImpares[i].style.color = 'pink';
+                }
+                swColorImpar = false;
+            }else{
+                for (let i=0; i<parrafosImpares.length; i++){
+                    parrafosImpares[i].style.color = '';
+                }
+                swColorImpar = true;
+            }
+        }
+
+        var parrafos, mensaje, btnColorImpar, swColorImpar, swColorPar;
+
+        swColorImpar = true;
+        btnColorImpar = document.getElementById('btnColorImpar');
+        btnColorImpar.addEventListener("click",cambiarColorImpar);
+        btnColorPar= document.getElementById('btnColorPar');
+        btnColorPar.addEventListener("click", cambiarColorPar)
+
+         btnColorPar.addEventListener("click", ()=>{
+            let parrafosPares = document.getElementsByClassName('par');
+            if (swColorPar == true){
+                for (let i=0; i<parrafosPares.length; i++){
+                    parrafosPares[i].style.color = 'red';
+                }
+                swColorPar = false;
+            }else{
+                for (let i=0; i<parrafosPares.length; i++){
+                    parrafosPares[i].style.color = '';
+                }
+                swColorPar = true;
+            }
+        })
+    </script>
+</body>
+</html>

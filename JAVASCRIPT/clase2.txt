@@ -1,0 +1,11 @@
+Manipulación del DOM (Modelo de Objetos del Documento)
+
+Singular:
+---------
+document.getElementById('identificador')
+
+Plural:
+-------
+document.getElementsByClassName('nombre de clase')
+document.getElementsByTagsName('nombre de etiqueta')
+document.getElementsByName('nombre de atributo')
