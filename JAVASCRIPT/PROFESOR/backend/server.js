@@ -13,7 +13,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',      // Cambia según tu configuración
     password: '',      // Cambia según tu configuración
-    database: 'agenda'
+    database: 'agenda_profesor'
 });
 
 db.connect(err => {

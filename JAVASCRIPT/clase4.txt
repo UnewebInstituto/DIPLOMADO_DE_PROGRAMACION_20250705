@@ -64,6 +64,11 @@ npm install express mysql2 cors dotenv
 Verificar:
 npm list
 
+Una vez desarrollado el archivo /backend/server.js 
+
+Ejecutar el comando:
+npm start
+
 
 
 
