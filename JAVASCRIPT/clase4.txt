@@ -54,8 +54,15 @@ GEMINI
       primary key(id),
       unique(correo_electronico)
   );
-  generar aplicación con componentes frontend y backend, que permitan el almacenamiento de los datos indicados en la estructura de la tabla. Hacer uso de bootstrap para el diseño de la interface. Describir el procedimiento paso a paso.
+  generar aplicación con componentes frontend y backend, que permitan el almacenamiento de los datos indicados en la estructura de la tabla. Hacer uso de bootstrap para el diseño de la interface. Describir el procedimiento paso a paso. Generar por separado los componentes del frontend y backend, en directorios independientes.
 
+
+mkdir backend && cd backend
+npm init -y
+npm install express mysql2 cors dotenv
+
+Verificar:
+npm list
 
 
 
