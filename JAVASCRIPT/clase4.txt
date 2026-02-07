@@ -1,0 +1,72 @@
+1) Creación de bbdd sql 
+Caso MySQL
+
+Nombre: 
+agenda_profesor
+agenda_kaira
+agenda_joelys
+agenda_ytzali
+agenda_barbara
+agenda_gabriel
+agenda_sebastian
+
+Comandos vía consola 
+Acceder al shell desde el panel de control de xampp
+y ejecutar el siguiente comando:
+mysql -u root -p
+
+Crear la base de datos:
+create database agenda_profesor;
+
+Conectarse a la base de datos:
+use agenda_profesor;
+
+Crear la tabla contactos:
+create table contactos(
+    id integer auto_increment,
+    nombres varchar(255),
+    apellidos varchar(255),
+    telefono_habitacion varchar(50),
+    telefono_trabajo varchar(50),
+    telefono_celular varchar(50),
+    correo_electronico varchar(255),
+    primary key(id),
+    unique(correo_electronico)
+);
+
+Ver estructura de la tabla
+describe contactos;
+
+Se genera el siguiente prompt para generar la aplicación
+GEMINI
+
+  Asume el rol de experto en Javascript, se requiere que basado en la siguiente estructura de tabla MySql:
+  Nombre de la base de datos: agenda 
+  y tabla:
+  create table contactos(
+      id integer auto_increment,
+      nombres varchar(255),
+      apellidos varchar(255),
+      telefono_habitacion varchar(50),
+      telefono_trabajo varchar(50),
+      telefono_celular varchar(50),
+      correo_electronico varchar(255),
+      primary key(id),
+      unique(correo_electronico)
+  );
+  generar aplicación con componentes frontend y backend, que permitan el almacenamiento de los datos indicados en la estructura de la tabla. Hacer uso de bootstrap para el diseño de la interface. Describir el procedimiento paso a paso.
+
+
+
+
+
+
+
+
+Enunc
+
+
+
+
+
+
