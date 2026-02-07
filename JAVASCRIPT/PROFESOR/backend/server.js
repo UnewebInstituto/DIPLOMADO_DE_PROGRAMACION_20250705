@@ -34,6 +34,13 @@ app.post('/api/contactos', (req, res) => {
         res.status(201).json({ message: 'Contacto guardado con éxito', id: result.insertId });
     });
 });
+/**
+ * Profesor: 3000
+ * Kaira: 3001
+ * Ytzali: 3002
+ * Joely: 3003
+ * Barbara: 3004
+ */
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`🚀 Backend de Agenda corriendo en http://localhost:${PORT}`));

@@ -70,6 +70,10 @@ Ejecutar el comando:
 npm start
 
 
+Para el frontend, ejecutar el comando:
+npx serve
+
+
 
 
 
