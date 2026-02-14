@@ -1,0 +1,37 @@
+liunyenelya@gmail.com;
+bvillasmils27@gmail.com;
+ytzalijimenez@gmail.com;
+gabcoffeelive@gmail.com;
+sebastian180408@gmail.com;
+salomongamez22@gmail.com;
+heinrikken@gmail.com;
+
+Fuentes de instalación
+
+https://www.apachefriends.org/download.html
+
+
+php --version
+PHP 8.2.12 (cli) (built: Oct 24 2023 21:15:15) (ZTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.2.12, Copyright (c) Zend Technologies
+
+Prueba:
+
+php programa.php
+
+
+Levantar servidor local
+
+php -S localhost:8000
+
+Profesor: 8000
+Salomón: 8001
+Joelys: 8002
+Gabriel: 8003
+Barbara: 8004
+Ytzali: 8005
+Sebastian: 8006
+Ricardo: 8007
+
+
