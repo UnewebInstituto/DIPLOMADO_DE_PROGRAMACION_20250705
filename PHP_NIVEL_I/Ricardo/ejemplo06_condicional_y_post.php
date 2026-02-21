@@ -5,7 +5,7 @@
     <input type="number" name="a" id="a"><br>
     <label for="">Valor de b:</label>
     <input type="number" name="b" id="b"><br>
-    <label for="">Valor de a</label>
+    <la for="">Valor de a</label>
     <input type="number"name="c" id="c"><br>
     <button type="submit">CALCULAR</button>
     <button type=reset>LIMPIAR</button>

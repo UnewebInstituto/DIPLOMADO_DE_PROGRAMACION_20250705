@@ -1,0 +1,128 @@
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-ORPPTTD c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| agenda_barbara     |
+| agenda_joelys      |
+| agenda_kaira       |
+| agenda_profesor    |
+| agenda_ytzali      |
+| bdpy2_alejandro    |
+| bdpy2_andy         |
+| bdpy2_gabriel      |
+| bdpy2_jesus        |
+| bdpy2_profesor     |
+| bdpy2_yisber       |
+| bdpy2r_profesor    |
+| ferreteria         |
+| fintech            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| prueba             |
+| test               |
++--------------------+
+20 rows in set (0.011 sec)
+
+MariaDB [(none)]> use agenda_profesor;
+Database changed
+MariaDB [agenda_profesor]> show tables;
++---------------------------+
+| Tables_in_agenda_profesor |
++---------------------------+
+| contactos                 |
++---------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [agenda_profesor]> describe contactos;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| id                  | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nombres             | varchar(255) | YES  |     | NULL    |                |
+| apellidos           | varchar(255) | YES  |     | NULL    |                |
+| telefono_habitacion | varchar(50)  | YES  |     | NULL    |                |
+| telefono_trabajo    | varchar(50)  | YES  |     | NULL    |                |
+| telefono_celular    | varchar(50)  | YES  |     | NULL    |                |
+| correo_electronico  | varchar(255) | YES  | UNI | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.008 sec)
+
+MariaDB [agenda_profesor]> use agenda_profesor;
+Database changed
+MariaDB [agenda_profesor]> create table personas(
+    ->     id integer auto_increment,
+    ->     cedula varchar(10),
+    ->     nombre varchar(80),
+    ->     apellido varchar(80),
+    ->     fechanac date,
+    ->     sexo char(1),
+    ->     telefono varchar(30),
+    ->     correoelectronico varchar(255),
+    ->     direccion text,
+    ->     primary key(id),
+    ->     unique(cedula),
+    ->     unique(correoelectronico)
+    -> );
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [agenda_profesor]> show create table personas;
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table
+
+
+
+
+
+                                                        |
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| personas | CREATE TABLE `personas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(10) DEFAULT NULL,
+  `nombre` varchar(80) DEFAULT NULL,
+  `apellido` varchar(80) DEFAULT NULL,
+  `fechanac` date DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `telefono` varchar(30) DEFAULT NULL,
+  `correoelectronico` varchar(255) DEFAULT NULL,
+  `direccion` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`),
+  UNIQUE KEY `correoelectronico` (`correoelectronico`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
++----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [agenda_profesor]> describe personas;
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
+| cedula            | varchar(10)  | YES  | UNI | NULL    |                |
+| nombre            | varchar(80)  | YES  |     | NULL    |                |
+| apellido          | varchar(80)  | YES  |     | NULL    |                |
+| fechanac          | date         | YES  |     | NULL    |                |
+| sexo              | char(1)      | YES  |     | NULL    |                |
+| telefono          | varchar(30)  | YES  |     | NULL    |                |
+| correoelectronico | varchar(255) | YES  | UNI | NULL    |                |
+| direccion         | text         | YES  |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.004 sec)
+
+MariaDB [agenda_profesor]>
+
+https://getbootstrap.com/docs/5.0/getting-started/introduction/
+https://www.w3schools.com/bootstrap5/index.php

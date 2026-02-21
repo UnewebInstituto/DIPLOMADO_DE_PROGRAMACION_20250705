@@ -1,0 +1,2 @@
+Para levantar el servidor en la terminal: php -S localhost:8005
+Para buscar en google el archivo: http://localhost:8000
