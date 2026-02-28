@@ -6,7 +6,7 @@
 https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_form&stacked=h  
 -->
 
-<form action="./ejemplo08.ing01.php" method="POST">
+<form action="./ejemplo08_ing01.php" method="POST">
 <div class="row">
   <div class="mb-3 mt-3 col">
       <label for="cedula" class="form-label">Cedula de Identidad:</label>
@@ -24,14 +24,20 @@ https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_form&stacked=h
     <input type="text" class="form-control" id="nombre" placeholder="Ingrese su Nombre" name="nombre" require>
   </div>
 </div>
-  <div class="mb-3">
-    <label for="apellido" class="form-label">Apellido:</label>
-    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su Apellido" name="apellido" require>
+
+
+<div class="row">
+    <div class="mb-3 mt-3 col">
+      <label for="apellido" class="form-label">Apellido:</label>
+      <input type="text" class="form-control" id="apellido" placeholder="Ingrese su Apellido" name="apellido" require>
+    </div>
+    <div class="mb-3 mt-3 col">
+      <label for="fechanac" class="form-label">Fecha de Nacimiento:</label>
+      <input type="date" class="form-control" id="fechanac" placeholder="Ingrese Fecha de Nacimiento" name="fechanac" require>
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="fechanac" class="form-label">Fecha de Nacimiento:</label>
-    <input type="date" class="form-control" id="fechanac" placeholder="Ingrese Fecha de Nacimiento" name="fechanac" require>
-  </div>
+
+
   <div class="mb-3">
     <label for="sexo" class="form-label">Sexo:</label>
   <div class="form-check">
@@ -46,14 +52,20 @@ https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_form&stacked=h
       Masculino
     </label>
   </div>
-  <div class="mb-3">
-    <label for="telefono" class="form-label">Telefono:</label>
-    <input type="text" class="form-control" id="telefono" placeholder="Ingrese su Numero Telefono" name="telefono" require>
+
+
+  <div class="row">
+    <div class="mb-3 mt-3 col">
+      <label for="telefono" class="form-label">Telefono:</label>
+      <input type="text" class="form-control" id="telefono" placeholder="Ingrese su Numero Telefono" name="telefono" require>
+    </div>
+      <div class="mb-3 mt-3 col">
+      <label for="correo" class="form-label">Correo Electronico:</label>
+      <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo electronico" name="correo" require>
+    </div>
   </div>
-    <div class="mb-3">
-    <label for="correo" class="form-label">Correo Electronico:</label>
-    <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo electronico" name="correo" require>
-  </div>
+
+
   <div class="mb-3">
     <label for="direccion" class="form-label">Direccion:</label>
     <textarea name="direccion" id="direccion" class="form-control" rows="3" placeholder="Ingrese la direccion"></textarea>

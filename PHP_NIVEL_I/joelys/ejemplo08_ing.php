@@ -20,15 +20,19 @@ include './ejemplo08_encabezado.php';
   </div>
 </div>
 
-  <div class="mb-3">
+<div class="row">
+  <div class="mb-3 mt-3 col">
     <label for="apellido" class="form-label">Apellido:</label>
     <input type="text" class="form-control" id="apellido" placeholder="Ingrese el apellido" name="apellido" require>
   </div>
-  <div class="mb-3">
+   <div class="mb-3 mt-3 col">
     <label for="fechanac" class="form-label">Fecha de Nacimiento:</label>
     <input type="date" class="form-control" id="fechanac" name="fechanac" require>
   </div>
-  <div class="mb-3">
+</div>
+
+<div class="row">
+  <div class="mb-3 mt-3 col">  
     <label for="sexo" class="form-label">Sexo:</label>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="sexo" id="sexo" checked>
@@ -43,17 +47,21 @@ include './ejemplo08_encabezado.php';
       </label>
     </div>
   </div>
-  <div class="mb-3">
+  <div class="mb-3 mt-3 col">
     <label for="telefono" class="form-label">Telefono:</label>
     <input type="text" class="form-control" id="telefono" placeholder="Ingrese el Telefono" name="telefono" require>
   </div>
-  <div class="mb-3">
-    <label for="correoelectronic" class="form-label">Correo Electronico:</label>
-    <input type="email" class="form-control" id="correoelectronic" placeholder="Ingrese el Correo Electronico" name="correoelectronic" require>
   </div>
-  <div class="mb-3">
+<div class="row">
+  <div class="mb-3 mt-3 col">
+    <label for="correoelectronico" class="form-label">Correo Electronico:</label>
+    <input type="email" class="form-control" id="correoelectronico" placeholder="Ingrese el Correo Electronico" name="correoelectronico" require>
+  </div>
+  
+  <div class="mb-3 mt-3 col">
     <label for="direccion" class="form-label">Direccion:</label>
     <textarea name="direccion" id="direccion" class="form-control" rows="3" placeholder="Ingrese la Direccion"></textarea>
+  </div>
   </div>
 
   <button type="submit" class="btn btn-primary">Guardar</button>

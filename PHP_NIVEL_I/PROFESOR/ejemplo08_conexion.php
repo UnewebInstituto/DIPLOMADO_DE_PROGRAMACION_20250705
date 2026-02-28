@@ -9,7 +9,7 @@
     try {
         // Efectuar conexión
         $enlace =  mysqli_connect($servidor,$usuario,$clave,$bbdd);
-        echo 'Conexión exitosa';
+        // echo 'Conexión exitosa';
     } catch (\Throwable $th) {
         //throw $th;
         // Mostrar la excepción o error ocurrido

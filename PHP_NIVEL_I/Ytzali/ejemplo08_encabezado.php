@@ -21,7 +21,7 @@
           <a class="nav-link" href="./ejemplo08_ing.php">Ingresar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Consultar</a>
+          <a class="nav-link" href="./ejemplo08_con01.php">Consultar</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Actualizar</a>
