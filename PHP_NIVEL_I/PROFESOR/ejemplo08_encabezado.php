@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/ejemplo08.css">
     <title>Personas</title>
 </head>
 <body>
@@ -24,15 +25,15 @@
                 <a class="nav-link" href="./ejemplo08_con.php">Consultar</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Actualizar</a>
+                <a class="nav-link" href="./ejemplo08_act.php">Actualizar</a>
                 </li>  
                 <li class="nav-item">
-                <a class="nav-link" href="#">Elminar</a>
+                <a class="nav-link" href="./ejemplo08_bor.php">Elminar</a>
                 </li>  
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reportes</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Reporte 1</a></li>
+                    <li><a class="dropdown-item" href="./ejemplo08_rep.php">Reporte de Personas</a></li>
                     <li><a class="dropdown-item" href="#">Reporte 2</a></li>
                     <li><a class="dropdown-item" href="#">Reporte 3</a></li>
                 </ul>

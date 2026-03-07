@@ -8,7 +8,7 @@ $bbdd = 'agenda_ytzali';
 try {
     //Efectuar conexion
     $enlace = mysqli_connect($servidor, $usuario, $clave, $bbdd);
-    echo 'Conexion exitosa';
+    //echo 'Conexion exitosa';
 } catch (\Throwable $th) {
     //throw $th;}
     //Mostrar la excepcion o error ocurrido

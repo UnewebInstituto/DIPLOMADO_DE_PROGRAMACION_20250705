@@ -10,6 +10,7 @@ CREATE DATABASE agenda_ricardo;
 CREATE DATABASE agenda_salomon;
 CREATE DATABASE agenda_gabriel;
 CREATE DATABASE agenda_sebastian;
+CREATE DATABASE agenda_joelys;
 
 -- CONECTARSE A LA BBDD
 use agenda_profesor;

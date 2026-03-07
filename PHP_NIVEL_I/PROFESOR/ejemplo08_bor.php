@@ -1,0 +1,68 @@
+<?php
+    include './ejemplo08_encabezado.php';
+    # Se incluye conexión a la BBDD
+    include './ejemplo08_conexion.php';
+    # Instrucción de consulta en SQL
+    $sql = "SELECT * from personas";
+    # Se intenta realizar la conexión
+    try {
+        # Consulta realizada con éxito
+        $resultado = mysqli_query($enlace, $sql);
+        # Se verifica si hay o no registros
+        $cantidad = mysqli_num_rows($resultado);
+        if ($cantidad > 0){
+            # https://getbootstrap.com/docs/5.0/content/tables/
+            ?>
+            <h2>Borrar registro de Personas</h2>
+            <div class="table-responsive mb-3">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Cédula</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Fecha Nacimiento</th>
+                            <th scope="col">Sexo</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Correo electrónico</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while ($datos = mysqli_fetch_array($resultado)){
+                                echo "<tr>";
+                                    echo "<td scope='row'>{$datos['cedula']}</td>";
+                                    echo "<td scope='row'>{$datos['nombre']}</td>";
+                                    echo "<td scope='row'>{$datos['apellido']}</td>";
+                                    echo "<td scope='row'>{$datos['fechanac']}</td>";
+                                    echo "<td scope='row'>{$datos['sexo']}</td>";
+                                    echo "<td scope='row'>{$datos['telefono']}</td>";
+                                    echo "<td scope='row'>{$datos['correoelectronico']}</td>";
+                                    echo "<td scope='row'>{$datos['direccion']}</td>";
+                                    echo "<td scope='row'><a href='./ejemplo08_bor01.php?id={$datos['id']}' title='Borrar este registro'><img src='./img/borrar.png'></a></td>";
+                                echo "</tr>";
+                            }
+                        $mensaje = "Fin del reporte de Personas";
+                        $severidad = 1;
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+        }else{
+            $mensaje = "No se tienen datos registrados de personas.";
+            $severidad = 3;
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+        # Consulta falló
+        $mensaje = $th->getmessage();
+        $severidad = 2;
+    }
+    $_GET['mensaje'] = $mensaje;
+    $_GET['severidad'] = $severidad;
+    include './ejemplo08_pie.php';
+?>
+

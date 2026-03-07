@@ -68,9 +68,6 @@
   <button type="submit" class="btn btn-primary">Guardar</button>
   <button type="reset" class="btn btn-warning">Limpiar</button>
 </form>
-
-
-
 <?php
     include './ejemplo08_pie.php';
 ?>
