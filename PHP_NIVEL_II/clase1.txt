@@ -1,0 +1,43 @@
+COMPROBACIÓN DE VERSIÓN DE PHP INSTALADA:
+
+c:/xampp/php/php -v
+
+"c:/xampp/php/php" -v
+
+ACTIVACIÓN DE SERVIDOR LIGERO
+
+c:/xampp/php/php -S localhost:8000
+
+PROFESOR  8000
+YTZALI    8001
+BARBARA   8002
+GABRIEL   8003
+SEBASTIAN 8004
+DANIELA   8005
+KAREN     8006
+RICARDO   8007
+KAIRA     8008
+SALOMON   8009
+JOELYS    8010
+
+c:/xampp/php/php -S localhost:8000
+
+KAIRA
+c:/xampp/php/php -S localhost:8008
+
+
+https://getbootstrap.com/docs/5.0/getting-started/introduction/
+
+https://getbootstrap.com/docs/5.0/components/navbar/
+
+https://getbootstrap.com/docs/5.0/components/card/
+
+https://getbootstrap.com/docs/5.0/forms/checks-radios/#radios
+
+https://getbootstrap.com/docs/5.0/components/buttons/
+
+
+https://www.php.net/manual/en/function.date-default-timezone-set.php
+
+https://getbootstrap.com/docs/5.0/components/alerts/
+

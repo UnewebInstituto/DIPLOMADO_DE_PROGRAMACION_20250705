@@ -1,0 +1,10 @@
+Persistencia: Guardar informacion en la base de datos (o tambien mantener la informacion en el tiempo)
+
+Estructura de arreglos en php
+
+
+fwite
+fopen 
+fread
+fclose
+file
