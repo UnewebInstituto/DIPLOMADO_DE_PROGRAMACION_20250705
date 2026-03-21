@@ -8,3 +8,7 @@ fopen
 fread
 fclose
 file
+
+
+
+Una sesion es un identificador unico asociado al navegador web 

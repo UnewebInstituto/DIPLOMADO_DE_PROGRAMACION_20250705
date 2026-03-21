@@ -1,0 +1,12 @@
+c:/xampp/php/php -S localhost:8000
+
+https://getbootstrap.com/docs/5.0/content/tables/
+
+
+https://www.php.net/manual/en/function.explode.php
+
+https://developer.mozilla.org/es/
+
+https://developer.mozilla.org/es/docs/Learn_web_development/Core/Structuring_content/Table_accessibility
+
+https://www.w3schools.com/bootstrap5/bootstrap_progressbars.php

@@ -1,6 +1,5 @@
 <?php
     include "./ejemplo04_encabezado.php"
-
 ?>
 
 <div class="card text-center">
@@ -54,5 +53,4 @@
 
 <?php
     include "./ejemplo04_pie.php"
-
 ?>

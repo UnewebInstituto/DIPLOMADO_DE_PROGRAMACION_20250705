@@ -22,7 +22,7 @@
                         <a class="nav-link active" aria-current="page" href="./ejemplo04_inicio.php">Inicio</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Reporte</a>
+                        <a class="nav-link" href="./ejemplo04_reporte.php">Reporte</a>
                         </li>
                         
                     </ul>
