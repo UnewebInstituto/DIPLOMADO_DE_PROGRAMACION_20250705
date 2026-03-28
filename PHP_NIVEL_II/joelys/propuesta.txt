@@ -1,0 +1,38 @@
+Propuesta de Modelo de datos
+
+Base de datos + PHP
+header.php
+index.php
+footer.php
+
+Flujo de Procesos de registro de usuarios
+
+MySql
+
+tabla usuario {
+    col email primary key
+    col clave
+    col nombre y apellido
+    col imagen de perfil
+}
+
+register.php
+
+formulario {
+    email
+    clave
+    nombre y apellido
+    imagen de perfil 
+    boton de enviar
+}
+
+Flujo del proceso de validacion o login del usuario
+
+login.php
+
+formulario {
+    metodo POST
+    email
+    contrasena
+    boton de enviar
+}

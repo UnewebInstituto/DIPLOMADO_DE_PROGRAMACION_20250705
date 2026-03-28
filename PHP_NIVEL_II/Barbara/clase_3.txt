@@ -1,0 +1,37 @@
+1. Propuesta de Modelo de Datos (ER)
+
+Necesitamos cuatro tablas fundamentales para que el ecosistema funcione.
+
+Usuarios:
+id, email (PK), password, nombre, apellido, avatar, fecha_registro
+
+temas:
+id, titulo, contenido, autor_email (FK), fecha_creacion
+
+comentarios:
+id, tema_id (FK), autor_email (FK), comentario, fecha
+
+
+2. Flujos de Procesos
+Para que la lógica de programación sea clara, aquí tienes cómo deben interactuar los datos:
+
+Flujo de Registro
+- El usuario llena el formulario (incluyendo la carga de la imagen).
+
+- El sistema valida que el email no exista en la base de datos.
+
+- Se aplica un hash a la contraseña usando password_hash().
+
+- Se guarda la imagen de perfil en el servidor y la ruta en la DB.
+
+- Se insertan los datos y se redirige al Login.
+
+
+Flujo de Login (Validación)
+- El usuario ingresa email y password.
+
+- Se busca el usuario por email.
+
+- Validación: Se comparan los hashes con password_verify().
+
+- Si es correcto, se inicia una session_start() y se guardan los datos del usuario en la superglobal $_SESSION.

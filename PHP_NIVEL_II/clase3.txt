@@ -1,0 +1,37 @@
+FUNCIONES
+
+function nombre($a, $b,..., $z){
+    acción 1;
+    acción 2;
+    ...
+    acción n;
+    return $resultado
+}
+
+ESTUCTURA PROGRAMA
+1- Declaración de dependencias
+2- Declaración de FUNCIONES
+3- Declaración de variables
+4- Cuerpo principal del programa
+
+
+https://getbootstrap.com/docs/5.0/getting-started/introduction/
+
+https://getbootstrap.com/docs/5.0/components/buttons/
+
+
+
+Setting environment for using XAMPP for Windows.
+INSTRUCTOR@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+

@@ -13,7 +13,7 @@
         #Guardar datos en archivos
         fwrite($estudiantes, $curso_php_nivel_2[$i] . "\n");
     }
-    echo "<hr>";
+    echo "<br>";
 
     #Cierre del archivo 
     fclose($estudiantes);

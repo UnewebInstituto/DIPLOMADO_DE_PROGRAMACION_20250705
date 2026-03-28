@@ -1,0 +1,16 @@
+registro{
+    id_usuario (pk) (autoincrement) 
+    correo_usuario (varchar) (unique)
+    clave_usuario
+    nombre_usuario
+    apellido_usuario
+    imagen_usuario
+}
+
+login{
+    id_login
+    fecha
+    correo_usuario (fk)
+    clave_usuario (fk)
+}
+

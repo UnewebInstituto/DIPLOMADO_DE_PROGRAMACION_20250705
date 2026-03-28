@@ -32,9 +32,9 @@
         }
     }
     /*
-    echo "<hr>";
+    echo "<br>";
     echo var_dump($resumen);
-    echo "<hr>";
+    echo "<br>";
     */
     #recorrido del arreglo
     $fecha = "";
@@ -77,7 +77,7 @@
 
     echo "</tbody>";
     echo "</table>";
-    echo "<hr>";
+    echo "<br>";
     echo "<h3>Detalle</h3>";
     echo "<table class='table table-hover'>";
     echo "

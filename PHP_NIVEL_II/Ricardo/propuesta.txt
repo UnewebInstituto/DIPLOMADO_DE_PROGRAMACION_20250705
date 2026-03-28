@@ -1,0 +1,70 @@
+Perfecto. Como Senior Developer, voy a plantearte una estructura profesional para este foro. Aunque usemos tecnologías clásicas como PHP y SQL, el enfoque será modular y seguro, separando la lógica de datos de la visualización.
+
+Aquí tienes la propuesta técnica para el sistema:
+
+1. Propuesta de Modelo de Datos (SQL)
+Para un foro, la integridad referencial es clave. Necesitamos una base de datos relacional que maneje las jerarquías entre usuarios, temas y comentarios.
+
+users: Almacena la identidad. La clave debe guardarse siempre con un hash (usando password_hash() en PHP), nunca en texto plano.
+
+topics: El "padre" de la conversación. Incluye título y contenido inicial.
+
+comments: Relacionados tanto con el usuario (autor) como con el tema.
+
+Tabla	Campos Clave	Relaciones
+users	id, email, password_hash, first_name, last_name, profile_image	-
+topics	id, user_id, title, content, created_at	FK user_id -> users.id
+comments	id, topic_id, user_id, comment_text, created_at	FK topic_id -> topics.id, FK user_id -> users.id
+2. Flujo del Registro de Usuarios
+El registro no es solo insertar datos; requiere validación y saneamiento para evitar ataques como XSS o Inyección SQL.
+
+Captura (HTML/CSS): Formulario con enctype="multipart/form-data" para permitir la subida de la imagen de perfil.
+
+Validación Server-side (PHP): * Verificar que el email sea válido y no exista ya en la base de datos.
+
+Validar que la imagen sea un formato permitido (JPG/PNG) y no exceda un tamaño (ej. 2MB).
+
+Procesamiento:
+
+Hasheo: Se transforma la clave usando el algoritmo PASSWORD_DEFAULT.
+
+Almacenamiento de imagen: Se mueve el archivo temporal a una carpeta /uploads/profiles/ y se guarda solo la ruta o el nombre del archivo en la DB.
+
+Persistencia (SQL): INSERT INTO users (...).
+
+Finalización: Redirección al Login con un mensaje de éxito.
+
+3. Flujo de Validación (Login)
+Como Senior, aquí implementaría el manejo de Sesiones para mantener al usuario conectado.
+
+Solicitud: El usuario envía su email y clave vía POST.
+
+Búsqueda: PHP realiza una consulta: SELECT * FROM users WHERE email = ?.
+
+Verificación de Hash: * Si el usuario existe, usamos password_verify($password_ingresada, $password_en_db).
+
+Nota: Nunca digas "La clave es incorrecta"; usa "Credenciales inválidas" por seguridad.
+
+Creación de Sesión:
+
+Si es válido, iniciamos session_start().
+
+Guardamos en la superglobal $_SESSION el id y el nombre del usuario.
+
+Redirección: Se envía al usuario al "Dashboard" o índice del foro.
+
+4. Flujo de Temas y Comentarios
+Para que el foro sea funcional, la lógica sigue este orden:
+
+Crear Tema: Solo usuarios con sesión activa (isset($_SESSION['user_id'])) pueden ver el formulario de creación. El user_id se toma de la sesión, no del formulario (para evitar suplantación).
+
+Comentar: Al visualizar un tema específico (topic.php?id=25), se carga el formulario de comentario. Al enviar, el script PHP inserta en la tabla comments asociando el topic_id de la URL y el user_id de la sesión.
+
+Consideraciones de Senior
+Seguridad SQL: Usaría Prepared Statements (PDO o MySQLi) obligatoriamente para evitar SQL Injection.
+
+Diseño (CSS): Implementaría un diseño Card-based para los temas, asegurando que las imágenes de perfil sean circulares (border-radius: 50%) y escalen bien.
+
+UX: Al registrar un comentario, usaría una redirección header("Location: topic.php?id=$id") para evitar que el usuario reenvíe el formulario al refrescar la página (patrón POST-Redirect-GET).
+
+¿Te gustaría que profundizáramos en cómo estructurar las Prepared Statements en PHP para que el sistema sea invulnerable a inyecciones?

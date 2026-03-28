@@ -41,7 +41,7 @@
     </label>
     </div>
   </div>
-  <button class="btn btn-dark mb-3">Guardar</button>
+  <input class="btn btn-dark mb-3">Guardar</input>
   </form>  
 
   <div class="card-footer text-body-secondary">

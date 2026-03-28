@@ -1,0 +1,101 @@
+¡Hola! Qué excelente proyecto. Desarrollar un foro desde cero es una de las mejores formas de dominar el manejo de sesiones, bases de datos y la arquitectura de aplicaciones web.
+
+Como experto en desarrollo web, te presento una propuesta sólida y escalable para estructurar tu sistema utilizando PHP y MySQL (MariaDB).
+
+1. Modelo de Datos (Esquema de Tablas)
+Para que el sistema sea eficiente, necesitamos una estructura relacional. Aquí tienes el diseño de las tablas principales:
+
+Tabla: usuarios
+Almacena la información de identidad y credenciales.
+
+id_usuario (INT, PK, AI)
+
+nombre (VARCHAR)
+
+apellido (VARCHAR)
+
+email (VARCHAR, UNIQUE) - Usado para el login.
+
+password (VARCHAR) - Siempre cifrada con password_hash().
+
+foto_perfil (VARCHAR) - Ruta de la imagen en el servidor.
+
+fecha_registro (DATETIME)
+
+Tabla: temas (Threads)
+Los temas principales que se discuten.
+
+id_tema (INT, PK, AI)
+
+titulo (VARCHAR)
+
+contenido (TEXT)
+
+id_autor (INT, FK -> usuarios.id_usuario)
+
+fecha_creacion (DATETIME)
+
+Tabla: comentarios (Posts)
+Las respuestas de los usuarios a cada tema.
+
+id_comentario (INT, PK, AI)
+
+id_tema (INT, FK -> temas.id_tema)
+
+id_usuario (INT, FK -> usuarios.id_usuario)
+
+comentario (TEXT)
+
+fecha_publicacion (TIMESTAMP)
+
+2. Flujo de Registro de Usuarios
+El registro no es solo guardar datos; implica validar que el usuario no exista y manejar archivos (la foto).
+
+Formulario: El usuario ingresa nombre, apellido, email, clave y sube su foto.
+
+Validación Backend: * Verificar que el email sea válido y no esté registrado previamente.
+
+Validar formato y tamaño de la imagen (JPG/PNG).
+
+Procesamiento de Clave: Se aplica un hash a la contraseña: $hash = password_hash($password, PASSWORD_DEFAULT);.
+
+Almacenamiento de Imagen: Se guarda el archivo en una carpeta (ej: /uploads/perfiles/) y se genera un nombre único para evitar duplicados.
+
+Inserción: Se guardan los datos en la tabla usuarios.
+
+Redirección: Se envía al usuario a la página de Login.
+
+3. Flujo de Login y Sesión
+Este proceso es crítico para la seguridad del foro.
+
+Entrada: El usuario ingresa su email y contraseña.
+
+Consulta: Se busca en la base de datos un registro que coincida con ese email.
+
+Verificación de Clave: Se usa password_verify($password_ingresada, $hash_en_db).
+
+Nota: Nunca compares la clave directamente con = si no está cifrada.
+
+Creación de Sesión: Si es correcto, iniciamos la sesión con session_start() y guardamos los datos clave:
+
+$_SESSION['user_id'] = $row['id_usuario'];
+
+$_SESSION['user_name'] = $row['nombre'];
+
+$_SESSION['user_foto'] = $row['foto_perfil'];
+
+Acceso: Se redirige al index del foro.
+
+4. Funcionamiento del Foro (Interacción)
+Para que el foro sea dinámico, la lógica de visualización sigue este orden:
+
+Crear Tema: Un formulario simple que inserta en la tabla temas usando el id_usuario guardado en la sesión.
+
+Listar Temas: Una consulta SELECT que trae los títulos y los nombres de los autores.
+
+Ver Tema y Comentar: Al entrar a un tema específico, se filtran los registros de la tabla comentarios cuyo id_tema coincida. Debajo, se habilita un área de texto para insertar nuevos comentarios.
+
+Recomendación de Seguridad
+Usa Sentencias Preparadas (Prepared Statements): Al usar PHP con MySQL (ya sea mediante PDO o mysqli), siempre usa sentencias preparadas para evitar ataques de Inyección SQL. Es la regla de oro del programador web.
+
+¿Te gustaría que te ayude a escribir el código de la conexión a la base de datos o el script para procesar el hash de la contraseña?

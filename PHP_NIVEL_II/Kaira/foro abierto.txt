@@ -1,0 +1,25 @@
+Paso 1: Diseño del Modelo de Datos
+
+Primero, diseñamos la base de datos en MySQL (phpMyAdmin). La estructura básica incluirá las siguientes tablas:
+
+Usuarios (usuarios): Almacena la información de los usuarios registrados.
+- id (INT, PRIMARY KEY, AUTOINCREMENT)
+- nombre (VARCHAR)
+- apellido (VARCHAR)
+- email (VARCHAR, UNIQUE)
+- clave (VARCHAR) (Almacenar el hash de la contraseña)
+- imagenperfil (VARCHAR) (Ruta de la imagen de perfil)
+
+Temas (temas): Almacena los temas creados en el foro.
+- id (INT, PRIMARY KEY, AUTOINCREMENT)
+- titulo (VARCHAR)
+- descripcion (TEXT)
+- usuarioid (INT, FOREIGN KEY REFERENCES usuarios.id)
+- fechacreacion (DATETIME)
+
+Comentarios (comentarios): Almacena los comentarios relacionados con los temas.
+- id (INT, PRIMARY KEY, AUTOINCREMENT)
+- contenido (TEXT)
+- usuarioid (INT, FOREIGN KEY REFERENCES usuarios.id)
+- temaid (INT, FOREIGN KEY REFERENCES temas.id)
+- fechacreacion (DATETIME)

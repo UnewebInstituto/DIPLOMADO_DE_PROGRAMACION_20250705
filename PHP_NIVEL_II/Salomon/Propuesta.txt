@@ -1,0 +1,28 @@
+Porpuesta de un Modelo de datos 
+Herramientas a usar:
+Frontend
+HTML
+CSS
+JAVASCRIPT
+
+Backend
+PHP
+MySql
+
+Para tener un flujo del proceso de registros de usarios necesitamos una planificacion de las tablas que se llegaran a incluir en base de datos las cuales estarian basadas en un Registro Y/O login, son una misma.
+
+Registro
+id_usuario primary key autoincrement
+correo_electronico (varchar) unique  
+clave (varchar) unique foreing key
+nombre_apellido (Varchar) 
+imagen_perfil 
+fecha (datetime)
+ 
+Y para validacion se necesitario una conexion directa con la base de datos requiriendo lo que seria el campo clave y el campo correo_electronico.
+
+Para la creacion del programa se utilizaria un archivo index.php, como tambien registro.php y login.php, tambien se usara un archivo que podria tener nombre por ejemplo foro_encabezado.php y foro_pie.php. 
+
+En este apartado de registro de comentarios necesitarios la implementacion de los datos del id_usuario y nombre_apellido para tener una posibilidad de busqueda de comentario por usuario, como tambien para poder mostrar en la interfaz quien es el autor del comentario.
+
+Creando simultaneamente el archivo respectivo para el apartado de busqueda de temas el cualpodria ser temarios.php, y tambien el archivo comentar.php con el motivo del que usuario pueda tener la posibilidad de enviar un comentario sobre el temaque este leyendo, teniendo la posiblidad de estar estos dos apartados en un mismo archivo el cual puede llamarse foro.php quizas ahorrando organizacion.
