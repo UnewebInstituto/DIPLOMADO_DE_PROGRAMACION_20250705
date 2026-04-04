@@ -1,0 +1,1 @@
+insert into usuarios(nombre, apellido,correo_electronico,foto,clave) values ('CAMILA','VASQUEZ','cv@gmail.com','./img/perfil1.png',md5('CAMILA'));

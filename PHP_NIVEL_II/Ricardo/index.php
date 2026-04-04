@@ -1,4 +1,58 @@
-<?php 
-include "ejemplo04_encabezado.php";
-include "ejemplo04_pie.php";
+
+
+<?php
+    include './ejemplo08_encabezado.php';
+    
+    include './ejemplo08_conexion.php';
+
+    $sql = "SELECT * FROM temas ORDER BY fecha, hora DESC";
+
+    try {
+        $resultado = mysqli_query($enlace, $sql);
+        $cantidad = mysqli_num_rows($resultado);
+        echo "<h2 class='text-center'>Temas registrados</h2>";
+        if ($cantidad > 0){
+        # Se encontraron temas registrados
+        ?>
+            <div class="table-responsive mb-3">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tema</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Comentarios</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while ($datos = mysqli_fetch_array($resultado)){
+                                echo "<tr>";
+                                    echo "<td scope='row'>{$datos['titulo']}</td>";
+                                    echo "<td scope='row'>{$datos['fecha']}</td>";
+                                    echo "<td scope='row'>{$datos['hora']}</td>";
+                                    echo "<td scope='row'>0</td>";
+                                echo "</tr>";
+                            }
+                        $mensaje = "Fin de los temas registrados";
+                        $severidad = 1;
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+    <?php
+        }else{
+            # No hay temas registrados
+            $mensaje = "No hay temas registrados";
+            $severidad = 3;
+          }
+    } catch (\Throwable $th) {
+        $mensaje = $th->getMessage();
+        $severidad = 2;
+        // Cierra conexión a la BBDD
+        mysqli_close($enlace);
+    }
+    $_GET['mensaje'] = $mensaje;
+    $_GET['severidad'] = $severidad;
+    include './ejemplo08_pie.php';
 ?>
