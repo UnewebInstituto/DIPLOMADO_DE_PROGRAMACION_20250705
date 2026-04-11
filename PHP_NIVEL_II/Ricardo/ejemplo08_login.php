@@ -1,6 +1,10 @@
 <?php
     include './ejemplo08_encabezado.php';
 ?>
+<div class="text-center">
+    <h2>Iniciar sesión</h2>
+    <a href="./">Ir al inicio</a>
+</div>
 <form action="./ejemplo08_login01.php" method="POST">
   <div class="mb-3 row">
     <div class="col">

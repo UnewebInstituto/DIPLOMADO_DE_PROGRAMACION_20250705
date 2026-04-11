@@ -1,6 +1,10 @@
 <?php
     include './ejemplo08_encabezado.php';
 ?>
+<div class="text-center">
+    <h2>Iniciar sesión</h2>
+    <a href="./">Ir al inicio</a>
+</div>
 <form action="./ejemplo08_login01.php" method="POST">
   <div class="mb-3 row">
     <div class="col">
@@ -18,7 +22,7 @@
     <div class="col">
         <label for="exampleInputPassword1" class="form-label">Clave secreta</label>
         <input type="password" class="form-control" id="exampleInputPassword1" name="clave" required>
-        <div>
+        <div class="text-center">
             <a href="./ejemplo08_registrarse.php">Usuario no registrado</a><br>
         </div>
     <button type="submit" class="btn btn-primary mt-3">Enviar</button>

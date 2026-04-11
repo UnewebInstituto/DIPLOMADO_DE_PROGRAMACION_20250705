@@ -11,16 +11,15 @@
             # Encontro el correo
             $data = mysqli_fetch_array($resultado);
             if (md5($_POST['clave']) == $data['clave']){
-
-                # Clave correcta
-                $_SESSION ['id'] = $data['id'];
-                $_SESSION ['correo_electronico'] = $data['correo_electronico'];
-                $_SESSION ['nombre'] = $data['nombre'];
-                $_SESSION ['apellido'] = $data['apellido'];
-                $_SESSION ['foto'] = $data['foto'];
+                # Clave correcta, se crean variables de sesión
+                $_SESSION['id'] = $data['id'];
+                $_SESSION['correo_electronico'] = $data['correo_electronioco'];
+                $_SESSION['nombre'] = $data['nombre'];
+                $_SESSION['apellido'] = $data['apellido'];
+                $_SESSION['foto'] = $data['foto'];
                 $mensaje = "Bienvenido al Foro";
                 $severidad = 1;
-                header('location:ejemplo08_login.php?mensaje='.$mensaje.'&severidad='.$severidad);
+                header('location:/?mensaje='.$mensaje.'&severidad='.$severidad);
             }else{
                 # Clave incorrecta
                 $mensaje = "Clave incorrecta";

@@ -1,0 +1,370 @@
+
+Setting environment for using XAMPP for Windows.
+INSTRUCTOR@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 503
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------------+
+| Database                 |
++--------------------------+
+| agenda_barbara           |
+| agenda_daniela           |
+| agenda_joelys            |
+| agenda_kaira             |
+| agenda_karen             |
+| agenda_profesor          |
+| agenda_ricardo           |
+| agenda_salomon           |
+| agenda_ytzali            |
+| bd1_airon_20250830       |
+| bd1_barbara_20250830     |
+| bd1_daniel_20250913      |
+| bd1_ismael_20250913      |
+| bd1_movi_30482481        |
+| bd1_profesor_20250830    |
+| bd1_ricardo_20250830     |
+| bd1_ytzali_20250830      |
+| bd_airon_20250830        |
+| bd_barbara_20250830      |
+| bd_carrito_henry         |
+| bd_carrito_henry_restore |
+| bd_carrito_jose          |
+| bd_carrito_navileth      |
+| bd_carrito_nelson        |
+| bd_catalogo_frayner      |
+| bd_daniel_20250830       |
+| bd_frayner_20250830      |
+| bd_ismael_20250830       |
+| bd_movi_30482481         |
+| bd_nelly_20250830        |
+| bd_profesor_20250830     |
+| bd_ricardo_20250830      |
+| bd_ricardo_20253008      |
+| bd_ytzali_20250830       |
+| catalogo_barbara_bd      |
+| catalogo_daniel_bd       |
+| catalogo_frayner_bd      |
+| catalogo_ismael_bd       |
+| catalogo_moises_bd       |
+| catalogo_profesor_bd     |
+| catalogo_ricardo_bd      |
+| catalogo_ytzali_bd       |
+| ejercicio1               |
+| information_schema       |
+| movi_30482481_bd         |
+| mysql                    |
+| performance_schema       |
+| phpmyadmin               |
+| ricardo_20253008         |
+| test                     |
++--------------------------+
+50 rows in set (0.001 sec)
+
+MariaDB [(none)]> show databases like '%agenda%';
++---------------------+
+| Database (%agenda%) |
++---------------------+
+| agenda_barbara      |
+| agenda_daniela      |
+| agenda_joelys       |
+| agenda_kaira        |
+| agenda_karen        |
+| agenda_profesor     |
+| agenda_ricardo      |
+| agenda_salomon      |
+| agenda_ytzali       |
++---------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> use agenda_profesor
+Database changed
+MariaDB [agenda_profesor]> show tables;
++---------------------------+
+| Tables_in_agenda_profesor |
++---------------------------+
+| comentarios               |
+| personas                  |
+| temas                     |
+| usuarios                  |
++---------------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [agenda_profesor]> describe temas;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| titulo     | text    | YES  | UNI | NULL    |                |
+| fecha      | date    | YES  |     | NULL    |                |
+| hora       | time    | YES  |     | NULL    |                |
+| id_usuario | int(11) | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [agenda_profesor]> select * from temas;
++----+--------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                 | fecha      | hora     | id_usuario |
++----+--------------------------------------------------------+------------+----------+------------+
+|  1 | ELECCIONES PRESIDENCIALES EN VENEZUELA                 | 2026-04-11 | 09:35:24 |          1 |
+|  2 | LA INTELIGENCIA ARTIFICIAL COMO HERRAMIENTA DE TRABAJO | 2026-04-11 | 09:37:24 |          1 |
++----+--------------------------------------------------------+------------+----------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [agenda_profesor]> use agenda_daniela
+Database changed
+MariaDB [agenda_daniela]> use agenda_daniela
+Database changed
+MariaDB [agenda_daniela]> select * from temas;
++----+-----------------------------------------+------------+----------+------------+
+| id | titulo                                  | fecha      | hora     | id_usuario |
++----+-----------------------------------------+------------+----------+------------+
+|  1 | INICIO DE CLASES DESPU├ëS DE VACACIONES  | 2026-04-11 | 09:40:02 |          1 |
++----+-----------------------------------------+------------+----------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_daniela]> use agenda_profesor
+Database changed
+MariaDB [agenda_profesor]> select * from temas;
++----+--------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                 | fecha      | hora     | id_usuario |
++----+--------------------------------------------------------+------------+----------+------------+
+|  1 | ELECCIONES PRESIDENCIALES EN VENEZUELA                 | 2026-04-11 | 09:35:24 |          1 |
+|  2 | LA INTELIGENCIA ARTIFICIAL COMO HERRAMIENTA DE TRABAJO | 2026-04-11 | 09:37:24 |          1 |
++----+--------------------------------------------------------+------------+----------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [agenda_profesor]>
+MariaDB [agenda_profesor]> describe comentarios;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| texto      | text    | YES  |     | NULL    |                |
+| fecha      | date    | YES  |     | NULL    |                |
+| hora       | time    | YES  |     | NULL    |                |
+| id_tema    | int(11) | YES  |     | NULL    |                |
+| id_usuario | int(11) | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+6 rows in set (0.003 sec)
+
+MariaDB [agenda_profesor]> select * from comentarios;
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+| id | texto                                                           | fecha      | hora     | id_tema | id_usuario |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+|  1 | Todo el pa├¡s a la espera de una fecha para ejercer el sufragio  | 2026-04-11 | 10:26:21 |       1 |          1 |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_profesor]> select id_tema, id_usuario from comentarios;
++---------+------------+
+| id_tema | id_usuario |
++---------+------------+
+|       1 |          1 |
++---------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_profesor]>
+MariaDB [agenda_profesor]> use agenda_ytzali
+Database changed
+MariaDB [agenda_ytzali]> select * from comentarios;
+Empty set (0.003 sec)
+
+MariaDB [agenda_ytzali]> select * from temas;
++----+----------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                   | fecha      | hora     | id_usuario |
++----+----------------------------------------------------------+------------+----------+------------+
+|  1 | La biblia pero en lugar de decir Dios dice: Kim Namjoon. | 2026-04-11 | 09:36:06 |          2 |
+|  2 | La vida es una sopa y yo soy un tenedor.                 | 2026-04-11 | 09:40:50 |          2 |
+|  3 |                                                          | 2026-04-11 | 10:27:19 |          2 |
++----+----------------------------------------------------------+------------+----------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [agenda_ytzali]> select * from temas;
++----+----------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                   | fecha      | hora     | id_usuario |
++----+----------------------------------------------------------+------------+----------+------------+
+|  1 | La biblia pero en lugar de decir Dios dice: Kim Namjoon. | 2026-04-11 | 09:36:06 |          2 |
+|  2 | La vida es una sopa y yo soy un tenedor.                 | 2026-04-11 | 09:40:50 |          2 |
+|  4 |                                                          | 2026-04-11 | 10:31:01 |          2 |
++----+----------------------------------------------------------+------------+----------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [agenda_ytzali]> select * from temas;
++----+----------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                   | fecha      | hora     | id_usuario |
++----+----------------------------------------------------------+------------+----------+------------+
+|  1 | La biblia pero en lugar de decir Dios dice: Kim Namjoon. | 2026-04-11 | 09:36:06 |          2 |
+|  2 | La vida es una sopa y yo soy un tenedor.                 | 2026-04-11 | 09:40:50 |          2 |
+|  4 |                                                          | 2026-04-11 | 10:31:01 |          2 |
++----+----------------------------------------------------------+------------+----------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [agenda_ytzali]> select * from comentarios;
+Empty set (0.000 sec)
+
+MariaDB [agenda_ytzali]> use agenda?kaira
+ERROR 1049 (42000): Unknown database 'agenda?kaira'
+MariaDB [agenda_ytzali]> use agenda_kaira
+Database changed
+MariaDB [agenda_kaira]> select * from comentarios;
+Empty set (0.000 sec)
+
+MariaDB [agenda_kaira]> select * from comentarios;
++----+--------------------+------------+----------+---------+------------+
+| id | texto              | fecha      | hora     | id_tema | id_usuario |
++----+--------------------+------------+----------+---------+------------+
+|  1 | Es una injusticia. | 2026-04-11 | 10:37:13 |       2 |          1 |
++----+--------------------+------------+----------+---------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_kaira]> use agenda_ytzali
+Database changed
+MariaDB [agenda_ytzali]> select * from comentarios;
+Empty set (0.000 sec)
+
+MariaDB [agenda_ytzali]> select * from comentarios;
+Empty set (0.000 sec)
+
+MariaDB [agenda_ytzali]> select * from comentarios;
++----+--------------------------------------------------------------------------------------------------------------------------------+------------+----------+---------+------------+
+| id | texto                                                                                                                          | fecha      | hora     | id_tema | id_usuario |
++----+--------------------------------------------------------------------------------------------------------------------------------+------------+----------+---------+------------+
+|  1 | Muchas personas se preguntan "┬┐Qu├® se sentir├í ser lindo/a?", pero yo me pregunto siempre ┬┐qu├® se sentir├í ser millonario?       | 2026-04-11 | 10:41:11 |       2 |          2 |
++----+--------------------------------------------------------------------------------------------------------------------------------+------------+----------+---------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_ytzali]> use agenda_profesor
+Database changed
+MariaDB [agenda_profesor]> select * from temas;
++----+--------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                 | fecha      | hora     | id_usuario |
++----+--------------------------------------------------------+------------+----------+------------+
+|  1 | ELECCIONES PRESIDENCIALES EN VENEZUELA                 | 2026-04-11 | 09:35:24 |          1 |
+|  2 | LA INTELIGENCIA ARTIFICIAL COMO HERRAMIENTA DE TRABAJO | 2026-04-11 | 09:37:24 |          1 |
++----+--------------------------------------------------------+------------+----------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [agenda_profesor]> select * from comentarios;
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+| id | texto                                                           | fecha      | hora     | id_tema | id_usuario |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+|  1 | Todo el pa├¡s a la espera de una fecha para ejercer el sufragio  | 2026-04-11 | 10:26:21 |       1 |          1 |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_profesor]> select count(*) as cnt_comentarios from comentarios where id_tema = 1;
++-----------------+
+| cnt_comentarios |
++-----------------+
+|               1 |
++-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [agenda_profesor]> SELECT count(*) AS cnt_comentarios FROM comentarios WHERE id_tema = '2';\
++-----------------+
+| cnt_comentarios |
++-----------------+
+|               0 |
++-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [agenda_profesor]> SELECT count(*) AS cnt_comentarios FROM comentarios WHERE id_tema = '2';
++-----------------+
+| cnt_comentarios |
++-----------------+
+|               0 |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [agenda_profesor]> select * from comentarios<
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '<' at line 1
+MariaDB [agenda_profesor]> select * from comentarios;
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+| id | texto                                                           | fecha      | hora     | id_tema | id_usuario |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+|  1 | Todo el pa├¡s a la espera de una fecha para ejercer el sufragio  | 2026-04-11 | 10:26:21 |       1 |          1 |
+|  2 | ESPERAMOS QUE SEAN EN EL 2026                                   | 2026-04-11 | 11:10:31 |       1 |          0 |
+|  3 | LA ECONOM├ìA DEBE MEJORARSE                                      | 2026-04-11 | 11:10:50 |       1 |          0 |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [agenda_profesor]> select * from temas;
++----+--------------------------------------------------------+------------+----------+------------+
+| id | titulo                                                 | fecha      | hora     | id_usuario |
++----+--------------------------------------------------------+------------+----------+------------+
+|  1 | ELECCIONES PRESIDENCIALES EN VENEZUELA                 | 2026-04-11 | 09:35:24 |          1 |
+|  2 | LA INTELIGENCIA ARTIFICIAL COMO HERRAMIENTA DE TRABAJO | 2026-04-11 | 09:37:24 |          1 |
++----+--------------------------------------------------------+------------+----------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [agenda_profesor]> select * from comentarios;
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+| id | texto                                                           | fecha      | hora     | id_tema | id_usuario |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+|  1 | Todo el pa├¡s a la espera de una fecha para ejercer el sufragio  | 2026-04-11 | 10:26:21 |       1 |          1 |
+|  2 | ESPERAMOS QUE SEAN EN EL 2026                                   | 2026-04-11 | 11:10:31 |       1 |          0 |
+|  3 | LA ECONOM├ìA DEBE MEJORARSE                                      | 2026-04-11 | 11:10:50 |       1 |          0 |
++----+-----------------------------------------------------------------+------------+----------+---------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [agenda_profesor]> SELECT * FROM comentarios ORDER BY fecha, hora DESC WHERE id_tema = '2';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'WHERE id_tema = '2'' at line 1
+MariaDB [agenda_profesor]> SELECT * FROM comentarios WHERE id_tema = 2 ORDER BY fecha, hora DESC;
+Empty set (0.000 sec)
+
+MariaDB [agenda_profesor]> CREATE TABLE carrito_usuarios(
+    -> ID_USUARIO INT,
+    -> CEDULA VARCHAR(10),
+    -> NOMBRE_APELLIDO VARCHAR(60),
+    -> CORREO VARCHAR(30),
+    -> CLAVE VARCHAR(32),
+    -> TIPO_USUARIO VARCHAR(20));
+Query OK, 0 rows affected (0.012 sec)
+
+MariaDB [agenda_profesor]> CREATE TABLE carrito_productos(
+    -> ID_PRODUCTO INT AUTO_INCREMENT,
+    -> NOMBRE_PRODUCTO VARCHAR(40),
+    -> DESCRIPCION TEXT,
+    -> NOMBRE_ARCHIVO VARCHAR(30),
+    -> PRECIO DECIMAL(13.2),
+    -> EXISTENCIA MEDIUMINT UNSIGNED,
+    -> PRIMARY KEY (ID_PRODUCTO));
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [agenda_profesor]> CREATE TABLE carrito_agregar(
+    -> SESSION_ID  VARCHAR(26),
+    -> ID_PRODUCTO INT);
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [agenda_profesor]> CREATE TABLE carrito_compras(
+    -> ID_USUARIO INT,
+    -> ID_PRODUCTO INT,
+    -> CANTIDAD MEDIUMINT UNSIGNED,
+    -> FECHA DATE);
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [agenda_profesor]> show tables;
++---------------------------+
+| Tables_in_agenda_profesor |
++---------------------------+
+| carrito_agregar           |
+| carrito_compras           |
+| carrito_productos         |
+| carrito_usuarios          |
+| comentarios               |
+| personas                  |
+| temas                     |
+| usuarios                  |
++---------------------------+
+8 rows in set (0.001 sec)
+
+MariaDB [agenda_profesor]>

@@ -7,14 +7,15 @@
 
     $sql = "SELECT * FROM temas ORDER BY fecha, hora DESC";
 
+
+
     try {
         $resultado = mysqli_query($enlace, $sql);
         $cantidad = mysqli_num_rows($resultado);
-        echo "<h2 class='text-center'>Temas Registrados</h2>";
+        echo "<h2 class='text-center'>Temas registrados</h2>";
         if ($cantidad > 0){
-              # Se encontraron temas registrados
+        # Se encontraron temas registrados
         ?>
-            <h2>Temas registrados</h2>
             <div class="table-responsive mb-3">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -22,20 +23,25 @@
                             <th scope="col">Tema</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora</th>
-                            <th scope="col">Comentarios</th>
+                            <th class='text-center' scope="col">Comentarios</th>
                         </tr>
                     </thead>
                     <tbody>
+                        
+
                         <?php
                             while ($datos = mysqli_fetch_array($resultado)){
                                 echo "<tr>";
-                                    echo "<td scope='row'>{$datos['titulo']}</td>";
+                                    echo "<td scope='row'><a href='./ejemplo08_comentario.php?id_tema={$datos['id']}' title='Añadir comentario acerca del tema'>{$datos['titulo']}</a></td>";
                                     echo "<td scope='row'>{$datos['fecha']}</td>";
                                     echo "<td scope='row'>{$datos['hora']}</td>";
-                                    echo "<td scope='row'>0</td>";
+                                    $sql_1 = "SELECT count(*) AS cnt_comentarios FROM comentarios WHERE id_tema = '" . $datos['id'] . "'";
+                                    $resultado1 = mysqli_query($enlace, $sql_1);
+                                    $cantidad_comentarios = mysqli_fetch_array($resultado1);
+                                    echo "<td class='text-center' scope='row'><a title='Ver comentarios' href='./ejemplo08_ver_comentarios.php?id_tema={$datos['id']}'>{$cantidad_comentarios['cnt_comentarios']}</a></td>";
                                 echo "</tr>";
                             }
-                        $mensaje = "Fin de los temas";
+                        $mensaje = "Fin de los temas registrados";
                         $severidad = 1;
                         ?>
                     </tbody>
@@ -46,7 +52,7 @@
             # No hay temas registrados
             $mensaje = "No hay temas registrados";
             $severidad = 3;
-        }
+          }
     } catch (\Throwable $th) {
         $mensaje = $th->getMessage();
         $severidad = 2;

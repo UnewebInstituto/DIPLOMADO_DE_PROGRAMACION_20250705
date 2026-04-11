@@ -19,7 +19,7 @@
                 $_SESSION['foto'] = $data['foto'];
                 $mensaje = "Bienvenido al foro.";
                 $severidad = 1;
-                header('location:ejemplo08_login.php?mensaje='.$mensaje.'&severidad='.$severidad);
+                header('location:/?mensaje='.$mensaje.'&severidad='.$severidad);
 
             }else{
                 #Clave incorrecta
