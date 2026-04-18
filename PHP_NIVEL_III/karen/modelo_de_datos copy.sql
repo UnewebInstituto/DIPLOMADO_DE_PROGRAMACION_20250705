@@ -1,6 +1,7 @@
-use agenda_Daniela;
-
-
+--Creación de BBDD en postgresql
+create database carrito_karen;
+--Conexión a BBDD en postgresql
+\c carrito_karen;
 
 CREATE TABLE carrito_usuarios( 
 ID_USUARIO INT, 
@@ -28,4 +29,3 @@ ID_USUARIO INT,
 ID_PRODUCTO INT, 
 CANTIDAD MEDIUMINT UNSIGNED, 
 FECHA DATE); 
-

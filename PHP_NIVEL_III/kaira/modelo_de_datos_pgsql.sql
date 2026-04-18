@@ -1,25 +1,27 @@
---creación de la bbdd en psql
-create database carrito_barbara;
---conectar a la bbdd carrito_barbara\
-\c carrito_barbara;
+create database carrito_kaira;
+
+\c carrito_kaira;
+
 
 CREATE TABLE usuarios( 
-ID_USUARIO INT, 
+ID_USUARIO serial, 
 CEDULA VARCHAR(10), 
 NOMBRE_APELLIDO VARCHAR(60), 
 CORREO VARCHAR(30), 
 CLAVE VARCHAR(32), 
 TIPO_USUARIO VARCHAR(20),
-PRIMARY KEY(ID_USUARIO),
-UNIQUE(CORREO));
+primary key(ID_USUARIO),
+unique(CORREO));
+
+\d usuarios
 
 CREATE TABLE productos( 
 ID_PRODUCTO serial, 
 NOMBRE_PRODUCTO VARCHAR(40), 
 DESCRIPCION TEXT, 
 NOMBRE_ARCHIVO VARCHAR(30), 
-PRECIO NUMERIC(13,2), 
-EXISTENCIA INTEGER, 
+PRECIO numeric(13,2), 
+EXISTENCIA integer, 
 PRIMARY KEY (ID_PRODUCTO)); 
 
 
@@ -31,5 +33,9 @@ ID_PRODUCTO INT);
 CREATE TABLE compras( 
 ID_USUARIO INT, 
 ID_PRODUCTO INT, 
-CANTIDAD INTEGER, 
+CANTIDAD integer,
 FECHA DATE); 
+
+
+insert into usuarios(CEDULA, NOMBRE_APELLIDO, CORREO, CLAVE, TIPO_USUARIO) values
+('V12345678', 'Carmen Lopez', 'Carmen@gmail.com', md5('V12345678'), 'Administrador');

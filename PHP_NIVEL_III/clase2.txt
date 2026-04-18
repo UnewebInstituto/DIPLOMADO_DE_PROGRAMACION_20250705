@@ -1,0 +1,126 @@
+Conexión a BBDD, postgresql
+
+Desde el inicio de Windows
+pgsql
+
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# create database carrito_profesor;
+CREATE DATABASE
+postgres=# \c carrito_profesor;
+Ahora está conectado a la base de datos «carrito_profesor» con el usuario «postgres».
+carrito_profesor=# CREATE TABLE usuarios(
+carrito_profesor(# ID_USUARIO serial,
+carrito_profesor(# CEDULA VARCHAR(10),
+carrito_profesor(# NOMBRE_APELLIDO VARCHAR(60),
+carrito_profesor(# CORREO VARCHAR(30),
+carrito_profesor(# CLAVE VARCHAR(32),
+carrito_profesor(# TIPO_USUARIO VARCHAR(20),
+carrito_profesor(# primary key(id_usuario),
+carrito_profesor(# unique(correo));
+CREATE TABLE
+carrito_profesor=# \d usuarios
+                                             Tabla ½public.usuarios╗
+     Columna     |         Tipo          | Ordenamiento | Nulable  |                 Por omisi¾n
+-----------------+-----------------------+--------------+----------+----------------------------------------------
+ id_usuario      | integer               |              | not null | nextval('usuarios_id_usuario_seq'::regclass)
+ cedula          | character varying(10) |              |          |
+ nombre_apellido | character varying(60) |              |          |
+ correo          | character varying(30) |              |          |
+ clave           | character varying(32) |              |          |
+ tipo_usuario    | character varying(20) |              |          |
+═ndices:
+    "usuarios_pkey" PRIMARY KEY, btree (id_usuario)
+    "usuarios_correo_key" UNIQUE CONSTRAINT, btree (correo)
+
+
+carrito_profesor=# \d usuarios; \dt
+                                             Tabla ½public.usuarios╗
+     Columna     |         Tipo          | Ordenamiento | Nulable  |                 Por omisi¾n
+-----------------+-----------------------+--------------+----------+----------------------------------------------
+ id_usuario      | integer               |              | not null | nextval('usuarios_id_usuario_seq'::regclass)
+ cedula          | character varying(10) |              |          |
+ nombre_apellido | character varying(60) |              |          |
+ correo          | character varying(30) |              |          |
+ clave           | character varying(32) |              |          |
+ tipo_usuario    | character varying(20) |              |          |
+═ndices:
+    "usuarios_pkey" PRIMARY KEY, btree (id_usuario)
+    "usuarios_correo_key" UNIQUE CONSTRAINT, btree (correo)
+
+
+         Listado de relaciones
+ Esquema |  Nombre  | Tipo  |  Due±o
+---------+----------+-------+----------
+ public  | usuarios | tabla | postgres
+(1 fila)
+
+
+carrito_profesor=# CREATE TABLE productos(
+carrito_profesor(# ID_PRODUCTO serial,
+carrito_profesor(# NOMBRE_PRODUCTO VARCHAR(40),
+carrito_profesor(# DESCRIPCION TEXT,
+carrito_profesor(# NOMBRE_ARCHIVO VARCHAR(30),
+carrito_profesor(# PRECIO NUMERIC(13,2),
+carrito_profesor(# EXISTENCIA INTEGER,
+carrito_profesor(# PRIMARY KEY (ID_PRODUCTO));
+CREATE TABLE
+carrito_profesor=# \d productos;
+                                              Tabla ½public.productos╗
+     Columna     |         Tipo          | Ordenamiento | Nulable  |                  Por omisi¾n
+-----------------+-----------------------+--------------+----------+------------------------------------------------
+ id_producto     | integer               |              | not null | nextval('productos_id_producto_seq'::regclass)
+ nombre_producto | character varying(40) |              |          |
+ descripcion     | text                  |              |          |
+ nombre_archivo  | character varying(30) |              |          |
+ precio          | numeric(13,2)         |              |          |
+ existencia      | integer               |              |          |
+═ndices:
+    "productos_pkey" PRIMARY KEY, btree (id_producto)
+
+
+carrito_profesor=# CREATE TABLE agregar(
+carrito_profesor(# SESSION_ID  VARCHAR(26),
+carrito_profesor(# ID_PRODUCTO INT);
+CREATE TABLE
+carrito_profesor=# CREATE TABLE compras(
+carrito_profesor(# ID_USUARIO INT,
+carrito_profesor(# ID_PRODUCTO INT,
+carrito_profesor(# CANTIDAD integer,
+carrito_profesor(# FECHA DATE);
+CREATE TABLE
+carrito_profesor=#
+
+ACTIVAR SERVICIO DE PHP
+c:/xampp/php/php -S localhost:8000
+
+https://www.php.net/manual/en/function.pg-connect.php
+
+carrito_profesor=# SELECT md5('secreto');
+               md5
+----------------------------------
+ e201994dca9320fc94336603b1cfc970
+(1 fila)
+
+
+carrito_profesor=#
+
+carrito_profesor=# INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES
+carrito_profesor-# ('V12345678', 'ANA VASQUEZ', 'av@gmail.com', md5('V12345678'), 'ADMINISTRADOR');
+INSERT 0 1
+carrito_profesor=# SELECT * FROM usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)

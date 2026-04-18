@@ -1,35 +1,43 @@
---creación de la bbdd en psql
-create database carrito_barbara;
---conectar a la bbdd carrito_barbara\
-\c carrito_barbara;
+-- creacion de la base de datos en postgresql
+create database carrito_daniela;
+-- conectar a la base de datos
+\c carrito_daniela;
+
+use agenda_Daniela;
 
 CREATE TABLE usuarios( 
-ID_USUARIO INT, 
+ID_USUARIO serial, 
 CEDULA VARCHAR(10), 
 NOMBRE_APELLIDO VARCHAR(60), 
 CORREO VARCHAR(30), 
 CLAVE VARCHAR(32), 
 TIPO_USUARIO VARCHAR(20),
-PRIMARY KEY(ID_USUARIO),
-UNIQUE(CORREO));
+primary key (ID_USUARIO),
+unique (CORREO));
 
 CREATE TABLE productos( 
 ID_PRODUCTO serial, 
 NOMBRE_PRODUCTO VARCHAR(40), 
 DESCRIPCION TEXT, 
 NOMBRE_ARCHIVO VARCHAR(30), 
-PRECIO NUMERIC(13,2), 
+PRECIO NUMERIC (13,2), 
 EXISTENCIA INTEGER, 
 PRIMARY KEY (ID_PRODUCTO)); 
-
 
 CREATE TABLE agregar( 
 SESSION_ID  VARCHAR(26), 
 ID_PRODUCTO INT); 
-
 
 CREATE TABLE compras( 
 ID_USUARIO INT, 
 ID_PRODUCTO INT, 
 CANTIDAD INTEGER, 
 FECHA DATE); 
+
+
+-- creacion del usuario administrador
+
+INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES 
+('V26234567', 'DANIELA MORENO', 'dm@gmail.com', md5 ('26234567'), 'ADMINISTRADOR');
+
+
