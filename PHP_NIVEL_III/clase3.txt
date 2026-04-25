@@ -1,0 +1,170 @@
+c:/xampp/php/php -S localhost:8000
+
+https://developer.mozilla.org/es/docs/Web/HTML/Reference/Elements/form
+
+https://www.php.net/manual/en/function.getimagesize.php
+
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (15.13)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# \l *carrito*
+                                                               Listado de base de datos
+      Nombre      |  Due±o   | Codificaci¾n |        Collate         |         Ctype          | configuraci¾n ICU | Proveedor de locale | Privilegios
+------------------+----------+--------------+------------------------+------------------------+-------------------+---------------------+-------------
+ carrito_barbara  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_daniela  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_kaira    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_karen    | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_profesor | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_ricardo  | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+ carrito_ytzali   | postgres | UTF8         | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   | libc                |
+(7 filas)
+
+
+postgres=# \c carrito_profesor
+Ahora está conectado a la base de datos «carrito_profesor» con el usuario «postgres».
+carrito_profesor=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_profesor=# \d usuarios;
+                                             Tabla ½public.usuarios╗
+     Columna     |         Tipo          | Ordenamiento | Nulable  |                 Por omisi¾n
+-----------------+-----------------------+--------------+----------+----------------------------------------------
+ id_usuario      | integer               |              | not null | nextval('usuarios_id_usuario_seq'::regclass)
+ cedula          | character varying(10) |              |          |
+ nombre_apellido | character varying(60) |              |          |
+ correo          | character varying(30) |              |          |
+ clave           | character varying(32) |              |          |
+ tipo_usuario    | character varying(20) |              |          |
+═ndices:
+    "usuarios_pkey" PRIMARY KEY, btree (id_usuario)
+    "usuarios_correo_key" UNIQUE CONSTRAINT, btree (correo)
+
+
+carrito_profesor=# SELECT * FROM USUARIOS;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+          2 | V6796356  | NELLY CONTRERAS |              | 88edbd6342d060d4af856854b50f5b40 | VISITANTE
+(2 filas)
+
+
+carrito_profesor=# delete from usuarios where id = 2;
+ERROR:  no existe la columna «id»
+LÍNEA 1: delete from usuarios where id = 2;
+                                    ^
+carrito_profesor=# delete usuarios where id = 2;
+ERROR:  error de sintaxis en o cerca de «usuarios»
+LÍNEA 1: delete usuarios where id = 2;
+                ^
+carrito_profesor=# delete from usuarios where id_usuario = 2;
+DELETE 1
+carrito_profesor=# delete from usuarios where id_usuario = 2;
+DELETE 0
+carrito_profesor=# SELECT * FROM USUARIOS;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+          3 | V6796356  | NELLY CONTRERAS | NC@GMAIL.COM | 88edbd6342d060d4af856854b50f5b40 | VISITANTE
+(2 filas)
+
+
+carrito_profesor=# select * from correo = 'nc@gmail.com';
+ERROR:  error de sintaxis en o cerca de «=»
+LÍNEA 1: select * from correo = 'nc@gmail.com';
+                              ^
+carrito_profesor=# select * fromw where correo = 'nc@gmail.com';
+ERROR:  error de sintaxis en o cerca de «fromw»
+LÍNEA 1: select * fromw where correo = 'nc@gmail.com';
+                  ^
+carrito_profesor=# select * from where correo = 'nc@gmail.com';
+ERROR:  error de sintaxis en o cerca de «where»
+LÍNEA 1: select * from where correo = 'nc@gmail.com';
+                       ^
+carrito_profesor=# select * from usuarios where correo = 'nc@gmail.com';
+ id_usuario | cedula | nombre_apellido | correo | clave | tipo_usuario
+------------+--------+-----------------+--------+-------+--------------
+(0 filas)
+
+
+carrito_profesor=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+          3 | V6796356  | NELLY CONTRERAS | NC@GMAIL.COM | 88edbd6342d060d4af856854b50f5b40 | VISITANTE
+(2 filas)
+
+
+carrito_profesor=# \c carrito_kaira
+Ahora está conectado a la base de datos «carrito_kaira» con el usuario «postgres».
+carrito_kaira=# select * from usurios;
+ERROR:  no existe la relación «usurios»
+LÍNEA 1: select * from usurios;
+                       ^
+carrito_kaira=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |      correo      |              clave               | tipo_usuario
+------------+-----------+-----------------+------------------+----------------------------------+---------------
+          1 | V12345678 | Carmen Lopez    | Carmen@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | Administrador
+(1 fila)
+
+
+carrito_kaira=# \c carrito_karen
+Ahora está conectado a la base de datos «carrito_karen» con el usuario «postgres».
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+(1 fila)
+
+
+carrito_karen=# select * from usuarios;
+ id_usuario |  cedula   | nombre_apellido |    correo    |              clave               | tipo_usuario
+------------+-----------+-----------------+--------------+----------------------------------+---------------
+          1 | V12345678 | ANA VASQUEZ     | av@gmail.com | bb58fd8dcab41e78d93c98a3204d438c | ADMINISTRADOR
+          4 | V6796356  | NELLY CONTRERAS | NC@GMAIL.COM | 88edbd6342d060d4af856854b50f5b40 | VISITANTE
+(2 filas)
+
+
+carrito_karen=#

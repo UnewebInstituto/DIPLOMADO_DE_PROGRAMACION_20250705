@@ -14,15 +14,13 @@
         <h1 class="text-xl font-bold">Carrito de Compras</h1>
         <div class="text-right">
         <?php
-            if (!empty($_SESSION['nombre'])){
+            if (!empty($_SESSION['nombre_apellido'])){
                 echo "<div>";
-                echo "<img src='{$_SESSION['foto']}' width='40px' height='40px'>" . "  ";
-                echo $_SESSION['nombre'] . " " . $_SESSION['apellido'];
+                echo $_SESSION['nombre_apellido'];
                 echo "</div>";
-                echo "<a href='./cerrar_sesion.php'>Cerrar sesión</a>";
+                echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./cerrar_sesion.php'>Cerrar sesión</a>";
             }else{
                 echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200'  href='./login.php'>Iniciar sesión</a>";
             }
         ?>
         </div>
-

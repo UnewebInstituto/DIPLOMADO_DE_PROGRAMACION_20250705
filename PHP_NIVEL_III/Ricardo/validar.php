@@ -6,7 +6,7 @@
         case '1':
             # Efectuar validación del usuario
             $sql = "SELECT * FROM usuarios WHERE correo = '$_REQUEST[correo_electronico]'";
-            try {
+            try {                        
                 $resultado = pg_query($enlace, $sql);
                 $cantidad = pg_num_rows($resultado);
                 if ($cantidad > 0){
