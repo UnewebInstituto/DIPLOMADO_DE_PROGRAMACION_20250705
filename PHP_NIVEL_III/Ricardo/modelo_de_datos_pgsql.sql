@@ -36,3 +36,9 @@ ID_USUARIO INT,
 ID_PRODUCTO INT, 
 CANTIDAD integer, 
 FECHA DATE); 
+
+
+-- CREACIÓN DEL USUARIO ADMINISTRADOR
+
+INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES 
+('V12345678', 'ANA VASQUEZ', 'av@gmail.com', md5('V12345678'), 'ADMINISTRADOR');

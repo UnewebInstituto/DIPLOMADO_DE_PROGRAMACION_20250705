@@ -1,0 +1,335 @@
+El patrón que observas (saltos de 2 en 2: 14, 16, 18...) no es un error de la base de datos, sino una **doble petición de incremento** generada por la lógica de tu código PHP en combinación con el comportamiento automático de PostgreSQL.
+
+Aquí te explico exactamente qué está pasando y cómo corregirlo profesionalmente.
+
+### El Diagnóstico: El Doble Salto
+
+El problema ocurre porque estás llamando al incremento de la secuencia **dos veces** por cada inserción:
+
+1. **Primer Incremento (Manual):** En tu código ejecutas `$sql_archivo = "SELECT nextval('...')";`. Esto le dice a PostgreSQL: *"Dame el siguiente número y aumenta el contador"*. Si la secuencia estaba en 13, ahora pasa a **14**.
+2. **Segundo Incremento (Automático):** Al ejecutar el `INSERT INTO productos(...)`, no especificas el campo `id_producto`. PostgreSQL, al ver que el campo es (presumiblemente) de tipo `SERIAL` o tiene un `DEFAULT nextval()`, dispara **automáticamente** la secuencia otra vez. Entonces, el registro se guarda con el ID **15**.
+3. **La Inconsistencia:** Tu variable `$nombre_archivo` usa el valor que obtuviste manualmente (`14`), pero en la tabla el registro quedó guardado con el `15`. En tu salida de consola se ven pares porque probablemente en algún punto el código o la secuencia se desfasaron, pero el origen es esta duplicidad.
+
+---
+
+### La Solución Recomendada
+
+Para mantener la integridad y que el nombre del archivo coincida exactamente con el ID de la base de datos, debes realizar el insert y recuperar el ID generado en una sola operación usando la cláusula `RETURNING`.
+
+#### Código Optimizado:
+
+```php
+case '3':
+    $detalle_imagen = getimagesize($_FILES['imagen']['tmp_name']);
+    
+    if ($detalle_imagen[2] == 2 || $detalle_imagen[2] == 3) {
+        $extension = ($detalle_imagen[2] == 2) ? ".jpg" : ".png";
+
+        // 1. Iniciamos una transacción para asegurar consistencia
+        pg_query($enlace, "BEGIN");
+
+        // 2. Insertamos el producto SIN el nombre del archivo aún, recuperando el ID generado por Postgres
+        // Usamos RETURNING id_producto para obtener el valor real de la secuencia
+        $sql = "INSERT INTO productos (nombre_producto, descripcion, precio, existencia) 
+                VALUES ('$_REQUEST[nombre]', '$_REQUEST[descripcion]', '$_REQUEST[precio]', '$_REQUEST[cantidad]') 
+                RETURNING id_producto";
+        
+        $resultado = pg_query($enlace, $sql);
+        
+        if ($resultado) {
+            $fila = pg_fetch_result($resultado, 0, 0);
+            $id_generado = $fila;
+
+            // 3. Ahora que tenemos el ID real, definimos el nombre del archivo
+            $nombre_archivo = './img/' . $id_generado . $extension;
+
+            // 4. Actualizamos el registro con el nombre del archivo final
+            $sql_update = "UPDATE productos SET nombre_archivo = '$nombre_archivo' WHERE id_producto = $id_generado";
+            pg_query($enlace, $sql_update);
+
+            // 5. Movemos el archivo físico
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $nombre_archivo)) {
+                pg_query($enlace, "COMMIT");
+                $mensaje = "Producto cargado con éxito. ID: $id_generado";
+                $severidad = 1;
+            } else {
+                pg_query($enlace, "ROLLBACK");
+                $mensaje = "Error al mover el archivo físico.";
+                $severidad = 2;
+            }
+        } else {
+            pg_query($enlace, "ROLLBACK");
+            $mensaje = "Error al insertar en la base de datos.";
+            $severidad = 2;
+        }
+
+        header('location:/menu.php?mensaje='.urlencode($mensaje).'&severidad='.$severidad);
+    } else {
+        $mensaje = "Formato de imagen no válido.";
+        $severidad = 2;
+        header('location:/menu.php?mensaje='.urlencode($mensaje).'&severidad='.$severidad);
+    }
+    break;
+
+```
+
+---
+
+### ¿Por qué esta solución es mejor?
+
+1. **Uso de `RETURNING**`: Es la forma más eficiente en PostgreSQL de obtener el ID generado sin llamar a la secuencia por separado. Evita los saltos de "2 en 2".
+2. **Transacciones (`BEGIN/COMMIT`)**: Si por alguna razón el archivo no se puede mover a la carpeta `./img/`, el registro no se queda "huérfano" en la base de datos; se deshace la operación.
+3. **Sincronización Total**: El nombre del archivo en disco siempre será idéntico al ID en la tabla, eliminando el `$data_archivo[0]++` que es una práctica riesgosa (si dos personas insertan al mismo tiempo, los IDs podrían cruzarse).
+
+**Nota de seguridad:** Como experto, te sugiero en el futuro utilizar **Sentencias Preparadas** (`pg_prepare` y `pg_execute`) en lugar de pasar las variables `$_REQUEST` directo al SQL, para proteger Interaxia contra ataques de Inyección SQL.
+
+
+
+
+
+
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Contraseña para usuario postgres:
+psql (16.3)
+ADVERTENCIA: El código de página de la consola (850) difiere del código
+            de página de Windows (1252).
+            Los caracteres de 8 bits pueden funcionar incorrectamente.
+            Vea la página de referencia de psql «Notes for Windows users»
+            para obtener más detalles.
+Digite «help» para obtener ayuda.
+
+postgres=# create database carrito_profesor;
+CREATE DATABASE
+postgres=# \c carrito_profesor;
+Ahora está conectado a la base de datos «carrito_profesor» con el usuario «postgres».
+carrito_profesor=# CREATE TABLE usuarios(
+carrito_profesor(# ID_USUARIO serial,
+carrito_profesor(# CEDULA VARCHAR(10),
+carrito_profesor(# NOMBRE_APELLIDO VARCHAR(60),
+carrito_profesor(# CORREO VARCHAR(30),
+carrito_profesor(# CLAVE VARCHAR(32),
+carrito_profesor(# TIPO_USUARIO VARCHAR(20),
+carrito_profesor(# primary key(id_usuario),
+carrito_profesor(# unique(correo));
+CREATE TABLE
+carrito_profesor=# CREATE TABLE productos(
+carrito_profesor(# ID_PRODUCTO serial,
+carrito_profesor(# NOMBRE_PRODUCTO VARCHAR(40),
+carrito_profesor(# DESCRIPCION TEXT,
+carrito_profesor(# NOMBRE_ARCHIVO VARCHAR(30),
+carrito_profesor(# PRECIO NUMERIC(13,2),
+carrito_profesor(# EXISTENCIA INTEGER,
+carrito_profesor(# PRIMARY KEY (ID_PRODUCTO));
+CREATE TABLE
+carrito_profesor=# CREATE TABLE agregar(
+carrito_profesor(# SESSION_ID  VARCHAR(26),
+carrito_profesor(# ID_PRODUCTO INT);
+CREATE TABLE
+carrito_profesor=# CREATE TABLE compras(
+carrito_profesor(# ID_USUARIO INT,
+carrito_profesor(# ID_PRODUCTO INT,
+carrito_profesor(# CANTIDAD integer,
+carrito_profesor(# FECHA DATE);
+CREATE TABLE
+carrito_profesor=# INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES
+carrito_profesor-# ('V12345678', 'administrador', 'administrador@gmail.com', md5('V12345678'), 'ADMINISTRADOR');
+INSERT 0 1
+carrito_profesor=# \l *carrito*
+                                                                         Listado de base de datos
+         Nombre         |  Due±o   | Codificaci¾n | Proveedor de locale |        Collate         |         Ctype          | configuraci¾n ICU | Reglas ICU: | Privilegios
+------------------------+----------+--------------+---------------------+------------------------+------------------------+-------------------+-------------+-------------
+ carrito_barbara        | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_deivis_db      | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_henry_db       | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_maria_db       | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_miguel_db      | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_profesor       | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_ricardo        | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_salomon        | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ carrito_ytzali         | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+ prueba_carrito_zayleth | postgres | UTF8         | libc                | Spanish_Venezuela.1252 | Spanish_Venezuela.1252 |                   |             |
+(10 filas)
+
+
+carrito_profesor=# \dt
+         Listado de relaciones
+ Esquema |  Nombre   | Tipo  |  Due±o
+---------+-----------+-------+----------
+ public  | agregar   | tabla | postgres
+ public  | compras   | tabla | postgres
+ public  | productos | tabla | postgres
+ public  | usuarios  | tabla | postgres
+(4 filas)
+
+
+carrito_profesor=# \d
+                   Listado de relaciones
+ Esquema |          Nombre           |   Tipo    |  Due±o
+---------+---------------------------+-----------+----------
+ public  | agregar                   | tabla     | postgres
+ public  | compras                   | tabla     | postgres
+ public  | productos                 | tabla     | postgres
+ public  | productos_id_producto_seq | secuencia | postgres
+ public  | usuarios                  | tabla     | postgres
+ public  | usuarios_id_usuario_seq   | secuencia | postgres
+(6 filas)
+
+
+carrito_profesor=#
+carrito_profesor=# \d productos;
+                                              Tabla ½public.productos╗
+     Columna     |         Tipo          | Ordenamiento | Nulable  |                  Por omisi¾n
+-----------------+-----------------------+--------------+----------+------------------------------------------------
+ id_producto     | integer               |              | not null | nextval('productos_id_producto_seq'::regclass)
+ nombre_producto | character varying(40) |              |          |
+ descripcion     | text                  |              |          |
+ nombre_archivo  | character varying(30) |              |          |
+ precio          | numeric(13,2)         |              |          |
+ existencia      | integer               |              |          |
+═ndices:
+    "productos_pkey" PRIMARY KEY, btree (id_producto)
+
+
+carrito_profesor=# SELECT * FROM PRODUCTOS;
+ id_producto |     nombre_producto      |               descripcion               | nombre_archivo | precio | existencia
+-------------+--------------------------+-----------------------------------------+----------------+--------+------------
+           8 | BALËN DE FUTBOL N┌MERO 5 | BALËN DE FUTBOL N┌MERO 5 MARCA TAMANACO | ./img/7.jpg    | 100.00 |         12
+          10 | Balon de futbol          | Balon del futbol del bicho              | ./img/9.jpg    |  30.00 |          3
+(2 filas)
+
+
+carrito_profesor=# DELETE FROM PRODUCTOS WHERE ID_PRODUCTO = 10;
+DELETE 1
+carrito_profesor=# SELECT * FROM PRODUCTOS;
+ id_producto |     nombre_producto      |               descripcion               | nombre_archivo | precio | existencia
+-------------+--------------------------+-----------------------------------------+----------------+--------+------------
+           8 | BALËN DE FUTBOL N┌MERO 5 | BALËN DE FUTBOL N┌MERO 5 MARCA TAMANACO | ./img/7.jpg    | 100.00 |         12
+          12 | Franela deportiva        | Camisa blanca de futbol                 | ./img/11.jpg   |  45.00 |         15
+(2 filas)
+
+
+carrito_profesor=# DELETE FROM PRODUCTOS WHERE ID_PRODUCTO = 11;
+DELETE 0
+carrito_profesor=# DELETE FROM PRODUCTOS WHERE ID_PRODUCTO = 12;
+DELETE 1
+carrito_profesor=# \c carrito_ytzali
+Ahora está conectado a la base de datos «carrito_ytzali» con el usuario «postgres».
+carrito_ytzali=# SELECT * FROM PRODUCTOS;
+ id_producto | nombre_producto | descripcion | nombre_archivo | precio | existencia
+-------------+-----------------+-------------+----------------+--------+------------
+(0 filas)
+
+
+carrito_ytzali=# SELECT * FROM PRODUCTOS;
+ id_producto | nombre_producto |  descripcion  | nombre_archivo | precio | existencia
+-------------+-----------------+---------------+----------------+--------+------------
+           7 | Album BTS       | Album de BTS. | ./img/6.jpg    |  30.00 |          1
+(1 fila)
+
+
+carrito_ytzali=# \c carrito_ytzali
+Ahora está conectado a la base de datos «carrito_ytzali» con el usuario «postgres».
+carrito_ytzali=# \c carrito_profesor
+Ahora está conectado a la base de datos «carrito_profesor» con el usuario «postgres».
+carrito_profesor=# truncate productos;
+TRUNCATE TABLE
+carrito_profesor=# select * from productos;
+ id_producto | nombre_producto | descripcion | nombre_archivo | precio | existencia
+-------------+-----------------+-------------+----------------+--------+------------
+(0 filas)
+
+
+carrito_profesor=# select * from productos;
+ id_producto |     nombre_producto      |               descripcion               | nombre_archivo | precio | existencia
+-------------+--------------------------+-----------------------------------------+----------------+--------+------------
+          14 | BALËN DE FUTBOL N┌MERO 5 | BALËN DE FUTBOL N┌MERO 5 MARCA TAMANACO | ./img/14.jpg   | 100.00 |         12
+(1 fila)
+
+
+carrito_profesor=# select * from productos;
+ id_producto |          nombre_producto          |                  descripcion                  | nombre_archivo | precio | existencia
+-------------+-----------------------------------+-----------------------------------------------+----------------+--------+------------
+          14 | BALËN DE FUTBOL N┌MERO 5          | BALËN DE FUTBOL N┌MERO 5 MARCA TAMANACO       | ./img/14.jpg   | 100.00 |         12
+          16 | BATE DE BEISBOL DE ALUMINIO       | BATE DE BEISBOL DE ALUMINIO MARCA TAMANACO    | ./img/16.jpg   | 120.00 |          6
+          18 | FRANELA DEPORTIVA TALLAS VARIADAS | FRANELA DEPORTIVA TALLAS VARIADAS MARCA ARENA | ./img/18.jpg   |  30.00 |         24
+          20 | LENTES DE NATACIËN                | LENTES DE NATACIËN MARCA SPEEDO               | ./img/20.jpg   |  75.00 |          8
+          22 | PESAS PARA MULTIFUERZA            | PESAS PARA MULTIFUERZA MARCA TAMANACO         | ./img/22.jpg   | 120.00 |         24
+(5 filas)
+
+
+carrito_profesor=# select * from productos;
+ id_producto |          nombre_producto          |                  descripcion                  | nombre_archivo | precio | existencia
+-------------+-----------------------------------+-----------------------------------------------+----------------+--------+------------
+          14 | BALËN DE FUTBOL N┌MERO 5          | BALËN DE FUTBOL N┌MERO 5 MARCA TAMANACO       | ./img/14.jpg   | 100.00 |         12
+          16 | BATE DE BEISBOL DE ALUMINIO       | BATE DE BEISBOL DE ALUMINIO MARCA TAMANACO    | ./img/16.jpg   | 120.00 |          6
+          18 | FRANELA DEPORTIVA TALLAS VARIADAS | FRANELA DEPORTIVA TALLAS VARIADAS MARCA ARENA | ./img/18.jpg   |  30.00 |         24
+          20 | LENTES DE NATACIËN                | LENTES DE NATACIËN MARCA SPEEDO               | ./img/20.jpg   |  75.00 |          8
+          22 | PESAS PARA MULTIFUERZA            | PESAS PARA MULTIFUERZA MARCA TAMANACO         | ./img/22.jpg   | 120.00 |         24
+          24 | RAQUETA DE PIN PON                | RAQUETA DE PIN PON MARCA TAMANACO             | ./img/24.jpg   |  25.00 |         10
+(6 filas)
+
+
+carrito_profesor=# \dt
+         Listado de relaciones
+ Esquema |  Nombre   | Tipo  |  Due±o
+---------+-----------+-------+----------
+ public  | agregar   | tabla | postgres
+ public  | compras   | tabla | postgres
+ public  | productos | tabla | postgres
+ public  | usuarios  | tabla | postgres
+(4 filas)
+
+
+carrito_profesor=# \d
+                   Listado de relaciones
+ Esquema |          Nombre           |   Tipo    |  Due±o
+---------+---------------------------+-----------+----------
+ public  | agregar                   | tabla     | postgres
+ public  | compras                   | tabla     | postgres
+ public  | productos                 | tabla     | postgres
+ public  | productos_id_producto_seq | secuencia | postgres
+ public  | usuarios                  | tabla     | postgres
+ public  | usuarios_id_usuario_seq   | secuencia | postgres
+(6 filas)
+
+
+carrito_profesor=# \d productos_id_producto_seq;
+             Secuencia ½public.productos_id_producto_seq╗
+  Tipo   | Inicio | MÝnimo |   Mßximo   | Incremento | ┐Cicla? | Cache
+---------+--------+--------+------------+------------+---------+-------
+ integer |      1 |      1 | 2147483647 |          1 | no      |     1
+Asociada a: public.productos.id_producto
+
+
+carrito_profesor=# \d agregar
+                           Tabla ½public.agregar╗
+   Columna   |         Tipo          | Ordenamiento | Nulable | Por omisi¾n
+-------------+-----------------------+--------------+---------+-------------
+ session_id  | character varying(26) |              |         |
+ id_producto | integer               |              |         |
+
+
+carrito_profesor=# select * from agregar;
+         session_id         | id_producto
+----------------------------+-------------
+ boehg0sju8qk2l7iqnkt38mav8 |          14
+ boehg0sju8qk2l7iqnkt38mav8 |          16
+ boehg0sju8qk2l7iqnkt38mav8 |          18
+(3 filas)
+
+
+carrito_profesor=# select * from agregar;
+         session_id         | id_producto
+----------------------------+-------------
+ boehg0sju8qk2l7iqnkt38mav8 |          14
+ boehg0sju8qk2l7iqnkt38mav8 |          16
+ boehg0sju8qk2l7iqnkt38mav8 |          18
+ boehg0sju8qk2l7iqnkt38mav8 |          14
+ boehg0sju8qk2l7iqnkt38mav8 |          14
+(5 filas)
+
+
+carrito_profesor=#

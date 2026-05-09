@@ -15,7 +15,7 @@ TIPO_USUARIO VARCHAR(20), primary key (id_usuario), unique(correo));
 --Para que la base de datos identifique si es mayuscula o minuscula, hay que colocarlo en comillas, sino está en comillas, lo toma por defecto que es minúscula
 
 --Ver descripción de tablas
-\d usuarios
+\d usuarios 
 
 --Ver tablas
 \ dt 
@@ -41,4 +41,6 @@ FECHA DATE);
 
 
 --Creación del Administrador
-INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES ('V12345678', 'ANA VASQUEZ', 'av@gmail.com', md5('V12345678'), 'ADMINISTRADOR');
+INSERT INTO usuarios(cedula, nombre_apellido, correo, clave, tipo_usuario) VALUES ('V30300271', 'YTZALI', 'yt@gmail.com', md5('V30300271'), 'ADMINISTRADOR');
+
+

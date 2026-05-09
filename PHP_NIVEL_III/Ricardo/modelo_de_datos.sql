@@ -1,4 +1,4 @@
-use agenda_ricardo;
+use agenda_profesor;
 
 CREATE TABLE carrito_usuarios( 
 ID_USUARIO INT, 

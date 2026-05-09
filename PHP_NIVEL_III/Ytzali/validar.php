@@ -86,14 +86,53 @@
             if ($detalle_imagen[2] == 2 || $detalle_imagen[2] == 3 ){
                 // 2: jpeg
                 // 3: png
-                $mensaje = "Imagen cargada con éxito";
+                // imagen, nombre, precio, cantidad, descripcion
+                $sql_archivo = "SELECT nextval('productos_id_producto_seq')";
+                $resultado_archivo = pg_query($enlace, $sql_archivo);
+                $data_archivo = pg_fetch_array($resultado_archivo);
+                /**
+                 * En la posición 0 de $data_archivo, está contenido 
+                 * el número del id, del producto que se vaya a almacenar
+                 * $data_archivo[0]
+                 */
+                if ($detalle_imagen[2] == 2){
+                    $extension = ".jpg";
+                }else{
+                    $extension = ".png";
+                }
+
+                // Se incrementa en 1 el id obtenido para que se
+                // corresponda al producto_id almacenado
+                $data_archivo[0]++;
+                $nombre_archivo = './img/' . $data_archivo[0] . $extension;
+
+                $sql = "INSERT INTO productos(nombre_producto, descripcion, nombre_archivo, precio, existencia) VALUES ('$_REQUEST[nombre]','$_REQUEST[descripcion]','$nombre_archivo','$_REQUEST[precio]', '$_REQUEST[cantidad]')";
+                $mensaje = "Producto cargado con éxito";
                 $severidad = 1;
+                //echo "<hr>";
+                //echo $sql;
+                //echo "<hr>";
+                
+                $resultado = pg_query($enlace, $sql);
+
+                move_uploaded_file($_FILES['imagen']['tmp_name'],$nombre_archivo );
+
                 header('location:/menu.php?mensaje='.$mensaje.'&severidad='.$severidad);
             }else{
                 $mensaje = "Formato de imagen no válido, sólo se admiten archivos de tipo *.jpeg o *.png";
                 $severidad = 2;
                 header('location:/menu.php?mensaje='.$mensaje.'&severidad='.$severidad);
             }
+            break;
+        case '4':
+            # Agregar al carrito de compras
+            $session_id = session_id();
+            $sql = "INSERT INTO agregar(session_id, id_producto) VALUES ('$session_id','$_REQUEST[id_producto]')";
+            $resultado = pg_query($enlace, $sql);
+            $_SESSION['carrito'] = true;
+            $mensaje = "Producto añadido al carrito de compras";
+            $severidad = 1;
+            header('location:/?mensaje='.$mensaje.'&severidad='.$severidad);
             break;
 
         default:
