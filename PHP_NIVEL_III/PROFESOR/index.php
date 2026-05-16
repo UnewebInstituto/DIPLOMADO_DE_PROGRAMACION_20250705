@@ -48,19 +48,19 @@
         /**
          * Mostrar catálogo
          */
-        echo "<table>";
+        echo "<table class='border border-gray-200 divide-y divide-gray-200'>";
         for ($c=1; $c<=$a ; $c++) { 
             echo "<tr>";
             for ($d=1; $d <= $condicion; $d++) { 
                 if (!empty($id[$c][$d])){
-                    echo "<td>";
-                    echo "<b>Id:</b>" . $id[$c][$d] . "<br>";
-                    echo "<b>Nombre:</b>" . $nombre_producto[$c][$d] . "<br>";
-                    echo "<b>Precio:</b>" . $precio[$c][$d] . "<br>";
-                    echo "<b>Existencia:</b>" . $existencia[$c][$d] .  "Unidad(es)"  . "<br>";
-                    echo "<b>Descripción:</b>" . $descripcion[$c][$d] . "<br>";
-                    echo "<b>Imagen:</b><img src='" . $nombre_archivo[$c][$d] . "' width='150px' height='150px'>"  . "<br>";
-                    echo "<a href='./validar.php?id=4&id_producto=" . $id[$c][$d] . "'>Agregar al carrito</a>" . "<br>";
+                    echo "<td class='border border-gray-200 text-center'>";
+                    echo "<b>Id: </b>" . $id[$c][$d] . "<br>";
+                    echo "<b>Nombre: </b>" . $nombre_producto[$c][$d] . "<br>";
+                    echo "<b>Precio: </b>" . $precio[$c][$d] . "<br>";
+                    echo "<b>Existencia: </b>" . $existencia[$c][$d] .  "Unidad(es)"  . "<br>";
+                    echo "<b>Descripción: </b>" . $descripcion[$c][$d] . "<br>";
+                    echo "<b>Imagen: </b><img src='" . $nombre_archivo[$c][$d] . "' width='150px' height='150px'>"  . "<br>";
+                    echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./validar.php?id=4&id_producto=" . $id[$c][$d] . "'>Agregar al carrito</a>" . "<br>";
                     echo "</td>";
                 }
             }
@@ -71,5 +71,16 @@
         $_GET['severidad'] = 3;
         $_GET['mensaje'] = "No hay productos cargados en el sistema";            
     }
+    if ($_SESSION['carrito']){
+        echo "<br>";
+        echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./ver_carrito.php'>Ver carrito</a>";
+    }
+    if ($_SESSION['tipo_usuario']=='ADMINISTRADOR'){
+        echo "<br>";
+        echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./menu.php'>Menú</a>";
+    }
+    echo "<br>";
+    echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./login.php'>Iniciar sesión</a>";
+    echo "<br>";
     include './pie.php';
 ?>

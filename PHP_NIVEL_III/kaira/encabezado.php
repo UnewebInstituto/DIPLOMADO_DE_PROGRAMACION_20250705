@@ -1,5 +1,7 @@
 <?php
     session_start();
+    // Eliminar mensajes de alerta
+    error_reporting(0); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +21,6 @@
                 echo $_SESSION['nombre_apellido'];
                 echo "</div>";
                 echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200' href='./cerrar_sesion.php'>Cerrar sesión</a>";
-            }else{
-                echo "<a class='text-blue-600 font-medium hover:text-blue-800 underline-offset-4 hover:underline transition-all duration-200'  href='./login.php'>Iniciar sesión</a>";
             }
         ?>
         </div>

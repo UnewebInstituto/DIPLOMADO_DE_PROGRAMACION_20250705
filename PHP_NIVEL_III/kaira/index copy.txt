@@ -1,0 +1,75 @@
+<?php
+    include './conexion.php';
+    include './encabezado.php';
+
+    $query = "SELECT * from productos";
+    $resultado = pg_query($enlace, $query);
+    $cantidad = pg_num_rows($resultado);
+
+    if ($cantidad > 0) {
+        // Contenedor principal con fondo gris claro y padding
+        echo "<div class='bg-[#f5f5f5] min-h-screen py-12 px-4 sm:px-6 lg:px-8'>";
+        echo "<div class='max-w-7xl mx-auto'>";
+        
+        // Cuadrícula responsiva: 1 columna en móviles, 2 en tablets, 3 o 4 en escritorio
+        echo "<div class='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>";
+
+        while ($data = pg_fetch_array($resultado)) {
+            $id = $data['id_producto'];
+            $nombre_producto = $data['nombre_producto'];
+            $descripcion = $data['descripcion'];
+            $nombre_archivo = $data['nombre_archivo'];
+            $precio = $data['precio'];
+            $existencia = $data['existencia'];
+
+            // Tarjeta del producto
+            echo "<div class='bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col overflow-hidden'>";
+            
+            // Área de la imagen
+            echo "<div class='relative h-64 bg-white flex items-center justify-center border-b border-gray-100'>";
+            echo "<img src='" . htmlspecialchars($nombre_archivo) . "' alt='" . htmlspecialchars($nombre_producto) . "' class='object-cover w-full h-full'>";
+            
+            // Etiqueta flotante para el stock
+            if ($existencia > 0) {
+                echo "<span class='absolute top-4 right-4 bg-gray-100 text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-gray-200'>Stock: " . $existencia . "</span>";
+            } else {
+                echo "<span class='absolute top-4 right-4 bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm'>Agotado</span>";
+            }
+            echo "</div>"; // Fin área imagen
+
+            // Área de contenido de la tarjeta
+            echo "<div class='p-6 flex flex-col flex-grow'>";
+            
+            // Metadatos (ID)
+            echo "<div class='text-xs text-gray-400 font-medium mb-2'>Ref: " . htmlspecialchars($id) . "</div>";
+            
+            // Título
+            echo "<h3 class='text-lg font-bold text-gray-800 mb-2 line-clamp-1'>" . htmlspecialchars($nombre_producto) . "</h3>";
+            
+            // Descripción (limitada a 3 líneas con line-clamp)
+            echo "<p class='text-gray-500 text-sm flex-grow line-clamp-3 mb-6'>" . htmlspecialchars($descripcion) . "</p>";
+            
+            // Sección inferior: Precio y Botón
+            echo "<div class='mt-auto flex items-center justify-between'>";
+            echo "<div class='text-2xl font-black text-gray-900'>$" . number_format($precio, 2) . "</div>";
+            
+            // Botón con esquinas redondeadas (rounded-xl)
+            echo "<a href='./validar.php?id=4&id_producto=" . $id . "' class='bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 px-5 rounded-xl transition-colors duration-200 shadow-sm hover:shadow'>";
+            echo "Agregar";
+            echo "</a>";
+            echo "</div>"; // Fin precio y botón
+            
+            echo "</div>"; // Fin área contenido
+            echo "</div>"; // Fin tarjeta
+        }
+
+        echo "</div>"; // Fin grid
+        echo "</div>"; // Fin max-w-7xl
+        echo "</div>"; // Fin contenedor principal
+    } else {
+        $_GET['severidad'] = 3;
+        $_GET['mensaje'] = "No hay productos cargados en el sistema";            
+    }
+
+    include './pie.php';
+?>

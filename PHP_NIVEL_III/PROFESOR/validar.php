@@ -22,6 +22,7 @@
                         $_SESSION['cedula'] = $data['cedula'];
                         $_SESSION['nombre_apellido'] = $data['nombre_apellido'];
                         $_SESSION['tipo_usuario'] = $data['tipo_usuario'];
+                        $_SESSION['activo'] = true;
                         if ($_SESSION['tipo_usuario']=='ADMINISTRADOR'){
                             $mensaje = "Bienvenido Administrador";
                         }else{
@@ -133,6 +134,24 @@
             $mensaje = "Producto añadido al carrito de compras";
             $severidad = 1;
             header('location:/?mensaje='.$mensaje.'&severidad='.$severidad);
+            break;
+
+        case '5':
+            # Borrar del carrito de compras
+            $session_id = session_id();
+            $id_producto = $_REQUEST['id_producto'];
+            $sql = "DELETE FROM agregar WHERE session_id = '". $session_id . "' AND id_producto = '" . $id_producto . "'";
+            
+            $resultado = pg_query($enlace, $sql);
+            $mensaje = "Producto fue borrado del carrito de compras";
+            $severidad = 3;
+            header('location:/ver_carrito.php?mensaje='.$mensaje.'&severidad='.$severidad);
+            
+            //echo $sql;
+            break;
+        case '6':
+            # Ver factura pre compra
+            
             break;
 
         default:
