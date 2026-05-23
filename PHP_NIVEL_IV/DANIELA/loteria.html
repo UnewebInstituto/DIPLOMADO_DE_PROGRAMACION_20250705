@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotería de la Suerte - Panel de Compras</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Librería de Confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-start font-sans p-4 md:p-8">
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="w-full max-w-md space-y-6">
+        
+        <!-- Tarjeta Principal: Compra / Éxito -->
+        <div class="bg-slate-800 p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700">
+            
+            <!-- Encabezado -->
+            <div class="text-center mb-6">
+                <span class="text-4xl">🍀</span>
+                <h1 class="text-2xl font-bold mt-2 text-yellow-400 tracking-wide uppercase">Lotería Millonaria</h1>
+                <p class="text-slate-400 text-sm mt-1">¡Tu boleto hacia la fortuna!</p>
+            </div>
+
+            <!-- SECCIÓN 1: Formulario de Compra -->
+            <div id="compra-section">
+                <div class="bg-slate-700/50 p-4 rounded-xl border border-slate-600 mb-6 text-center">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Premio Mayor Estimado</p>
+                    <p class="text-3xl font-extrabold text-green-400 mt-1">$15,000,000</p>
+                </div>
+
+                <form id="loteria-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Nombre</label>
+                            <input type="text" id="user-name" required placeholder="Ej. Juan" 
+                                   class="w-full bg-slate-950 border border-slate-600 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-yellow-400 placeholder-slate-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Apellido</label>
+                            <input type="text" id="user-lastname" required placeholder="Ej. Pérez" 
+                                   class="w-full bg-slate-950 border border-slate-600 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-yellow-400 placeholder-slate-600">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cantidad de Tickets</label>
+                        <select id="tickets-qty" class="w-full bg-slate-950 border border-slate-600 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-yellow-400 cursor-pointer">
+                            <option value="1">1 Ticket ($5.00)</option>
+                            <option value="3">3 Tickets ($15.00)</option>
+                            <option value="5">5 Tickets ($25.00) - ¡Más azar!</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="btn-comprar" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold py-4 px-6 rounded-xl shadow-lg transition-all active:scale-98 cursor-pointer text-center block mt-2">
+                        🎟️ Comprar Tickets
+                    </button>
+                </form>
+            </div>
+
+            <!-- SECCIÓN 2: Pantalla de Éxito (Oculta por defecto) -->
+            <div id="exito-section" class="hidden text-center py-4 space-y-4">
+                <div class="inline-flex items-center justify-center w-14 h-14 bg-green-500/20 text-green-400 rounded-full text-2xl mb-1">
+                    ✓
+                </div>
+                <h2 class="text-2xl font-bold text-green-400">¡Compra Realizada!</h2>
+                
+                <p class="text-slate-300 text-sm">
+                    ¡Buena suerte, <span id="display-fullname" class="font-bold text-white"></span>! Tu transacción ha sido procesada.
+                </p>
+
+                <div class="bg-slate-950 border border-slate-700 rounded-xl p-4 my-4 space-y-2 text-left">
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2 text-center border-b border-slate-800 pb-2">Recién Comprados</p>
+                    <div id="tickets-list" class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                        <!-- Tickets de la última compra aquí -->
+                    </div>
+                </div>
+
+                <button onclick="reiniciarInterfaz()" class="mt-2 bg-slate-700 hover:bg-slate-600 text-white font-semibold text-xs py-2 px-4 rounded-lg transition-all cursor-pointer inline-block mx-auto">
+                    Comprar más boletos
+                </button>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN 3: NUEVO PANEL DE HISTORIAL (MIS TICKETS) -->
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-2xl border border-slate-700">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                <h3 class="text-md font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    📊 Mis Tickets Comprados
+                </h3>
+                <span id="total-tickets-count" class="bg-slate-950 text-yellow-400 font-mono text-xs font-bold px-2.5 py-1 rounded-full border border-slate-700">
+                    Total: 0
+                </span>
+            </div>
+
+            <!-- Estado Vacío -->
+            <div id="historial-vacio" class="text-center py-6 text-slate-500 text-sm">
+                Aún no has comprado tickets para este sorteo.
+            </div>
+
+            <!-- Lista de Historial agrupada por compras -->
+            <div id="historial-lista" class="space-y-4 max-h-64 overflow-y-auto pr-1 hidden">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Lógica de Programación -->
+    <script>
+        const form = document.getElementById('loteria-form');
+        const compraSection = document.getElementById('compra-section');
+        const exitoSection = document.getElementById('exito-section');
+        
+        // Elementos dinámicos
+        const displayFullname = document.getElementById('display-fullname');
+        const ticketsList = document.getElementById('tickets-list');
+        
+        // Elementos del Historial
+        const historialVacio = document.getElementById('historial-vacio');
+        const historialLista = document.getElementById('historial-lista');
+        const totalTicketsCount = document.getElementById('total-tickets-count');
+
+        // Base de datos temporal en memoria (Estado de la App)
+        let historialCompras = [];
+        let contadorTotalTickets = 0;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const nombre = document.getElementById('user-name').value.trim();
+            const apellido = document.getElementById('user-lastname').value.trim();
+            const cantidadTickets = parseInt(document.getElementById('tickets-qty').value);
+            const nombreCompleto = `${nombre} ${apellido}`;
+
+            displayFullname.textContent = nombreCompleto;
+            ticketsList.innerHTML = ''; 
+
+            // Arreglo para guardar los números generados en ESTA transacción
+            let nuevosNumeros = [];
+
+            for (let i = 0; i < cantidadTickets; i++) {
+                const numeroSuerte = generarNumeroLoteria();
+                nuevosNumeros.push(numeroSuerte);
+                
+                // Mostrar en la pantalla de éxito inmediata
+                ticketsList.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900 border border-slate-700/60 px-3 py-2 rounded-lg text-sm">
+                        <span class="text-slate-500 font-mono text-xs">TICKET #0${i+1}</span>
+                        <span class="text-yellow-400 font-mono font-bold tracking-widest text-base">${numeroSuerte}</span>
+                    </div>
+                `;
+            }
+
+            // --- REGISTRO EN EL HISTORIAL ---
+            const ahora = new Date();
+            const horaFormateada = ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            
+            // Guardamos el objeto en nuestro historial
+            historialCompras.unshift({ // unshift agrega al inicio para que lo más nuevo salga arriba
+                usuario: nombreCompleto,
+                hora: horaFormateada,
+                tickets: nuevosNumeros
+            });
+
+            contadorTotalTickets += cantidadTickets;
+
+            // Actualizar interfaz del historial
+            renderizarHistorial();
+
+            // Intercambiar pantallas visuales
+            compraSection.classList.add('hidden');
+            exitoSection.classList.remove('hidden');
+
+            // ¡Confeti!
+            lanzarConfetiEstiloCelebracion();
+        });
+
+        function generarNumeroLoteria() {
+            let numero = '';
+            for (let i = 0; i < 6; i++) {
+                numero += Math.floor(Math.random() * 10);
+            }
+            return numero;
+        }
+
+        // Función encargada de pintar el historial acumulado en pantalla
+        function renderizarHistorial() {
+            // Manejo de estados visuales (vacío o con datos)
+            if (historialCompras.length === 0) {
+                historialVacio.classList.remove('hidden');
+                historialLista.classList.add('hidden');
+                return;
+            }
+
+            historialVacio.classList.add('hidden');
+            historialLista.classList.remove('hidden');
+            
+            // Actualizar contador del badge
+            totalTicketsCount.textContent = `Total: ${contadorTotalTickets}`;
+
+            // Limpiar lista e inyectar el HTML acumulado
+            historialLista.innerHTML = '';
+            historialCompras.forEach((compra) => {
+                
+                // Generar los badges de los números para esta compra en específico
+                let numerosHTML = compra.tickets.map(num => 
+                    `<span class="bg-slate-900 border border-slate-700 text-yellow-400 font-mono font-bold px-2 py-1 rounded text-xs tracking-wider">${num}</span>`
+                ).join('');
+
+                historialLista.innerHTML += `
+                    <div class="bg-slate-700/30 border border-slate-700/80 p-3 rounded-xl space-y-2">
+                        <div class="flex justify-between items-center text-xs text-slate-400">
+                            <span class="font-semibold text-slate-300">${compra.usuario}</span>
+                            <span>⏱️ ${compra.hora}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            ${numerosHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function lanzarConfetiEstiloCelebracion() {
+            const duracion = 2.5 * 1000; 
+            const fin = Date.now() + duracion;
+
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: ['#facc15', '#4ade80', '#38bdf8', '#f43f5e'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: ['#facc15', '#4ade80', '#38bdf8', '#f43f5e'] });
+                if (Date.now() < fin) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        function reiniciarInterfaz() {
+            // Opcional: dejamos el nombre/apellido fijo para que el usuario no tenga que volver a escribirlo
+            document.getElementById('tickets-qty').value = "1"; 
+            
+            exitoSection.classList.add('hidden');
+            compraSection.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

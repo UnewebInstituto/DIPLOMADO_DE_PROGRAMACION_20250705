@@ -1,0 +1,54 @@
+NOTA: COMPRE 2 PAQUETES DE GALLETAS
+
+Programación orientada a objetos:
+*Atributos = Variables
+*Métodos = Funciones
+
+la letra inicial de la clase debe ser mayuscula
+los atributos y metodos con nombres diferentes para diferenciarlos.
+
+Estructura:
+Class Nombre{
+    [Código]
+}
+
+Ejemplo:
+
+Class Libro{
+    //Atributos
+    $at1 = '';
+    $at2 = '';
+
+    //Métodos
+    function m1(){
+        echo $this->
+    }
+
+    function m2(){
+        
+    }
+}
+
+Clase -> Instancia -> objeto
+
+Un objeto viene a ser como una Variable, que va a tener atributos y métodos.
+
+Cuando creas instancias, creas objetos
+
+HERENCIA
+- No se puiede heredar de 2 clases diferentes. Cada clase tiene sus herederos, ejemplo:
+            Clase padre 
+             !--------!
+             !persona !
+             ----------
+
+             clase hijos
+
+    !------------!   !------------!
+    ! trabajador !   ! Estudiante !
+    !------------!   !------------!
+
+
+
+USO DE STATIC EN POO
+-Se usa sin usar instancias (cuando se usa static)
