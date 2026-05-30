@@ -25,29 +25,6 @@ $mi_pagina = new Pagina();
 $mi_pagina->bienvenida();
 echo "<hr>";
 Pagina::bienvenida2();
-echo "<hr>";
-Web::bienvenida2();
-/**
- * Se intenta acceder al atributo público
- */
-echo "<br>";
-echo "NOMBRE DEL INSTITUTO:<br>";
-echo $mi_pagina->nombre;
-echo "<br>";
-/**
- * Se intenta acceder al atributo estático a través del nombre de clase
- */
-echo Pagina::$url;
-echo "<br>";
-/**
- * Se intenta acceder al atributo estático a través del objeto
- * Dará error.
- */
-//echo $mi_pagina->$url;
-//echo "<br>";
-
-
-
 
 
 ?>

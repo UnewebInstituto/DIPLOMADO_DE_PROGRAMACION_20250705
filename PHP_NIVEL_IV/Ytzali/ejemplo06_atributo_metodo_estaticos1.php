@@ -8,7 +8,7 @@ class Pagina{
     public function bienvenida(){
         echo "Bienvenido a <b>" . $this->nombre . "</b>, la página es: <b>" . self::$url . "</b>"; 
         echo "<br>";
-        echo "Bienvenido a <b> {$this->nombre} </b>, la página es: <b> " . self::$url . "</b>"; 
+   
     }
 
     public static function bienvenida2(){
@@ -26,28 +26,21 @@ $mi_pagina->bienvenida();
 echo "<hr>";
 Pagina::bienvenida2();
 echo "<hr>";
-Web::bienvenida2();
-/**
- * Se intenta acceder al atributo público
- */
+web::bienvenida2();
+
+//Se intenta acceder al atributo publico 
 echo "<br>";
-echo "NOMBRE DEL INSTITUTO:<br>";
+echo "Nombre del Instituto:<br>";
 echo $mi_pagina->nombre;
 echo "<br>";
-/**
- * Se intenta acceder al atributo estático a través del nombre de clase
- */
+
+//Se intenta acceder al atributo estatico a traves del nombre de la clase
 echo Pagina::$url;
 echo "<br>";
-/**
- * Se intenta acceder al atributo estático a través del objeto
- * Dará error.
- */
+
+
+//Se intenta acceder al atributo estatico a traves del objeto. Dara error 
 //echo $mi_pagina->$url;
 //echo "<br>";
-
-
-
-
 
 ?>
