@@ -32,17 +32,20 @@
             $this->nombre = $nom;
         }
 
-        public function hola(){
-            echo "Saludo desde la clase Persona.<br>";
+        public function asignarApellido($ape){
+            $this->apellido = $ape;
+        }
+
+        public function saludar(){
+            echo "Saludo: {$this->nombre} , {$this->apellido} .<br>";
         }
 
     }
 
     // Instancia de la clase
-    $persona = new Persona();
-    $persona->asignarNombre("ANA");
-    $persona->mostrarNombre();
-    $persona->hola();
-
+    $obj = new Persona();
+    $obj->asignarNombre("ANA");
+    $obj->asignarApellido("VASQUEZ");
+    $obj->saludar();
 
 ?>

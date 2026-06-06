@@ -1,0 +1,10 @@
+http://localhost:8000/Api
+
+Archivos PDF
+
+https://www.fpdf.org/
+
+
+Gráficos
+
+https://jpgraph.net/
