@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej01_dependencia</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Manipulación del DOM</h1>
+    <p id="demo">Lorem ipsum dolor sit amet consectetur adipisicing elit. <s>Ipsum asperiores culpa aspernatur, quia,</s> officiis dolorum iure sed deserquos <i>quaerat hic aliquid? Enim eos quo, laudantium</i> a similique velit excepturi dolores as dignissimos, facere sit tenetur temporibus <b>soluta qui error adipisci dolorum</b> laboriosam posxplicabo placeat nostrum id commodi, deleniti soluta provident <u>veniam error obcaecati facere. In ea eos fugit iusto,</u> quo ipsam, adipisci molestias maxime corrupti eligendi obcaecati earum!</p> 
+    
+    <input type="email" name="correo" id="correo" value="morenodaniela148@gmail.com">
+    <p>Contenedor para mostrar efecto del metodo html()</p>
+    <div id= "resultado" ></div>
+
+    <script>
+        console.log("texto del selector #demo");
+        console.log($('#demo').text());
+        console.log("html del selector #demo");
+        console.log($('#demo').html());
+        console.log("valor del selector #correo");
+        console.log($('#correo').val());
+        let entrada = prompt("Por favor ingrese una palabra:");
+        $('#resultado').html('La palabra que usted escribio fue: <b><u><i>' + entrada + '</b></u></i>');
+        
+    </script>
+
+</body>
+</html>

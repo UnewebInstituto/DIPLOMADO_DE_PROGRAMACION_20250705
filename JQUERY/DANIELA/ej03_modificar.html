@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej03_modificar</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Manipulación del DOM - Añadir y quitar selectores</h1>
+
+    <div id="contenido">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti beatae nesciunt eum impedit aperiam ipsam suscipit ad exercitationem tempora. Eum dolores mollitia nemo provident eius quibusdam totam porro facere dicta?</div>
+
+    <button id="btnAddIni">Añadir al inicio</button>
+    <button id="btnAddEnd">Añadir al final</button>
+    <hr>
+    <button id="btnPutIni">Colocar al principio</button>
+    <button id="btnPutEnd">Colocar al final</button>
+    <hr>
+    <button id="btnQuitar">Quitar</button>
+    <button id="btnEmpty">Vaciar</button>
+
+    <script>
+        // Declaración de variables
+        let balon = '&#9917;';
+        let surf = '&#127940;';
+
+        $("#btnAddIni").click(function(){
+            $("#contenido").prepend(balon);
+        });
+
+        $("#btnAddEnd").click(function(){
+            $("#contenido").append(balon);
+        });
+
+        $("#btnPutIni").click(function(){
+            $("#contenido").before(surf);
+        });
+
+        $("#btnPutEnd").click(function(){
+            $("#contenido").after(surf);
+        })
+
+        $("#btnQuitar").click(function(){
+            $("#contenido").remove();
+        })
+                
+        $("#btnEmpty").click(function(){
+            $("#contenido").empty();
+        })
+
+    </script>
+</body>
+</html>

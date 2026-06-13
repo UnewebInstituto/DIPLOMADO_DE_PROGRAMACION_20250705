@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo_01_Dependencia</title>
+    <!--Declaracion de dependencias de un CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Manipulacion de DOM</h1>
+    <p id="demo">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet vel vitae voluptatem dicta laboriosam <b>minus tempora cupiditate dolor</b> deserunt possimus! <u>A iure reprehenderit totam tenetur, mollitia voluptatem</u>, sit et ad ratione <s>quos eum unde aspernatur.</s> Ad corporis incidunt <i>soluta magni debitis quos consectetur aperiam cupiditate</i>, aut odio! Quod, mollitia et?</p>
+
+    <p>Correo Electronico del alumno Ytzali Rodriguez</p>
+    <input type ="email" name = "correo" id="correo" value="ytzalijimenez@gmail.com">
+
+    <p>Contenedor para mostrar efecto del metodo $().html</p>
+    <div id="resultado"></div>
+
+    <script>
+        console.log("Texto del selector #demo");
+        console.log($('#demo').text());
+        console.log("HTML del selector #demo");
+        console.log($('#demo').html());
+        console.log("Valor del selector #correo");
+        console.log($('#demo').val());
+        let entrada = prompt("Por favor ingrese una palabra:");
+        //$('#resultado').html('La palabra que usted escribió fue: <b><u><i>' + entrada + '</i></u></b>');
+        // ALT+96 : `
+        $('#resultado').html(`La palabra que usted escribió fue: <b><u><i> ${entrada} </i></u></b>`);
+    </script>
+
+</body>
+</html>

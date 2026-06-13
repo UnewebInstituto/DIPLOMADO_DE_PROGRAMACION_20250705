@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej04_clases</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+    <style>
+        .estilo1{
+            background-color: purple;
+            color: yellow;
+            width: 50%;
+            margin-left: 25%;
+        }
+        .estilo2{
+            background-color: blue;
+            color: white;
+            width: 70%;
+            margin-left: 15%;
+        };
+    </style>
+</head>
+<body>
+    <h1>Manipulación del DOM - Añadir y quitar clases</h1>
+
+    <div id = "contenido">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem maxime perferendis atque dolore repellendus aliquam quam similique nulla sit ipsam ullam blanditiis et, voluptatum expedita aliquid impedit dolorum cupiditate eum consequuntur, possimus voluptatem placeat? Quas dolore corporis quod animi. Nobis eos, placeat aliquam doloribus dignissimos repudiandae voluptate. Soluta eius quis corporis. Obcaecati consequuntur</div>
+    <hr>
+    <button id ="btnAdd1">Añadir clase1</button>
+    <button id ="btnRmv1">Quitar clase1</button>
+    <hr>
+    <button id ="btnAdd2">Añadir clase2</button>
+    <button id ="btnRmv2">Quitar clase2</button>
+    <hr>
+    <button id ="btnAlternar">Alternar clases</button>
+
+
+     <script>
+        $("#btnAdd1").click(function(){
+            $("#contenido").addClass('estilo1');
+        });
+
+        $("#btnRmv1").click(function(){
+            $("#contenido").removeClass('estilo1');
+        });
+        
+        $("#btnAdd2").click(function(){
+            $("#contenido").addClass('estilo2');
+        });
+
+        $("#btnRmv2").click(function(){
+            $("#contenido").removeClass('estilo2');
+        });
+
+          $("#btnAlternar").click(function(){
+            $("#contenido").toggleClass('estilo1');
+        })
+
+
+    </script>
+
+</body>
+</html>

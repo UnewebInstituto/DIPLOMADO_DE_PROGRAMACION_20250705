@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej02_atributos</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Manipulación del DOM - atributos</h1>
+
+    <h2 id="titulo">Sitio oficial Uneweb</h2>
+
+    <a id="enlace" href="https://www.uneweb.edu.ve" title="Usted accederá al enlace oficial de Uneweb" target="_blank">Sitio Oficial Uneweb</a>
+
+    <button id="boton">Cambiar</button>
+
+    <script>
+        // Declaración de funciones
+        function cambiar(){
+            if (control == true){
+                // Modificar 1 sólo atributo
+                //$('#enlace').attr('href', enlaceTutorial);
+                // Modificar varios atributos
+                $('#enlace').attr({'href': enlaceTutorial,'title':'Usted accederá al enlace de los tutoriales de cursos en Uneweb'});
+                $('#titulo').html(titTutorial);
+                $('#enlace').html(titTutorial);
+                control = false;
+            }else{
+                // Modificar 1 sólo atributo
+                //$('#enlace').attr('href', enlaceOficial);
+                // Modificar varios atributos
+                $('#enlace').attr({'href': enlaceOficial,'title':'Usted accederá al enlace oficial de Uneweb'});
+                $('#titulo').html(titOficial);
+                $('#enlace').html(titOficial);
+                control = true;
+            }
+        }
+
+        // Declaración de variables
+        let control = true;
+        let enlaceOficial = 'https://www.uneweb.edu.ve';
+        let enlaceTutorial = 'https://www.uneweb.edu.ve/tutoriales/';
+        let titOficial = 'Sitio Oficial Uneweb';
+        let titTutorial = 'Sitio Tutoriales Uneweb';
+        /*
+        * Detecta el evento clic sobre el botón
+        * 1ra. Forma de declaración
+        $('#boton').click(function(){
+            if (control == true){
+                // Modificar 1 sólo atributo
+                //$('#enlace').attr('href', enlaceTutorial);
+                // Modificar varios atributos
+                $('#enlace').attr({'href': enlaceTutorial,'title':'Usted accederá al enlace de los tutoriales de cursos en Uneweb'});
+                $('#titulo').html(titTutorial);
+                $('#enlace').html(titTutorial);
+                control = false;
+            }else{
+                // Modificar 1 sólo atributo
+                //$('#enlace').attr('href', enlaceOficial);
+                // Modificar varios atributos
+                $('#enlace').attr({'href': enlaceOficial,'title':'Usted accederá al enlace oficial de Uneweb'});
+                $('#titulo').html(titOficial);
+                $('#enlace').html(titOficial);
+                control = true;
+            }
+        });
+        */
+       
+        // 2da forma de declaración llamando una funcion 
+        $('#boton').click(cambiar);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej01_dependencia</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Manipulación del DOM</h1>
+    <p id="demo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum asperiores <b>culpa aspernatur, quia, officiis dolorum</b> iure sed deserunt minus, soluta iste molestias assumenda dolorem. Omnis voluptatum debitis alias incidunt ea quos quaerat hic aliquid? <u>Enim eos quo, laudantium a similique</u> velit excepturi dolores aperiam obcaecati tempora</p>
+    <p>Correo electrónico Uneweb del profesor Henry Duque</p>
+    <input type="email" name="correo" id="correo" value="henry@uneweb.edu.ve">
+    <p>Contenedor para mostrar efecto del método html()</p>
+    <div id="resultado"></div>
+
+    <script>
+        console.log("Texto del selector #demo");
+        console.log($('#demo').text());
+        console.log("Html del selector #demo");
+        console.log($('#demo').html());
+        console.log("Valor del selector #correo");
+        console.log($('#correo').val());
+        let entrada = prompt("Por favor ingrese una palabra:");
+        //$('#resultado').html('La palabra que usted escribió fue: <b><u><i>' + entrada + '</i></u></b>');
+        // ALT+96 : `
+        $('#resultado').html(`La palabra que usted escribió fue: <b><u><i> ${entrada} </i></u></b>`)
+    </script>
+</body>
+</html>
