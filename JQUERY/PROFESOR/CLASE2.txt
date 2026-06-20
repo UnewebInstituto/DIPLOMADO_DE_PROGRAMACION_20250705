@@ -1,0 +1,45 @@
+https://jquery.com/
+
+ACCESO A SELECTORES (PRUEBA DESDE CONSOLA DEL NAVEGADOR)
+
+VÍA JAVASCRIPT:
+document.getElementsByTagName('p')
+HTMLCollection(5) [p.impar, p.par, p.impar, p.par, p.impar]
+
+document.getElementsByClassName('impar')
+HTMLCollection(3) [p.impar, p.impar, p.impar]
+
+VÍA JQUERY:
+$("p")
+ce.fn.init {0: p.impar, 1: p.par, 2: p.impar, 3: p.par, 4: p.impar, length: 5, prevObject: ce.fn.init}
+
+$(".impar")
+ce.fn.init {0: p.impar, 1: p.impar, 2: p.impar, length: 3, prevObject: ce.fn.init}
+
+document.getElementsByTagName("p")
+HTMLCollection(5) [p#uno.impar, p#dos.par, p#tres.impar, p#cuatro.par, p#cinco.impar, uno: p#uno.impar, dos: p#dos.par, tres: p#tres.impar, cuatro: p#cuatro.par, cinco: p#cinco.impar]
+$("p")
+ce.fn.init {0: p#uno.impar, 1: p#dos.par, 2: p#tres.impar, 3: p#cuatro.par, 4: p#cinco.impar, length: 5, prevObject: ce.fn.init}
+let parrafos = $("p")
+undefined
+parrafos
+ce.fn.init {0: p#uno.impar, 1: p#dos.par, 2: p#tres.impar, 3: p#cuatro.par, 4: p#cinco.impar, length: 5, prevObject: ce.fn.init}
+parrafos[0]
+<p class=​"impar" id=​"uno">​…​</p>​
+parrafos[1]
+<p class=​"par" id=​"dos">​…​</p>​
+entradas = $("input")
+ce.fn.init {0: input, length: 1, prevObject: ce.fn.init}
+entradas[0]
+<input type=​"text" name=​"correo" value=​"henry@uneweb.edu.ve">​
+entradas[0].value
+'henry@uneweb.edu.ve'
+entradas[0].name
+'correo'
+entradas[0].type
+'text'
+
+Asignación:
+Desarrollar una función que devuelva la longitud de los parrafos contenidos en 
+el documento, usando javascript y jquery. La ejecucion de la función será a través
+de un botón y el resultado, se generará en una ventana de alerta de javascript alert().

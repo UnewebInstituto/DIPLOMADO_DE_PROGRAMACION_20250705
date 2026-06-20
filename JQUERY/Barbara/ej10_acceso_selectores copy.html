@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Longitud de Párrafos</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Mis Párrafos de Prueba</h2>
+    <p>Este es el primer párrafo, es bastante corto.</p>
+    <p>Aquí tenemos el segundo párrafo del documento. Este tiene un poco más de texto para notar la diferencia en el conteo de caracteres.</p>
+    <p>Y el tercer párrafo finaliza la prueba.</p>
+
+    <br>
+    <button id="btnCalcular">Calcular longitud de párrafos</button>
+
+    <script>
+        // Buenas prácticas: Esperar a que el DOM esté completamente cargado
+        $(document).ready(function() {
+            
+            // Asignamos el evento click al botón usando jQuery
+            $('#btnCalcular').on('click', function() {
+                alertarLongitudParrafos();
+            });
+
+            /**
+             * Función que calcula la longitud de cada párrafo 
+             * y muestra el resultado en un alert().
+             */
+            function alertarLongitudParrafos() {
+                let mensaje = "Longitud de los párrafos:\n\n";
+                
+                // Seleccionamos todos los elementos <p> del documento
+                const $parrafos = $('p');
+
+                // Validación defensiva por si no existen párrafos en el DOM
+                if ($parrafos.length === 0) {
+                    alert("No se encontraron párrafos en el documento.");
+                    return;
+                }
+
+                // Iteramos sobre cada párrafo encontrado
+                $parrafos.each(function(indice) {
+                    // $(this).text() obtiene el texto limpio (sin etiquetas HTML)
+                    // .trim() elimina espacios en blanco innecesarios al inicio y final
+                    const textoLimpio = $(this).text().trim();
+                    const longitud = textoLimpio.length;
+
+                    // Acumulamos el resultado en la cadena de texto
+                    mensaje += `Párrafo ${indice + 1}: ${longitud} caracteres\n`;
+                });
+
+                // Mostramos el resultado final en la ventana de alerta
+                alert(mensaje);
+            }
+
+        });
+    </script>
+
+</body>
+</html>

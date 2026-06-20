@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej09_estilo</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        p{
+            padding: 30px;
+            background-color: pink;
+            color: black;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Hojas de estilo cascada - css()</h1>
+    <p id="parrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos similique tempora dolor enim ipsa non ipsum ut architecto quibusdam asperiores beatae fugiat, quasi dolores omnis corrupti, magni ea. Impedit molestias quaerat ex ducimus eos harum consequatur similique perspiciatis tempora voluptate alias, laudantium possimus distinctio reiciendis temporibus deserunt error accusantium corrupti laboriosam sit sapiente? Porro quos dolore nesciunt deleniti ipsa ipsam, hic adipisci dignissimos cumque, facere iusto aut quam numquam consectetur corporis voluptatem. Dicta porro labore fugit dignissimos quisquam laudantium qui rem deleniti ab debitis, eveniet vel corrupti aperiam exercitationem dolores doloremque at ipsum quas officiis, reprehenderit accusantium nisi quidem quis?</p>
+
+    <button id="btnConsultarCSS">Propiedades CSS del párrafo</button><br>
+    <button id="btnCambiarCSS">Cambiar CSS del párrafo</button>
+
+    <script>
+        $("#btnConsultarCSS").click(function(){
+            let propiedades = "";
+            propiedades += "color: " + $("#parrafo").css("color") + "\n";
+            propiedades += "background-color: " + $("#parrafo").css("background-color") + "\n";
+            propiedades += "paddign:" + $("#parrafo").css("padding") + "\n";
+            alert(propiedades);
+        })
+
+        $("#btnCambiarCSS").click(function(){
+            /**
+             * Asignación individual de propiedades
+            $("#parrafo").css("color","white");
+            $("#parrafo").css("background-color","blue");
+            $("#parrafo").css("padding","15px");
+            */
+           // Asignación en conjunto de propiedades
+           $("#parrafo").css({"color":"white","background-color":"blue","padding":"15px"});
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Longitud de Párrafos</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Mis Párrafos</h2>
+    <p>Este es el primer párrafo del documento.</p>
+    <p>Aquí tenemos un segundo párrafo un poco más largo para probar.</p>
+    <p>Y un tercer párrafo final.</p>
+
+    <button id="btnCalcular">Calcular Longitud</button>
+
+    <script>
+        $(document).ready(function() {
+            
+            // Asignamos el evento click al botón usando jQuery
+            $('#btnCalcular').click(function() {
+                obtenerLongitudParrafos();
+            });
+
+            function obtenerLongitudParrafos() {
+                let mensaje = "";
+                
+                // Opción A: Si quieres saber cuántos caracteres tiene CADA párrafo
+                $('p').each(function(indice) {
+                    console.log(indice);
+                    let longitudTexto = $(this).text().length;
+                    mensaje += `Párrafo ${indice + 1}: ${longitudTexto} caracteres.\n`;
+                });
+
+                // Opción B: Si solo querías saber la CANTIDAD total de párrafos
+                // let totalParrafos = $('p').length;
+                // mensaje = `El documento contiene un total de ${totalParrafos} párrafos.`;
+
+                // Mostramos el resultado en una ventana de alerta
+                alert(mensaje);
+            }
+
+        });
+    </script>
+
+</body>
+</html>

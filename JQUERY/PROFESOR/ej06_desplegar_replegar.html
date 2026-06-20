@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej06_efectos</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+    <style>
+        *{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+        }
+        #titulo, #contenido{
+            width: 50%;
+            margin-left: 25%;
+            padding: 30px;
+        }
+        #titulo{
+            background-color: purple;
+            color: yellow;
+        }
+        #contenido{
+            background-color: blue;
+            color: white;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Efectos - slideDown(), slideUp(), slideToggle()</h1>
+
+    <div id="titulo">Por favor hacer click sobre este titulo para mostrar el contenido</div>
+    <div id="contenido">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus esse accusantium nemo officia exercitationem officiis minus, quo, perferendis molestiae tempora maxime amet, fugiat natus reiciendis voluptatum consequuntur doloremque recusandae quas modi placeat quisquam cumque nostrum? Nam totam explicabo inventore quia harum nihil, eum veritatis? Sapiente distinctio esse ut commodi nisi, non sed id sit repellat quod laborum explicabo quae perferendis eaque consequuntur ab, debitis delectus expedita deleniti quos fugiat odio dolorum? Laborum, qui vitae optio, cupiditate aliquam quaerat quas nostrum libero ab beatae impedit eveniet exercitationem? Vel molestiae iste aspernatur? Qui unde autem, commodi ut animi quaerat iste minima eum, labore sit, facere corporis esse aliquam illo eos repellat! Tempora, magni at harum excepturi qui in, maiores ipsum quam et porro provident asperiores perferendis quos vitae laudantium praesentium voluptate omnis nemo mollitia enim ullam officiis recusandae non hic! Ducimus labore qui, cupiditate illo inventore rerum maxime sapiente, at explicabo, corrupti laborum. Soluta incidunt corporis ex, dolores odio corrupti repellendus et, doloremque nulla, adipisci hic at id pariatur aperiam aliquam necessitatibus harum. Culpa ratione quo totam magnam inventore laboriosam aperiam vitae atque praesentium optio beatae corporis officia sit, dolorem placeat rem modi, iste a expedita esse ipsa officiis fugit tempora! Nesciunt.</div>
+
+    <script>
+        // Declaración de variables
+        let control = true;
+
+        /*
+        $("#titulo").click(function() {
+            if (control == true){
+                //$("#contenido").slideDown();
+                //$("#contenido").slideDown('slow');
+                $("#contenido").slideDown(3000);
+                $("#titulo").html("Por favor hacer click sobre este titulo para ocultar el contenido");
+                control = false;
+            }else{
+                //$("#contenido").slideUp();
+                //$("#contenido").slideUp('slow');
+                $("#contenido").slideUp(3000);
+                $("#titulo").html("Por favor hacer click sobre este titulo para mostrar el contenido");
+                control = true;
+            }
+        });
+        */
+
+        
+        $("#titulo").click(function() {
+            //$("#contenido").toggle();
+            //$("#contenido").toggle('slow');
+            $("#contenido").slideToggle(3000);
+            if (control == true){
+                $("#titulo").html("Por favor hacer click sobre este titulo para ocultar el contenido");
+                control = false;
+            }else{
+                $("#titulo").html("Por favor hacer click sobre este titulo para mostrar el contenido");
+                control = true;
+            }
+
+
+        });
+
+    </script>
+
+</body>
+</html>

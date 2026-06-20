@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej07_efectos</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+    <style>
+        div[id*="cuadro"]{
+            width: 150px;
+            height: 150px;
+        }
+        #cuadro1{
+            background-color: rgb(255, 123, 0);
+        }
+        #cuadro2{
+            background-color: rgb(63, 191, 241);
+        }
+        #cuadro3{
+            background-color: rgb(68, 253, 30);
+        }
+    </style>
+</head>
+<body>
+    <h1>Efectos - fadeIn(), fadeOut(), fadeToggle()</h1>
+
+    <div id="cuadro1"></div>
+    <div id="cuadro2"></div>
+    <div id="cuadro3"></div>
+    <hr>
+    <button id="btnFadeIn">fadeIn()</button>
+    <button id="btnFadeOut">fadeOut()</button>
+    <button id="btnFadeToggle">fadeToggle()</button>
+    <script>
+        $("#btnFadeOut").click(function(){
+            $("#cuadro1").fadeOut();
+            $("#cuadro2").fadeOut('slow');
+            $("#cuadro3").fadeOut(1500);
+        });
+        $("#btnFadeIn").click(function(){
+            $("#cuadro1").fadeIn();
+            $("#cuadro2").fadeIn('slow');
+            $("#cuadro3").fadeIn(1500);
+        });
+        $("#btnFadeToggle").click(function(){
+            $("#cuadro1").fadeToggle();
+            $("#cuadro2").fadeToggle('slow');
+            $("#cuadro3").fadeToggle(1500);
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej05_efectos</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+</head>
+<body>
+    <h1>Efectos - hide(), show(), toggle()</h1>
+
+    <p id="parrafo">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto quae impedit incidunt repudiandae sunt est ducimus culpa eum suscipit itaque, non accusamus aliquid cumque laudantium, placeatti voluptatum dolorem dicta eius, quos explicabo esse sequi neque aut distinctio quo quae voluptatem enim incidunt odit? Quam, quae!</p>
+
+    <button id="btnOculta">Ocultar</button>
+    <button id="btnMuestra">Mostrar</button>
+    <button id="btnAlterna">Alternar</button>
+
+     <script>
+        // Declaración de funciones
+        function alternar(){
+            //$('#parrafo').toggle(); // Ocultar de forma inmediata
+            //$('#parrafo').toggle('slow'); // Ocultar despacio
+            $('#parrafo').toggle(3000); // Ocultar en 3 segundos
+        }
+
+        // función anonima
+        $("#btnOculta").click(function(){
+            //$('#parrafo').hide(); // Ocultar de forma inmediata
+            //$('#parrafo').hide('slow'); // Ocultar despacio
+            $('#parrafo').hide(3000); // Ocultar en 3 segundos
+        })
+
+        // Arrow function
+        $("#btnMuestra").click(() => {
+            //$('#parrafo').show(); // Ocultar de forma inmediata
+            //$('#parrafo').show('slow'); // Ocultar despacio
+            $('#parrafo').show(3000); // Ocultar en 3 segundos
+        })
+
+        // Llamado a función externa
+        $("#btnAlterna").click(() => {alternar()});
+
+
+    </script>
+
+
+
+</body>
+</html>

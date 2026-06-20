@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej08_efectos</title>
+    <!--     Declaración de dependencia desde un CDN     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
+    <style>
+        #esfera{
+            width: 30px;
+            height: 30px;
+            background-color: pink;
+            margin-left:0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Efectos - animate()</h1>
+    <button id="mover">Mover</button>
+
+    <div id="esfera"></div>
+    <script>
+     $("#mover").click(function(){
+            //$("#esfera").animate({'width':'200px','height':'200px','margin-left':'50%','opacity':'0.5'});
+            //$("#esfera").animate({'width':'200px','height':'200px','margin-left':'50%','opacity':'0.5'},'slow');
+            $("#esfera").animate({'width':'200px','height':'200px','margin-left':'50%','opacity':'0.5'},1500);
+            $("#esfera").animate({'width':'30px','height':'30px','margin-left':'0%','opacity':'1'},1500);
+
+        })
+    </script>
+</body>
+</html>
